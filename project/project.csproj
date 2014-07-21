@@ -68,6 +68,7 @@
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Models\Supplier.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

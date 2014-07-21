@@ -10,11 +10,12 @@ namespace project.Models
 			// this aim to be a Singleton class
 
 			//TODO
-			// total (public) messages
-			// msg/user
-
+            // total supplier
+            // total products
+            // avg suppliers/product (total products / total supplier)
+            //
 			// methods:
-			//top 5 utenti messaggi
+			// top 5 supplier with more products
 		}
 	}
 }
