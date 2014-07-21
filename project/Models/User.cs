@@ -2,15 +2,18 @@ using System;
 
 namespace project.Models
 {
-	public class User
+	public abstract class User
 	{
+		private int userId;
+
 		public User (String email, String password, String nome, String cognome)
 		{
-			//String[][] values = {
-				//	new String[] { email, password, nome, cognome },
-				//};
-			//Database.insertData("User", values);
-			
+			String[][] values = {
+					new String[] { email, password, nome, cognome },
+				};
+			Database db = Database.Istance;
+			db.insertData("User", values);
+			//Console.WriteLine(db.getData("User", "email", email, new String[] {"id"})[0]["id"]);
 		}
 
 		public static String[][] model() {
@@ -19,8 +22,8 @@ namespace project.Models
 				new String[] {"password", "VARCHAR"},
 				new String[] {"nome", "VARCHAR"},
 				new String[] {"cognome", "VARCHAR"},
-				new String[] {"birth_date", "DATE"},
-				new String[] {"city", "VARCHAR"},
+				//new String[] {"birth_date", "DATE"},
+				//new String[] {"city", "VARCHAR"},
 			};
 			return model;
 		}

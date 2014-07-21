@@ -31,8 +31,8 @@ namespace project
 		protected void Application_Start ()
 		{
 			db = Database.Istance;
-			db.createTable("highscores", Models.User.model());
-			db.insertData("highscores", Models.User.example_data());
+			db.createTable("User", Models.User.model());
+			//new Models.Admin("mike@fender.it", "pw", "Mike", "Fender");
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

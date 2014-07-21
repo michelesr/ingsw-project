@@ -64,7 +64,6 @@
     <Compile Include="Models\Discussion.cs" />
     <Compile Include="Models\GeneralStats.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\PublicMessage.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Database.cs" />

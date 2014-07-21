@@ -4,7 +4,7 @@ namespace project.Models
 {
 	public class Supplier : User
 	{
-		public Supplier ()
+		public Supplier (String email, String password, String nome, String cognome) : base (email, password, nome, cognome)
 		{
 			// TODO
 			// - il fornitore ha una lista di prodotti
