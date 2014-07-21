@@ -11,6 +11,8 @@
 	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"></link>
 	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"></link>
     <link rel="stylesheet" type="text/css" href="//getbootstrap.com/examples/starter-template/starter-template.css"></link>
+	<script type="text/javascript" src="Content/angular/angular.min.js"></script>
+	<script type="text/javascript" src="Content/app.js"></script>
 </head>
 <body ng-controller="myController as store">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -33,12 +35,11 @@
             <h1>Project</h1>
             <p>
                 <%= Html.Encode(ViewData["Message"]) %><br></br>
+                <%= Html.Encode(ViewData["dbOut"]) %><br></br>
                 Test: 2 + 2 = {{2 + 2}}<br></br>
                 Models: - store.product.name: {{ store.product.name }}
             </p>
         </div>
     </div>
-	<script type="text/javascript" src="Content/angular/angular.min.js"></script>
-	<script type="text/javascript" src="Content/app.js"></script>
 </body>
 </html>
