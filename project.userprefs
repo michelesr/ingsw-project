@@ -1,11 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="project/Content/app.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="project/Database.cs">
     <Files>
-      <File FileName="project/Views/Home/Index.aspx" Line="10" Column="23" />
-      <File FileName="project/Views/Web.config" Line="1" Column="1" />
-      <File FileName="project/Controllers/HomeController.cs" Line="20" Column="1" />
-      <File FileName="project/Content/app.js" Line="8" Column="1" />
+      <File FileName="project/Database.cs" Line="25" Column="6" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
