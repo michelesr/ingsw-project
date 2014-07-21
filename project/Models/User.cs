@@ -13,7 +13,7 @@ namespace project.Models
 				};
 			Database db = Database.Istance;
 			db.insertData("User", values);
-			//Console.WriteLine(db.getData("User", "email", email, new String[] {"id"})[0]["id"]);
+			userId = int.Parse(db.getData("User", "email", email, new String[] {"id"})[0]["id"].ToString());
 		}
 
 		public static String[][] model() {
@@ -30,8 +30,10 @@ namespace project.Models
 
 		public static String[][] example_data() {
 			String[][] data = {
-				new String[] { "mike@fender.it", "pw", "Mike", "Fender", "1999-01-01", "Mondolfo" },
-				new String[] { "kobe@bryant.io", "pass", "Kobe", "Bryant", "1995-05-05", "Ancona" },
+				new String[] { "mike@fender.it", "pw", "Mike", "Fender" },
+				new String[] { "kobe@bryant.io", "pass", "Kobe", "Bryant" },
+				//new String[] { "mike@fender.it", "pw", "Mike", "Fender", "1999-01-01", "Mondolfo" },
+				//new String[] { "mike@fender.it", "pw", "Mike", "Fender", "1999-01-01", "Mondolfo" },
 			};
 			return data;
 		}

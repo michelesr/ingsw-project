@@ -65,12 +65,9 @@ namespace project
 		public void createTable(String tableName, String[][] fields) {
 			String sql = "CREATE TABLE `" + tableName + "` (";
 			for (int i = 0; i < fields.Length; i++) {
-				sql += "`" + fields[i][0] + "` " + fields[i][1];
-				if (i < fields.Length - 1) {
-					sql += ", ";
-				}
+				sql += "`" + fields[i][0] + "` " + fields[i][1] + ", ";
 			}
-			sql += ");";
+			sql += "`id` INTEGER PRIMARY KEY NOT NULL);";
 			_executeQuery(sql);
 		}
 
@@ -82,12 +79,9 @@ namespace project
 				sql += "(";
 				for (int j = 0; j < values[i].Length; j++) {
 					// aggiunge le virgolette anche sugli interi per l'sql
-					sql += "'" + values [i] [j] + "'";
-					if (j < values[i].Length - 1) {
-						sql += ", ";
-					}
+					sql += "'" + values [i] [j] + "', ";
 				}
-				sql += ");";
+				sql += "NULL);";
 			    _executeQuery(sql);
 			}
 		}

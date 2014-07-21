@@ -32,7 +32,8 @@ namespace project
 		{
 			db = Database.Istance;
 			db.createTable("User", Models.User.model());
-			//new Models.Admin("mike@fender.it", "pw", "Mike", "Fender");
+		    new Models.Admin("mike@fender.it", "pw", "Mike", "Fender");
+			new Models.Admin("mikes@fender.it", "pw", "Mike", "Fender");
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);
