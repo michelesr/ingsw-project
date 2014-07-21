@@ -68,6 +68,12 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\Catalog.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductCategory.cs" />
+    <Compile Include="Models\ProductStock.cs" />
+    <Compile Include="Models\Session.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
