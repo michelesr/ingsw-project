@@ -13,7 +13,6 @@ namespace project.Controllers
 		{
 			ViewData ["Message"] = "Welcome to ASP.NET MVC on Mono!";
 			Database db = Database.Istance;
-			db.printTable("Supplier"); 
 			return View ();
 		}
 	}
