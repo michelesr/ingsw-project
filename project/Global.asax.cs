@@ -26,8 +26,13 @@ namespace project
 			filters.Add (new HandleErrorAttribute ());
 		}
 
+		private Database db;
+
 		protected void Application_Start ()
 		{
+			db = Database.Istance;
+			db.createTable("highscores", Models.User.model());
+			db.insertData("highscores", Models.User.example_data());
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

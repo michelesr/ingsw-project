@@ -33,6 +33,7 @@
             <h1>Project</h1>
             <p>
                 <%= Html.Encode(ViewData["Message"]) %><br></br>
+                <%= Html.Encode(ViewData["dbOut"]) %><br></br>
                 Test: 2 + 2 = {{2 + 2}}<br></br>
                 Models: - store.product.name: {{ store.product.name }}
             </p>

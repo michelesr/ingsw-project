@@ -12,6 +12,8 @@ namespace project.Controllers
 		public ActionResult Index ()
 		{
 			ViewData ["Message"] = "Welcome to ASP.NET MVC on Mono!";
+			Database db = Database.Istance;
+			ViewData ["dbOut"] = db.getData("highscores")[0]["email"];
 			return View ();
 		}
 	}
