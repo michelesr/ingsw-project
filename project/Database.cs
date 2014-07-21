@@ -31,8 +31,7 @@ namespace project
 		// crea il Database 
 		private Database()
 		{
-			//if (File.Exists(fileName) == false) {
-			if (true) {
+			if (File.Exists(_fileName) == false) {
 				SqliteConnection.CreateFile(_fileName);
 			}
 			_con = new SqliteConnection("Data Source=" + _fileName);
@@ -51,8 +50,7 @@ namespace project
 			Hashtable[] outputTable = null;
 			if (table.Rows.Count > 0) {
 				outputTable = new Hashtable[table.Rows.Count];
-				foreach (DataRow row in table.Rows) {
-					outputTable [table.Rows.IndexOf(row)] = new Hashtable ();
+				foreach (DataRow row in table.Rows) { outputTable [table.Rows.IndexOf(row)] = new Hashtable ();
 					foreach (DataColumn column in table.Columns) {
 						outputTable [table.Rows.IndexOf(row)].Add (column.ColumnName, row[column.ColumnName]);
 					}
@@ -63,7 +61,7 @@ namespace project
 
 		// crea una tabella col nome scelto e con le combinazioni dati/tipi scelte 
 		public void createTable(String tableName, String[][] fields) {
-			String sql = "CREATE TABLE `" + tableName + "` (";
+			String sql = "CREATE TABLE IF NOT EXISTS `" + tableName + "` (";
 			for (int i = 0; i < fields.Length; i++) {
 				sql += "`" + fields[i][0] + "` " + fields[i][1] + ", ";
 			}

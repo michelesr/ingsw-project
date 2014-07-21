@@ -26,14 +26,21 @@ namespace project
 			filters.Add (new HandleErrorAttribute ());
 		}
 
-		private Database db;
+
+		private static void initDb(Database db) {
+			String[][] x = Models.User.model;
+			String[][] y = Models.Supplier.supplierModel;
+			String[][] model = new String[x.Length + y.Length][];
+			x.CopyTo(model, 0);
+			y.CopyTo(model, x.Length);
+			db.createTable("Supplier", model);
+			db.createTable("Admin", x); 
+		}
 
 		protected void Application_Start ()
 		{
-			db = Database.Istance;
-			db.createTable("User", Models.User.model());
-		    new Models.Admin("mike@fender.it", "pw", "Mike", "Fender");
-			new Models.Admin("mikes@fender.it", "pw", "Mike", "Fender");
+			Database db = Database.Istance;
+			initDb(db);
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);
