@@ -6,8 +6,7 @@ namespace project.Models {
 			new String[] {"email", "VARCHAR"},
 			new String[] {"password", "VARCHAR"},
 		    new String[] {"first_name", "VARCHAR"},
-			new String[] {"last_name", "VARCHAR"},
+			new String[] {"last_name", "VARCHAR"}
 		};
 	}
 }
-
