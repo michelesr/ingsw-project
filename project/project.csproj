@@ -52,26 +52,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Admin.cs" />
-    <Compile Include="Models\GeneralStats.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\GeneralStats.cs" />
+    <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ProductStock.cs" />
     <Compile Include="Models\Session.cs" />
-    <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

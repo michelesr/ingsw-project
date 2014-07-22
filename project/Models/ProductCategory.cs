@@ -1,15 +1,13 @@
 ﻿using System;
 
 namespace project.Models {
-	public class ProductCategory {
-		public static readonly String[][] model = {
-			new String[] {"nome", "VARCHAR"}
-		};
-		public static void add(String name) {
-			String[][] data = {
-				new String[] {name}
-			};
-			Database.Istance.insertData("ProductCategory", data);
+	public class ProductCategory : Model {
+		protected static readonly String tableName = "ProductCategory";
+		public static void add(String[][] data) {
+			add(tableName, data);
+		}
+		public static void initTable() {
+			initTable(tableName, model);
 		}
 	}
 }

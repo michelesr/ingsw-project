@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,19 +29,15 @@ namespace project
 
 
 		private static void initDb(Database db) {
-			String[][] x = Models.User.model;
-			String[][] y = Models.Supplier.supplierModel;
-			String[][] model = new String[x.Length + y.Length][];
-			x.CopyTo(model, 0);
-			y.CopyTo(model, x.Length);
-			db.createTable("Supplier", model);
-			db.createTable("Admin", x); 
+
 		}
 
 		protected void Application_Start ()
 		{
 			Database db = Database.Istance;
 			initDb(db);
+			Models.City.initTable();
+			Models.ProductCategory.initTable();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

@@ -1,12 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
-    <Files>
-      <File FileName="project/Controllers/HomeController.cs" Line="20" Column="1" />
-      <File FileName="project/Views/Home/Index.aspx" Line="31" Column="10" />
-      <File FileName="project/Controllers/APIController.cs" Line="17" Column="26" />
-      <File FileName="project/Web.config" Line="100" Column="16" />
-    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="project" expanded="True">
+            <Node name="Controllers" expanded="True" />
+            <Node name="Models" expanded="True">
+              <Node name="City.cs" selected="True" />
+            </Node>
+            <Node name="Views" expanded="True" />
+            <Node name="Global.asax" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

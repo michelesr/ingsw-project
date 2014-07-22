@@ -2,13 +2,14 @@
 
 namespace project.Models
 {
-	public class City
+	public class City : Model
 	{
-		public City ()
-		{
-			// TODO
-            // id_city
-            // luogo
+		private static readonly String tableName = "City";
+		public static void add(String[][] data) {
+			add(tableName, data);
+		}
+		public static void initTable() {
+			initTable(tableName, model);
 		}
 	}
 }

@@ -66,22 +66,22 @@ namespace project
 				sql += "`" + fields[i][0] + "` " + fields[i][1] + ", ";
 			}
 			sql += "`id` INTEGER PRIMARY KEY NOT NULL);";
+			Console.WriteLine(sql);
 			_executeQuery(sql);
 		}
 
-		// inserisce i valori dentro una tabella (versione con campi non espliciti) 
-		public void insertData(String tableName, String[][] values) {
-			
-			for (int i = 0; i < values.Length; i++) {
-				String sql = "INSERT INTO `" + tableName + "` VALUES ";
-				sql += "(";
-				for (int j = 0; j < values[i].Length; j++) {
-					// aggiunge le virgolette anche sugli interi per l'sql
-					sql += "'" + values [i] [j] + "', ";
-				}
-				sql += "NULL);";
-			    _executeQuery(sql);
+		// inserisce un valore dentro una tabella (campi espliciti)
+		public void insertData(String tableName, String[][] data) {
+			String sql = "INSERT INTO `" + tableName + "` (";
+			foreach(String[] d in data) {
+				sql += "`" + d[0] + "`, ";
 			}
+			sql += "`id`) VALUES (";
+			foreach(String[] d in data) {
+				sql += "'" + d[1] + "', ";
+			}
+			sql += "NULL);" ;
+			_executeQuery(sql);
 		}
 
 		// ritorna tutti i record della tabella scelta
