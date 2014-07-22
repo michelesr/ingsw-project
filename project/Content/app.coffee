@@ -1,9 +1,21 @@
-app = angular.module 'myApp', []
+mainApp = angular.module 'mainApp', [
+  'ngRoute'
+  'mainCtrl'
+]
 
-app.controller 'myController', ->
-  this.product = gem
-  0
+mainApp.config ['$routeProvider'
+  ($routeProvider) ->
+    $routeProvider
 
-gem = {
-  name: "kobe"
-}
+      .when '/product/list',
+        templateUrl: 'Content/product_list.html'
+        controller: 'ProductListCtrl'
+
+      .when '/product/:productId/detail',
+        templateUrl: 'Content/product_detail.html'
+        controller: 'ProductDetailCtrl'
+
+      .otherwise
+        redirectTo: '/'
+    0
+]
