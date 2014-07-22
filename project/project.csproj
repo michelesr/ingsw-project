@@ -74,6 +74,7 @@
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ProductStock.cs" />
     <Compile Include="Models\Session.cs" />
+    <Compile Include="Controllers\APIController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

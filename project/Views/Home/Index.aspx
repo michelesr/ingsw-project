@@ -2,15 +2,14 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
 <head runat="server">
-    <meta charset="utf-8"></meta>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-    <meta name="author" content="Antonio Esposito, Michele Sorcinelli"></meta>
-    <meta name="description" content="A simple web app writter in Angular.js and ASP.NET"></meta>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="author" content="Antonio Esposito, Michele Sorcinelli"/>
+    <meta name="description" content="A web app written in Angular.js and ASP.NET"/>
 	<title>Project</title>
-	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"></link>
-	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"></link>
-    <link rel="stylesheet" type="text/css" href="//getbootstrap.com/examples/starter-template/starter-template.css"></link>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//getbootstrap.com/examples/starter-template/starter-template.css"/>
 	<script type="text/javascript" src="Content/angular/angular.min.js"></script>
 	<script type="text/javascript" src="Content/app.js"></script>
 </head>
@@ -32,9 +31,8 @@
     </div>
     <div class="container">
         <div class="starter-template">
-            <h1>Project</h1>
+            <h1><%= Html.Encode(ViewData["Title"]) %></h1>
             <p>
-                <%= Html.Encode(ViewData["Message"]) %><br></br>
                 <%= Html.Encode(ViewData["dbOut"]) %><br></br>
                 Test: 2 + 2 = {{2 + 2}}<br></br>
                 Models: - store.product.name: {{ store.product.name }}
