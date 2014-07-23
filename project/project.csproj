@@ -61,7 +61,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Database.cs" />
-    <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\City.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

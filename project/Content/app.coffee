@@ -2,7 +2,7 @@ mainApp = angular.module 'mainApp', [
   'ngRoute'
   'ui.boostrap'
   'mainCtls'
-  'mainServices'
+#  'mainServices'
 ]
 
 mainApp.config ['$routeProvider'
@@ -20,6 +20,10 @@ mainApp.config ['$routeProvider'
       .when '/product/:productId',
         templateUrl: 'Content/templates/product_detail.html'
         controller: 'ProductDetailCtl'
+
+      .when '/product/:productId/create',
+        templateUrl: 'Content/templates/product_form.html'
+        controller: 'ProductCreateCtl'
 
       .otherwise
         redirectTo: '/'

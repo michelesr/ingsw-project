@@ -5,7 +5,7 @@
   mainServices = angular.module('mainServices', ['ngResource']);
 
   mainServices.factory('Product', function($resource) {
-    return $resource('api/product/:productId', {}, {
+    return $resource('/api/product/:productId', {}, {
       query: {
         method: 'GET',
         params: {
