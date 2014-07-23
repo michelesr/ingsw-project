@@ -13,3 +13,9 @@ echo '====================================='
 echo
 cat js/controllers.js
 echo
+echo '=================================='
+echo '= Generated from services.coffee ='
+echo '=================================='
+echo
+cat js/services.js
+echo
