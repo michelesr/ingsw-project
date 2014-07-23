@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" type="text/css" href="//getbootstrap.com/examples/starter-template/starter-template.css"/>
     <script type="text/javascript" src="Content/angular/angular.min.js"></script>
+    <script type="text/javascript" src="Content/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script type="text/javascript" src="Content/angular-route/angular-route.min.js"></script>
     <script type="text/javascript" src="Content/angular-resource/angular-resource.min.js"></script>
     <script type="text/javascript" src="Content/js/app.js"></script>

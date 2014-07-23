@@ -1,5 +1,6 @@
 mainApp = angular.module 'mainApp', [
   'ngRoute'
+  'ui.boostrap'
   'mainCtls'
   'mainServices'
 ]

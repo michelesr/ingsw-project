@@ -2,7 +2,7 @@
 (function() {
   var mainApp;
 
-  mainApp = angular.module('mainApp', ['ngRoute', 'mainCtls', 'mainServices']);
+  mainApp = angular.module('mainApp', ['ngRoute', 'ui.boostrap', 'mainCtls', 'mainServices']);
 
   mainApp.config([
     '$routeProvider', function($routeProvider) {
