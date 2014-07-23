@@ -4,12 +4,12 @@ namespace project.Models
 {
 	public class City : Model
 	{
-		private static readonly String tableName = "City";
+		private static readonly String _tableName = "City";
 		public static void add(String[][] data) {
-			add(tableName, data);
+			_add(_tableName, data);
 		}
 		public static void initTable() {
-			initTable(tableName, model);
+			_initTable(_tableName, _model);
 		}
 	}
 }

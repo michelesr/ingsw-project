@@ -62,10 +62,15 @@ namespace project
 		// crea una tabella col nome scelto e con le combinazioni dati/tipi scelte 
 		public void createTable(String tableName, String[][] fields) {
 			String sql = "CREATE TABLE IF NOT EXISTS `" + tableName + "` (";
-			for (int i = 0; i < fields.Length; i++) {
-				sql += "`" + fields[i][0] + "` " + fields[i][1] + ", ";
+			foreach(String[] field in fields) {
+				String options = (field.Length < 3? "": " " + field[2]);
+				sql += "`" + field[0] + "` " + field[1] + options + ", ";
 			}
-			sql += "`id` INTEGER PRIMARY KEY NOT NULL);";
+			sql += "`id` INTEGER PRIMARY KEY NOT NULL";
+			foreach(String[] field in fields) 
+				if (field.Length >= 4) 
+					sql += field[3];
+			sql += ");";
 			Console.WriteLine(sql);
 			_executeQuery(sql);
 		}
@@ -139,6 +144,10 @@ namespace project
 				}
 				Console.WriteLine(rowText);
 			}
+		}
+
+		public static String getForeignKeyOption(String localField, String foreignTable, String foreignField) {
+			return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`)"; 
 		}
 
 		// chiude la connessione al database

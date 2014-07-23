@@ -38,6 +38,7 @@ namespace project
 			initDb(db);
 			Models.City.initTable();
 			Models.ProductCategory.initTable();
+			Models.Supplier.initTable();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);
