@@ -1,4 +1,15 @@
 #!/bin/bash
-coffee -c *.coffee
-cat app.js
-cat controllers.js
+coffee -co js/ *.coffee
+echo
+echo '============================='
+echo '= Generated from app.coffee ='
+echo '============================='
+echo
+cat js/app.js
+echo
+echo '====================================='
+echo '= Generated from controllers.coffee ='
+echo '====================================='
+echo
+cat js/controllers.js
+echo

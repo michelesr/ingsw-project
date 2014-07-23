@@ -1,21 +1,25 @@
 mainApp = angular.module 'mainApp', [
   'ngRoute'
-  'mainCtrl'
+  'mainCtls'
+  'mainServices'
 ]
 
 mainApp.config ['$routeProvider'
   ($routeProvider) ->
     $routeProvider
 
-      .when '/product/list',
-        templateUrl: 'Content/product_list.html'
-        controller: 'ProductListCtrl'
+      .when '/',
+        templateUrl: 'Content/templates/main.html'
+        controller: 'MainCtl'
 
-      .when '/product/:productId/detail',
-        templateUrl: 'Content/product_detail.html'
-        controller: 'ProductDetailCtrl'
+      .when '/product/list',
+        templateUrl: 'Content/templates/product_list.html'
+        controller: 'ProductListCtl'
+
+      .when '/product/:productId',
+        templateUrl: 'Content/templates/product_detail.html'
+        controller: 'ProductDetailCtl'
 
       .otherwise
         redirectTo: '/'
-    0
 ]

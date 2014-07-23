@@ -11,8 +11,7 @@ namespace project.Controllers
 	{
 		public ActionResult Index ()
 		{
-			ViewData ["Title"] = "Web Project";
-			Database db = Database.Istance;
+			//ViewData ["Title"] = "Web Project";
 			return View ();
 		}
 	}
