@@ -40,6 +40,7 @@ namespace project
 
 		// lancia una query e ritorna la tabella risultante (null se vuota)
 		private Hashtable[] _executeQuery(String sql) {
+			Console.WriteLine(sql);
 			DataTable table = new DataTable();
 			table.Load(new SqliteCommand(sql, _con).ExecuteReader());
 			return _parseTable(table);
@@ -71,7 +72,6 @@ namespace project
 				if (field.Length >= 4) 
 					sql += field[3];
 			sql += ");";
-			Console.WriteLine(sql);
 			_executeQuery(sql);
 		}
 

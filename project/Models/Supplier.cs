@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace project.Models {
 	public class Supplier : User {
@@ -11,6 +12,9 @@ namespace project.Models {
 		};
 		new public static void initTable() {
 			_initTable(_tableName, _model);
+		}
+		public static void add(String[][] userData, String[][] data) {
+			_add(userData, data, _tableName);
 		}
 	}
 }
