@@ -17,4 +17,17 @@
     });
   });
 
+  mainServices.factory('User', function($resource) {
+    return $resource('/api/user/:userId/:action', {}, {
+      query: {
+        method: 'GET',
+        params: {
+          productId: '',
+          action: 'list'
+        },
+        isArray: true
+      }
+    });
+  });
+
 }).call(this);

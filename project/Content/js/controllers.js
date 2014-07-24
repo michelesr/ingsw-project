@@ -10,12 +10,23 @@
   });
 
   mainCtls.controller('ProductListCtl', function($scope, Product) {
-    return $scope.product_list = Product.query();
+    return $scope.products = Product.query();
   });
 
   mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
     return $scope.product = Product.get({
       productId: $routeParams.productId,
+      action: 'detail'
+    });
+  });
+
+  mainCtls.controller('UserListCtl', function($scope, User) {
+    return $scope.users = User.query();
+  });
+
+  mainCtls.controller('UserDetailCtl', function($scope, $routeParams, User) {
+    return $scope.user = User.get({
+      userId: $routeParams.userId,
       action: 'detail'
     });
   });

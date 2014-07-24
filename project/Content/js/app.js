@@ -9,6 +9,15 @@
       return $routeProvider.when('/', {
         templateUrl: 'Content/templates/main.html',
         controller: 'MainCtl'
+      }).when('/user/list', {
+        templateUrl: 'Content/templates/user_list.html',
+        controller: 'UserListCtl'
+      }).when('/user/:userId/detail', {
+        templateUrl: 'Content/templates/user_detail.html',
+        controller: 'UserDetailCtl'
+      }).when('/user/:userId/create', {
+        templateUrl: 'Content/templates/user_form.html',
+        controller: 'UserCreateCtl'
       }).when('/product/list', {
         templateUrl: 'Content/templates/product_list.html',
         controller: 'ProductListCtl'
