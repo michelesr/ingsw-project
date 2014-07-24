@@ -15,21 +15,20 @@ namespace project.Controllers {
 
 		// GET: /api/user/
 		// GET: /api/user/list/
-		public ActionResult List() {
-			return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
+		public String List() {
+			return JsonConvert.SerializeObject(Models.User.getAll());
 		}
 
 		// GET: /api/user/1/detail/
-		public ActionResult Detail(int id) {
-			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
+		public String Detail(int id) {
+			return JsonConvert.SerializeObject(Models.User.getById(id));
 		}
 
 		// POST: /api/user/add/
-		[AcceptVerbs(HttpVerbs.Post)]
-		public ActionResult Add(String s) {
-			Console.WriteLine(s);
-			//Hashtable h = JsonConvert.DeserializeObject<Hashtable>(s);
-			return Json(s, JsonRequestBehavior.AllowGet);
+		//[AcceptVerbs(HttpVerbs.Post)]
+		public String Add(String data) {
+			Hashtable h = JsonConvert.DeserializeObject<Hashtable>(data);
+			return JsonConvert.SerializeObject(h);
 		}
 	}
 }
