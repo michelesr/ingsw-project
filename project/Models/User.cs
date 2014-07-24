@@ -28,5 +28,9 @@ namespace project.Models {
 		public static void initTable() {
 			_initTable(_tableName, _model);
 		}
+
+		public static Hashtable[] getAll() {
+			return _getAll(_tableName);
+		}
 	}
 }

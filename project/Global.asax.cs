@@ -56,6 +56,7 @@ namespace project
 			Models.Admin.add(userData, new String[][] {});
 			userData[0][1] = "diavleri@boia.org";
 			Models.Admin.add(userData, new String[][] {});
+			Hashtable[] h = Models.User.getAll();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

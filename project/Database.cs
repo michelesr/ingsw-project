@@ -109,7 +109,7 @@ namespace project
 					sql += ",";
 				}
 			}
-			sql += " FROM " + tableName + " WHERE " + inputField + "='" + inputValue + "'";
+			sql += " FROM `" + tableName + "` WHERE `" + inputField + "`='" + inputValue + "'";
 			return _executeQuery(sql);
 		} 
 		
