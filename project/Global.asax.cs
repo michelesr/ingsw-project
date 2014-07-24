@@ -15,12 +15,16 @@ namespace project
 		{
 			routes.IgnoreRoute ("{resource}.axd/{*pathInfo}");
 
-			routes.MapRoute ("defaultAPI","api/{controller}/{id}/{action}", new { id = "" });
+			routes.MapRoute (
+				"DefaultAPI",
+				"api/{controller}/{id}/{action}",
+				new { id = "", action = "List" }
+			);
 
 			routes.MapRoute (
 				"Default",
-				"{controller}/{action}/{id}",
-				new { controller = "Home", action = "Index", id = "" }
+				"{controller}/{action}",
+				new { controller = "Home", action = "Index" }
 			);
 
 		}
@@ -44,7 +48,6 @@ namespace project
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);
-            ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
 		}
 	}
 }
