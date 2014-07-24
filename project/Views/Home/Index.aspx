@@ -5,13 +5,14 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Project</title>
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" type="text/css" href="//getbootstrap.com/examples/starter-template/starter-template.css"/>
-    <script type="text/javascript" src="Content/angular/angular.min.js"></script>
-    <script type="text/javascript" src="Content/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <script type="text/javascript" src="Content/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="Content/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="Content/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Content/js/angular.min.js"></script>
+    <script type="text/javascript" src="Content/js/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="Content/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="Content/js/angular-resource.min.js"></script>
     <script type="text/javascript" src="Content/js/app.js"></script>
     <script type="text/javascript" src="Content/js/controllers.js"></script>
     <script type="text/javascript" src="Content/js/services.js"></script>
