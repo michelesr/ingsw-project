@@ -12,7 +12,6 @@ mainCtls.controller 'ProductDetailCtl', ($scope, $routeParams, Product) ->
   $scope.product = Product.get(
     {
       productId: $routeParams.productId
-      action: 'detail'
     }
   )
 
@@ -24,6 +23,5 @@ mainCtls.controller 'UserDetailCtl', ($scope, $routeParams, User) ->
   $scope.user = User.get(
     {
       userId: $routeParams.userId
-      action: 'detail'
     }
   )

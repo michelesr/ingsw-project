@@ -10,23 +10,24 @@ using Newtonsoft.Json;
 
 namespace project.Controllers {
 
-	// /api/user
 	public class UserController : Controller {
 
-		// GET: /api/user/
-		// GET: /api/user/list/
+		// /#/user/list
+		// GET /api/user/
+		// GET /api/user/list/
 		public String List() {
 			return JsonConvert.SerializeObject(Models.User.getAll());
 		}
 
-		// GET: /api/user/1/detail/
-		public String Detail(int id) {
+		// /#/user/1/detail
+		// GET /api/user/1/
+		public String Get(int id) {
 			return JsonConvert.SerializeObject(Models.User.getById(id));
 		}
 
-		// POST: /api/user/add/
-		//[AcceptVerbs(HttpVerbs.Post)]
-		public String Add(String data, String type, String supplierData) {
+		// /#/user/1/create
+		// POST /api/user/
+		public String Post(String data, String type, String supplierData) {
 			String returnMsg = "OK\n";
 			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
 			try {

@@ -15,8 +15,7 @@
 
   mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
     return $scope.product = Product.get({
-      productId: $routeParams.productId,
-      action: 'detail'
+      productId: $routeParams.productId
     });
   });
 
@@ -26,8 +25,7 @@
 
   mainCtls.controller('UserDetailCtl', function($scope, $routeParams, User) {
     return $scope.user = User.get({
-      userId: $routeParams.userId,
-      action: 'detail'
+      userId: $routeParams.userId
     });
   });
 

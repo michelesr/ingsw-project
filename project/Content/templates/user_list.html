@@ -1,6 +1,18 @@
 <h1>Users List</h1>
-<p>/api/user/list</p>
 
-<ul ng-repeat="user in users">
-    <li><a href="#/user/{{ user.id }}/detail">{{ user.name }} {{ user.surname }}</a></li>
-</ul>
+<br />
+<br />
+<br />
+
+<table class="table">
+<tr>
+  <td>Email</td>
+  <td>Name</td>
+  <td>Surname</td>
+</tr>
+<tr ng-repeat="user in users">
+  <td><a href="/#/user/{{ user.id }}/detail">{{ user.email }}</a></td>
+  <td>{{ user.first_name }}</td>
+  <td>{{ user.last_name }}</td>
+</tr>
+</table>

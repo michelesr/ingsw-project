@@ -15,7 +15,7 @@ mainServices.factory 'User', ($resource) ->
   $resource '/api/user/:userId/:action', {}, {
     query: {
       method: 'GET'
-      params: { productId: '', action: 'list' }
+      params: { userId: '', action: 'list' }
       isArray: true
     }
   }

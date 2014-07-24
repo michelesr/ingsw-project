@@ -8,11 +8,10 @@ using project.Models;
 
 namespace project.Controllers {
 
-	// /api/product
 	public class ProductController : Controller {
 
-        // GET: /api/product/
-        // GET: /api/product/list/
+        // GET /api/product/
+        // GET /api/product/list/
 		public ActionResult List () {
 			var movies = new List<object>();
 			movies.Add(new { id = 1, name = "Saponette profumate" });
@@ -21,15 +20,15 @@ namespace project.Controllers {
 
 			return Json(movies, JsonRequestBehavior.AllowGet); }
 
-        // GET: /api/product/1/detail/
-		public ActionResult Detail (int id) {
+        // GET /api/product/1/
+		public ActionResult Get (int id) {
 			var myProduct = new { id = id, name = "Saponette profumate", cat = "Saponi" };
 
 			return Json(myProduct, JsonRequestBehavior.AllowGet); }
 
-		// GET: /api/product/1/create/
+		// POST /api/product/
 		/*
-		public ActionResult Create (ProductInputModel inputModel) {
+		public ActionResult Post (Product data) {
             if (ModelState.IsValid) {
                 return Json(new ProductViewModel { Message = "Product successfully created"} );
             }

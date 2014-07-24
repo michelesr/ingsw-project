@@ -22,7 +22,7 @@
       query: {
         method: 'GET',
         params: {
-          productId: '',
+          userId: '',
           action: 'list'
         },
         isArray: true
