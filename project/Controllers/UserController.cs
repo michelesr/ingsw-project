@@ -15,7 +15,8 @@ namespace project.Controllers {
 		// /#/user/list
 		// GET /api/user/
 		// GET /api/user/list/
-		public String List() {
+		[AcceptVerbs(HttpVerbs.Get)]
+		public String Index() {
 			return JsonConvert.SerializeObject(Models.User.getAll());
 		}
 
@@ -28,7 +29,7 @@ namespace project.Controllers {
 		// /#/user/1/create
 		// POST /api/user/add/
 		[AcceptVerbs(HttpVerbs.Post)]
-		public String Add(String data, String type, String supplierData) {
+		public String Index(String data, String type, String supplierData) {
 			String returnMsg = "OK\n";
 			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
 			try {
