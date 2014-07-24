@@ -78,14 +78,14 @@ namespace project
 		}
 
 		// inserisce un valore dentro una tabella (campi espliciti)
-		public void insertData(String tableName, String[][] data) {
+		public void insertData(String tableName, Hashtable data) {
 			String sql = "INSERT INTO `" + tableName + "` (";
-			foreach(String[] d in data) {
-				sql += "`" + d[0] + "`, ";
+			foreach(var d in data.Keys) {
+				sql += "`" + d.ToString() + "`, ";
 			}
 			sql += "`id`) VALUES (";
-			foreach(String[] d in data) {
-				sql += "'" + d[1] + "', ";
+			foreach(var d in data.Keys) {
+				sql += "'" + data[d.ToString()] + "', ";
 			}
 			sql += "NULL);" ;
 			_executeQuery(sql);

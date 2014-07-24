@@ -7,7 +7,7 @@ namespace project.Models {
 		protected static readonly String[][] _model = {
 			new String[] {"name", "VARCHAR"}
 		};
-		protected static void _add(String tableName, String[][] data) {
+		protected static void _add(String tableName, Hashtable data) {
 			_db.insertData(tableName, data);
 		}
 		protected static void _initTable(String tableName, String[][] model) {

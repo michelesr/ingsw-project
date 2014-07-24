@@ -26,9 +26,27 @@ namespace project.Controllers {
 
 		// POST: /api/user/add/
 		//[AcceptVerbs(HttpVerbs.Post)]
-		public String Add(String data) {
-			Hashtable h = JsonConvert.DeserializeObject<Hashtable>(data);
-			return JsonConvert.SerializeObject(h);
+		public String Add(String data, String type, String supplierData) {
+			String returnMsg = "OK\n";
+			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
+			try {
+				if (type == "admin")
+				    Models.Admin.add(d, new Hashtable());
+				else if (type == "supplier") {
+					if (supplierData != null) { 
+						Hashtable sd = JsonConvert.DeserializeObject<Hashtable>(supplierData);
+						Models.Supplier.add(d, sd); 
+					}
+					else
+						returnMsg = "Invalid supplier data\n";
+				}
+				else
+					returnMsg = "Invalid user type\n";
+			}
+			catch(Mono.Data.Sqlite.SqliteException e) {
+				returnMsg = "Error in sqlite db: " + e.Message + "\n";
+			}
+			return returnMsg;
 		}
 	}
 }
