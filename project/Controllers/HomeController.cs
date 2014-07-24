@@ -11,8 +11,7 @@ namespace project.Controllers
 	{
 		public ActionResult Index ()
 		{
-			//ViewData ["Title"] = "Web Project";
-			return View ();
+			return File ("Content/templates/base.html", "text/html");
 		}
 	}
 }
