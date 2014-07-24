@@ -1,14 +1,10 @@
 <h1>Users List</h1>
 
-<br />
-<br />
-<br />
+<br/><br/>
 
 <table class="table">
 <tr>
-  <td>Email</td>
-  <td>Name</td>
-  <td>Surname</td>
+  <td ng-repeat="header in headers">{{ header | uppercase }}</td>
 </tr>
 <tr ng-repeat="user in users">
   <td><a href="/#/user/{{ user.id }}/detail">{{ user.email }}</a></td>

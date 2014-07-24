@@ -5,27 +5,30 @@
   mainCtls = angular.module('mainCtls', []);
 
   mainCtls.controller('MainCtl', function($scope, $http) {
-    $scope.title = "Web project";
-    return 0;
-  });
-
-  mainCtls.controller('ProductListCtl', function($scope, Product) {
-    return $scope.products = Product.query();
-  });
-
-  mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
-    return $scope.product = Product.get({
-      productId: $routeParams.productId
-    });
+    return $scope.title = 'Web project';
   });
 
   mainCtls.controller('UserListCtl', function($scope, User) {
-    return $scope.users = User.query();
+    $scope.users = User.query();
+    return $scope.headers = ['email', 'first_name', 'last_name'];
   });
 
   mainCtls.controller('UserDetailCtl', function($scope, $routeParams, User) {
     return $scope.user = User.get({
-      userId: $routeParams.userId
+      userId: $routeParams.userId,
+      action: 'index'
+    });
+  });
+
+  mainCtls.controller('ProductListCtl', function($scope, Product) {
+    $scope.products = Product.query();
+    return $scope.headers = ['name'];
+  });
+
+  mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
+    return $scope.product = Product.get({
+      productId: $routeParams.productId,
+      action: 'index'
     });
   });
 

@@ -20,8 +20,8 @@ namespace project.Controllers {
 
 			return Json(movies, JsonRequestBehavior.AllowGet); }
 
-        // GET /api/product/1/
-		public ActionResult Get (int id) {
+		// GET /api/product/1/index
+		public ActionResult Index (int id) {
 			var myProduct = new { id = id, name = "Saponette profumate", cat = "Saponi" };
 
 			return Json(myProduct, JsonRequestBehavior.AllowGet); }
