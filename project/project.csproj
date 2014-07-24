@@ -115,7 +115,6 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <None Include=".bowerrc" />
     <None Include="Content\app.coffee" />
     <None Include="Content\coffee.sh" />
     <None Include="Content\coffee_dev.sh" />
