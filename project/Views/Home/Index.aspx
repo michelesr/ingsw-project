@@ -32,7 +32,6 @@
     </div>
     <div class="container">
         <div class="starter-template">
-            {{ 'prova' }}
             <div ng-view></div>
         </div>
     </div>

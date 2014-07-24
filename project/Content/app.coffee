@@ -1,8 +1,8 @@
 mainApp = angular.module 'mainApp', [
   'ngRoute'
-  'ui.boostrap'
+#  'ui.boostrap'
   'mainCtls'
-#  'mainServices'
+  'mainServices'
 ]
 
 mainApp.config ['$routeProvider'
@@ -17,7 +17,7 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/product_list.html'
         controller: 'ProductListCtl'
 
-      .when '/product/:productId',
+      .when '/product/:productId/detail',
         templateUrl: 'Content/templates/product_detail.html'
         controller: 'ProductDetailCtl'
 

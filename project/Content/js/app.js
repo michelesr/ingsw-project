@@ -2,7 +2,7 @@
 (function() {
   var mainApp;
 
-  mainApp = angular.module('mainApp', ['ngRoute', 'ui.boostrap', 'mainCtls']);
+  mainApp = angular.module('mainApp', ['ngRoute', 'mainCtls', 'mainServices']);
 
   mainApp.config([
     '$routeProvider', function($routeProvider) {
@@ -12,7 +12,7 @@
       }).when('/product/list', {
         templateUrl: 'Content/templates/product_list.html',
         controller: 'ProductListCtl'
-      }).when('/product/:productId', {
+      }).when('/product/:productId/detail', {
         templateUrl: 'Content/templates/product_detail.html',
         controller: 'ProductDetailCtl'
       }).when('/product/:productId/create', {

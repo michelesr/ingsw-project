@@ -9,12 +9,15 @@
     return 0;
   });
 
-  mainCtls.controller('ProductListCtl', function($scope, $http) {
-    $http.get('/api/product/list').success(function(data) {
-      $scope.product_list = data;
-      return 0;
+  mainCtls.controller('ProductListCtl', function($scope, Product) {
+    return $scope.product_list = Product.query();
+  });
+
+  mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
+    return $scope.product = Product.get({
+      productId: $routeParams.productId,
+      action: 'detail'
     });
-    return 0;
   });
 
 }).call(this);

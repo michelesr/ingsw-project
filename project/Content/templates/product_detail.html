@@ -1,6 +1,6 @@
 <h1>{{ product.name }} detail</h1>
-<p>/api/product/1/detail</p>
+<p>/api/product/{{ product.id }}/detail</p>
 
-<div ng-repeat="item in product">
-    <p>{{ item }}</p>
+<div ng-repeat="(key, value) in product">
+    <p><b>{{ key }}</b>: {{ value }}</p>
 </div>
