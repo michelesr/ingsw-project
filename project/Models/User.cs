@@ -32,5 +32,9 @@ namespace project.Models {
 		public static Hashtable[] getAll() {
 			return _getAll(_tableName);
 		}
+
+		public static Hashtable getById(int id) {
+			return _getById(_tableName, id);
+		}
 	}
 }

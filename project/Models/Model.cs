@@ -17,6 +17,9 @@ namespace project.Models {
 		protected static Hashtable[] _getAll(String tableName) {
 			return _db.getData(tableName);
 		}
+		protected static Hashtable _getById(String tableName, int id) {
+			return _db.getData(tableName, "id", id.ToString())[0];
+		}
 	}
 }
 

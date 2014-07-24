@@ -48,7 +48,7 @@ namespace project
 
 		// converte i risultati di una query in un array di hashtable 
 		private Hashtable[] _parseTable(DataTable table) {
-			Hashtable[] outputTable = null;
+			Hashtable[] outputTable;
 			if (table.Rows.Count > 0) {
 				outputTable = new Hashtable[table.Rows.Count];
 				foreach (DataRow row in table.Rows) { outputTable [table.Rows.IndexOf(row)] = new Hashtable ();
@@ -57,6 +57,8 @@ namespace project
 					}
 				}
 			}
+			else
+				outputTable = new Hashtable[] { new Hashtable() };
 			return outputTable;
 		}
 

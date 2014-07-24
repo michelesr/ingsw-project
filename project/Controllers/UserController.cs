@@ -18,8 +18,8 @@ namespace project.Controllers {
 		}
 
 		// GET: /api/user/1/detail/
-		//public ActionResult Detail (int id) {
-		//	return Json(Models.User.getOne(id), JsonRequestBehavior.AllowGet);
-		//}
+		public ActionResult Detail (int id) {
+			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
+		}
 	}
 }
