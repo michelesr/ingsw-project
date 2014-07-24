@@ -15,11 +15,7 @@ namespace project
 		{
 			routes.IgnoreRoute ("{resource}.axd/{*pathInfo}");
 
-			routes.MapRoute (
-				"API",
-				"api/{controller}/{id}/{action}",
-				new { controller = "", action = "List", id = "" }
-			);
+			routes.MapRoute ("defaultAPI","api/{controller}/{id}/{action}", new { id = "-1" });
 
 			routes.MapRoute (
 				"Default",

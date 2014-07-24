@@ -24,8 +24,12 @@ namespace project.Controllers {
 			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
 		}
 
+		// POST: /api/user/add/
+		[AcceptVerbs(HttpVerbs.Post)]
 		public ActionResult Add(String s) {
-			// implement me
+			Console.WriteLine(s);
+			//Hashtable h = JsonConvert.DeserializeObject<Hashtable>(s);
+			return Json(s, JsonRequestBehavior.AllowGet);
 		}
 	}
 }
