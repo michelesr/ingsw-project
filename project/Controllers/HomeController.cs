@@ -9,8 +9,7 @@ namespace project.Controllers
 {
 	public class HomeController : Controller
 	{
-		public ActionResult Index ()
-		{
+		public ActionResult Index () {
 			return File ("Content/templates/base.html", "text/html");
 		}
 	}
