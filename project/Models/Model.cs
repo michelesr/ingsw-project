@@ -4,7 +4,6 @@ using System.Collections;
 namespace project.Models {
 	public abstract class Model {
 		private static readonly Database _db = Database.Istance;
-		protected static readonly String _tableName;
 		protected static readonly String[][] _model = {
 			new String[] {"name", "VARCHAR"}
 		};
