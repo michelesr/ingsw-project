@@ -4,7 +4,7 @@ namespace project.Models
 {
 	public class City : Model
 	{
-		new private static readonly String _tableName = "City";
+		private static readonly String _tableName = "City";
 		public static void add(String[][] data) {
 			_add(_tableName, data);
 		}

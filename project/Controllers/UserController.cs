@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,8 +24,8 @@ namespace project.Controllers {
 			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
 		}
 
-		//public ActionResult Add(String s) {
-		//	Newtonsoft.Json.P
-		//}
+		public ActionResult Add(String s) {
+			// implement me
+		}
 	}
 }

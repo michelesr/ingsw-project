@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using project.Models;
 
 namespace project
 {
@@ -33,20 +34,17 @@ namespace project
 			filters.Add (new HandleErrorAttribute ());
 		}
 
-
-		private static void initDb(Database db) {
-
+		public static void initTables() {
+			Admin.initTable();
+			City.initTable();
+			ProductCategory.initTable();
+			Supplier.initTable();
+			Models.User.initTable();
 		}
 
 		protected void Application_Start ()
 		{
-			Database db = Database.Istance;
-			initDb(db);
-			Models.City.initTable();
-			Models.ProductCategory.initTable();
-			Models.User.initTable();
-			Models.Supplier.initTable();
-			Models.Admin.initTable();
+			initTables();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);
