@@ -20,14 +20,15 @@ namespace project.Controllers {
 		}
 
 		// /#/user/1/detail
-		// GET /api/user/1/
-		public String Get(int id) {
+		// GET /api/user/detail/<id>/
+		public String Detail(int id) {
 			return JsonConvert.SerializeObject(Models.User.getById(id));
 		}
 
 		// /#/user/1/create
-		// POST /api/user/
-		public String Post(String data, String type, String supplierData) {
+		// POST /api/user/add/
+		[AcceptVerbs(HttpVerbs.Post)]
+		public String Add(String data, String type, String supplierData) {
 			String returnMsg = "OK\n";
 			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
 			try {
