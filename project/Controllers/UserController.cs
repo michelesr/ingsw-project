@@ -8,14 +8,18 @@ using project.Models;
 
 namespace project.Controllers {
 
-	// GET: /api/product
+	// /api/user
 	public class UserController : Controller {
 
-		// GET: /api/result/
-		// GET: /api/result/list/
+		// GET: /api/user/
+		// GET: /api/user/list/
 		public ActionResult List () {
 			return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
 		}
+
+		// GET: /api/user/1/detail/
+		public ActionResult Detail (int id) {
+			return Json(Models.User.getOne(id), JsonRequestBehavior.AllowGet);
 
 	}
 }

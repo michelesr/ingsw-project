@@ -8,7 +8,7 @@ using project.Models;
 
 namespace project.Controllers {
 
-	// GET: /api/product
+	// /api/product
 	public class ProductController : Controller {
 
         // GET: /api/product/
