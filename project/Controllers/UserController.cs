@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using project.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
 
@@ -16,14 +17,17 @@ namespace project.Controllers {
 		// GET /api/user/
 		// GET /api/user/list/
 		[AcceptVerbs(HttpVerbs.Get)]
-		public String Index() {
-			return JsonConvert.SerializeObject(Models.User.getAll());
+		public JsonResult Index(int id) {
+			if (id == -1)
+				return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
+			else 
+				return Detail(id);
 		}
 
 		// /#/user/1/detail
 		// GET /api/user/detail/<id>/
-		public String Detail(int id) {
-			return JsonConvert.SerializeObject(Models.User.getById(id));
+		public JsonResult Detail(int id) {
+			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
 		}
 
 		// /#/user/1/create
@@ -50,6 +54,14 @@ namespace project.Controllers {
 				returnMsg = "Error in sqlite db: " + e.Message + "\n";
 			}
 			return returnMsg;
+		}
+
+		public String Test(String data) {
+			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
+			Console.WriteLine(d["data"].GetType());
+			Console.WriteLine(d["type"].GetType());
+			Console.WriteLine(((JObject)d["data"])["name"]);
+			return "test api\n";
 		}
 	}
 }
