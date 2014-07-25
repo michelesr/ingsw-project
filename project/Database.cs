@@ -14,12 +14,12 @@ namespace project
 		private const String _fileName = "db.sqlite"; // path del database
 		private SqliteConnection _con; // connessione al database 
 		private static volatile Database _istance = null; // istanza del database
-		private static object _myLock = new object(); // lock per la creazione dell'istanza
+		private static object _lock = new object(); // lock per la creazione dell'istanza
 
 		// ritorna l'istanza del database, creandola qualora non esistesse
 		public static Database Istance {
 			get {
-				lock (_myLock) {
+				lock (_lock) {
 					if (_istance == null) {
 						_istance = new Database();
 					}
@@ -35,15 +35,14 @@ namespace project
 				SqliteConnection.CreateFile(_fileName);
 			}
 			_con = new SqliteConnection("Data Source=" + _fileName);
+			_con.Open();
 		}
 
 		// lancia una query e ritorna la tabella risultante
 		private Hashtable[] _executeQuery(String sql) {
 			Console.WriteLine(sql);
 			DataTable table = new DataTable();
-			_con.Open();
 			table.Load(new SqliteCommand(sql, _con).ExecuteReader());
-			_con.Close();
 			return _parseTable(table);
 		}
 
