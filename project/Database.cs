@@ -35,14 +35,15 @@ namespace project
 				SqliteConnection.CreateFile(_fileName);
 			}
 			_con = new SqliteConnection("Data Source=" + _fileName);
-			_con.Open();
 		}
 
-		// lancia una query e ritorna la tabella risultante (null se vuota)
+		// lancia una query e ritorna la tabella risultante
 		private Hashtable[] _executeQuery(String sql) {
 			Console.WriteLine(sql);
 			DataTable table = new DataTable();
+			_con.Open();
 			table.Load(new SqliteCommand(sql, _con).ExecuteReader());
+			_con.Close();
 			return _parseTable(table);
 		}
 
@@ -125,9 +126,8 @@ namespace project
 			_executeQuery("DELETE FROM `" + tableName + "` WHERE " + field + "='" + value + "';");
 		}
 
-		// stampa di debug di una tabella
-		public void printTable(String tableName) {
-
+		// ritorna una stringa che descrive il contenuto della tabella
+		public String tableToString(String tableName) {
 			String sql = "SELECT * FROM " + tableName;
 			SqliteCommand cmd = new SqliteCommand(sql, _con);
 			DataTable table = new DataTable();
@@ -137,24 +137,22 @@ namespace project
 			foreach (DataColumn column in table.Columns) {
 				columns += column.ColumnName + " | ";
 			}
-			Console.WriteLine(columns);
+			String tableString = columns + "\n";
 
 			foreach (DataRow row in table.Rows) {
 				String rowText = string.Empty;
 				foreach (DataColumn column in table.Columns) {
 					rowText += row[column.ColumnName] + " | ";
 				}
-				Console.WriteLine(rowText);
+				tableString += rowText + "\n";
 			}
+			return tableString;
 		}
 
+		// ritorna una stringa che rappresenta l'istruzione sql di creazione di una chiave esterna
+		// da usare nella definizione dei modelli per definire le chiavi esterne
 		public static String getForeignKeyOption(String localField, String foreignTable, String foreignField) {
 			return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`)"; 
-		}
-
-		// chiude la connessione al database
-		public void closeDatabase() {
-			_con.Close();
 		}
 	}
 }
