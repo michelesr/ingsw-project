@@ -61,13 +61,13 @@
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\js\" />
     <Folder Include="Views\Home\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Database.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\City.cs" />
@@ -81,6 +81,8 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Tools\Database.cs" />
+    <Compile Include="Tools\ConvertibleHashtable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

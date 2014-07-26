@@ -45,6 +45,9 @@ namespace project
 		protected void Application_Start ()
 		{
 			initTables();
+			new Admin("michele@gmail.com", "jigrweijeriogjeio", "Michele", "Verdi").insert();
+			User a = Models.Model.getById<User>(1);
+			Console.WriteLine(a.email);
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

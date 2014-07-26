@@ -16,7 +16,7 @@ namespace project.Controllers {
 		// /#/user/list
 		// GET /api/user/
 		// GET /api/user/list/
-		[AcceptVerbs(HttpVerbs.Get)]
+		/*[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			if (id == -1)
 				return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
@@ -35,13 +35,13 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Post)]
 		public String Index(String data, String type, String supplierData) {
 			String returnMsg = "OK\n";
-			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
+			ConvertibleHashtable d = JsonConvert.DeserializeObject<ConvertibleHashtable>(data);
 			try {
 				if (type == "admin")
-				    Models.Admin.add(d, new Hashtable());
+				    Models.Admin.add(d, new ConvertibleHashtable());
 				else if (type == "supplier") {
 					if (supplierData != null) { 
-						Hashtable sd = JsonConvert.DeserializeObject<Hashtable>(supplierData);
+						ConvertibleHashtable sd = JsonConvert.DeserializeObject<ConvertibleHashtable>(supplierData);
 						Models.Supplier.add(d, sd); 
 					}
 					else
@@ -57,11 +57,11 @@ namespace project.Controllers {
 		}
 
 		public String Test(String data) {
-			Hashtable d = JsonConvert.DeserializeObject<Hashtable>(data);
+			ConvertibleHashtable d = JsonConvert.DeserializeObject<ConvertibleHashtable>(data);
 			Console.WriteLine(d["data"].GetType());
 			Console.WriteLine(d["type"].GetType());
 			Console.WriteLine(((JObject)d["data"])["name"]);
 			return "test api\n";
-		}
+		}*/
 	}
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Mono.Data.Sqlite;
 
-namespace project
+namespace project.Tools
 {
 	// api di alto livello di astrazione per database sqlite
 	public class Database
@@ -39,26 +39,26 @@ namespace project
 		}
 
 		// lancia una query e ritorna la tabella risultante
-		private Hashtable[] _executeQuery(String sql) {
+		private ConvertibleHashtable[] _executeQuery(String sql) {
 			Console.WriteLine(sql);
 			DataTable table = new DataTable();
 			table.Load(new SqliteCommand(sql, _con).ExecuteReader());
 			return _parseTable(table);
 		}
 
-		// converte i risultati di una query in un array di hashtable 
-		private Hashtable[] _parseTable(DataTable table) {
-			Hashtable[] outputTable;
+		// converte i risultati di una query in un array di ConvertibleHashtable 
+		private ConvertibleHashtable[] _parseTable(DataTable table) {
+			ConvertibleHashtable[] outputTable;
 			if (table.Rows.Count > 0) {
-				outputTable = new Hashtable[table.Rows.Count];
-				foreach (DataRow row in table.Rows) { outputTable [table.Rows.IndexOf(row)] = new Hashtable ();
+				outputTable = new ConvertibleHashtable[table.Rows.Count];
+				foreach (DataRow row in table.Rows) { outputTable [table.Rows.IndexOf(row)] = new ConvertibleHashtable ();
 					foreach (DataColumn column in table.Columns) {
 						outputTable [table.Rows.IndexOf(row)].Add (column.ColumnName, row[column.ColumnName]);
 					}
 				}
 			}
 			else
-				outputTable = new Hashtable[] { new Hashtable() };
+				outputTable = new ConvertibleHashtable[] { new ConvertibleHashtable() };
 			return outputTable;
 		}
 
@@ -78,7 +78,8 @@ namespace project
 		}
 
 		// inserisce un valore dentro una tabella (campi espliciti)
-		public void insertData(String tableName, Hashtable data) {
+		public void insertData(String tableName, ConvertibleHashtable data) {
+			data.Remove("id");
 			String sql = "INSERT INTO `" + tableName + "` (";
 			foreach(var d in data.Keys) {
 				sql += "`" + d.ToString() + "`, ";
@@ -92,18 +93,18 @@ namespace project
 		}
 
 		// ritorna tutti i record della tabella scelta
-		public Hashtable[] getData(String tableName) {
+		public ConvertibleHashtable[] getData(String tableName) {
 			return _executeQuery("SELECT * FROM " + tableName);
 
 		}
 
 		// ritorna i record per i quali inputField = inputValue
-		public Hashtable[] getData(String tableName, String inputField, String inputValue) {
+		public ConvertibleHashtable[] getData(String tableName, String inputField, String inputValue) {
 			return getData(tableName, inputField, inputValue, new String[] {"*"});
 		} 
 
 		// ritorna i campi scelti per i record dove inputField = inputValue 
-		public Hashtable[] getData(String tableName, String inputField, String inputValue, String[] outputFields) {
+		public ConvertibleHashtable[] getData(String tableName, String inputField, String inputValue, String[] outputFields) {
 			String sql = "SELECT ";
 			for(int i=0; i < outputFields.Length; i++) {
 				sql += outputFields[i];
