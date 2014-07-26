@@ -16,20 +16,51 @@ namespace project.Models {
 		}
 
 		public virtual void insert() {
-			_db.insertData(_tableName, this._toConvertibleHashtable());
+			id = _db.insertData(_tableName, this._toConvertibleHashtable());
+			Console.WriteLine(id);
+		}
+
+		public virtual void update() {
+			ConvertibleHashtable old = _getById(id);
+			ConvertibleHashtable current = this._toConvertibleHashtable();
+			foreach(var k in old.Keys) 
+				if (old[k].ToString() != current[k].ToString())
+					_db.updateData(_tableName, k.ToString(), current[k].ToString(), "id", id.ToString());
+		}
+
+		public virtual void delete() {
+			_db.deleteData(_tableName, "id", id.ToString());
+		}
+
+		private ConvertibleHashtable _getById(int id) {
+			return _db.getData(_tableName, "id", id.ToString())[0];
 		}
 
 		public static T getById<T> (int id) {
-			String tableName = typeof(T).ToString().Split('.').Last();
-			return _db.getData(tableName, "id", id.ToString())[0].toObject<T>();
+			return _db.getData(_getTableName<T>(), "id", id.ToString())[0].toObject<T>();
+		}
+
+		public static Hashtable[] getAll<T>() {
+			return _db.getData(_getTableName<T>());
 		}
 
 		protected static readonly String[][] _model = {
 			new String[] {"name", "VARCHAR"}
 		};
 
-		protected static void _initTable(String tableName, String[][] model) {
+		public static void createSchema() {
+			String[] tables = new String[] {"Admin", "User", "Supplier"};
+			String[][][] models = new String[][][] { Admin._model, User._model, Supplier._model };
+			for(int i = 0; i < tables.Length; i++) 
+				_initTable(tables[i], models[i]);
+		}
+
+		private static void _initTable(String tableName, String[][] model) {
 			_db.createTable(tableName, model);
+		}
+
+		private static String _getTableName<T>() {
+			return typeof(T).ToString().Split('.').Last();
 		}
 	}
 }

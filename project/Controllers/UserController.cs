@@ -16,10 +16,10 @@ namespace project.Controllers {
 		// /#/user/list
 		// GET /api/user/
 		// GET /api/user/list/
-		/*[AcceptVerbs(HttpVerbs.Get)]
+		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			if (id == -1)
-				return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
+				return Json(Models.User.getAll<Models.User>(), JsonRequestBehavior.AllowGet);
 			else 
 				return Detail(id);
 		}
@@ -27,12 +27,12 @@ namespace project.Controllers {
 		// /#/user/1/detail
 		// GET /api/user/detail/<id>/
 		public JsonResult Detail(int id) {
-			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
+			return Json(Model.getById<User>(id), JsonRequestBehavior.AllowGet);
 		}
 
 		// /#/user/1/create
 		// POST /api/user/add/
-		[AcceptVerbs(HttpVerbs.Post)]
+		/*[AcceptVerbs(HttpVerbs.Post)]
 		public String Index(String data, String type, String supplierData) {
 			String returnMsg = "OK\n";
 			ConvertibleHashtable d = JsonConvert.DeserializeObject<ConvertibleHashtable>(data);
@@ -54,9 +54,9 @@ namespace project.Controllers {
 				returnMsg = "Error in sqlite db: " + e.Message + "\n";
 			}
 			return returnMsg;
-		}
+		}*/
 
-		public String Test(String data) {
+		/*public String Test(String data) {
 			ConvertibleHashtable d = JsonConvert.DeserializeObject<ConvertibleHashtable>(data);
 			Console.WriteLine(d["data"].GetType());
 			Console.WriteLine(d["type"].GetType());

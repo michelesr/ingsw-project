@@ -34,20 +34,22 @@ namespace project
 			filters.Add (new HandleErrorAttribute ());
 		}
 
-		public static void initTables() {
-			Admin.initTable();
-			City.initTable();
-			ProductCategory.initTable();
-			Supplier.initTable();
-			Models.User.initTable();
-		}
-
 		protected void Application_Start ()
 		{
-			initTables();
-			new Admin("michele@gmail.com", "jigrweijeriogjeio", "Michele", "Verdi").insert();
-			User a = Models.Model.getById<User>(1);
-			Console.WriteLine(a.email);
+			Model.createSchema();
+			Admin a = new Admin("michele@gmail.com", "jigrweijeriogjeio", "Michele", "Verdi");
+			Supplier s = new Supplier("pincopallino@gmail.com", "4ijijrojiiojioo3r90", "Pinco","Pallino", "498959jijgir", "PincoPallino&co", "Marotta");
+			a.insert();
+			s.insert();
+			a.email = "michele@libero.it";
+			a.last_name = "Verdino";
+			s.first_name = "Tonio";
+			s.last_name = "Sempronio";
+			s.supplier_name = "boiamond";
+			a.update();
+			s.update();
+			//s.delete();
+			//a.delete();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

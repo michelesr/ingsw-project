@@ -1,30 +1,60 @@
 using System;
-using System.Collections;
 
 namespace project.Models {
 	public class User : Model {
-		public String email {get; set;}
-		public String password {get; set;}
-		public String first_name {get; set;}
-		public String last_name {get; set;}
-
-		new protected static readonly String[][] _model = {
+		new public static readonly String[][] _model = {
 			new String[] {"email", "VARCHAR", "UNIQUE NOT NULL"},
 			new String[] {"password", "VARCHAR", "NOT NULL"},
 			new String[] {"first_name", "VARCHAR", "NOT NULL"},
 			new String[] {"last_name", "VARCHAR", "NOT NULL"}
 		};
+		public String email {get; set;}
+		public String password {get; set;}
+		public String first_name {get; set;}
+		public String last_name {get; set;}
+		public int user_id {get; set;}
 
-		public User(String email, String password, String first_name, String last_name) : base() {
-			this._tableName = "User";
+		protected int getUserId() {
+			return int.Parse(_db.getData("User", "email", email, new string[] {"id"})[0]["id"].ToString());
+		}
+
+		public User(String email, String password, String first_name, String last_name) : this() {
 			this.email = email;
 			this.password = password;
 			this.first_name = first_name;
 			this.last_name = last_name;
 		}
 
-		public static void initTable() {
-			_initTable("User", _model);
+		protected User(int id) : this() {
+			this.id = id;
+		}
+
+		protected User() : base () {
+			this._tableName = "User";
+		}
+
+		public override void update () {
+		    base.update();
+			if (this is Supplier || this is Admin) {
+				User u = new User(email, password, first_name, last_name);
+				u.id = user_id;
+				u.update();
+			}
+		}
+
+		public override void delete() {
+			base.delete();
+			if (this is Supplier || this is Admin)
+				new User(user_id).delete();
+		}
+
+		public override void insert() {
+			if ((this is Supplier || this is Admin)) {
+				User u = new User(email, password, first_name, last_name);
+				u.insert();
+				user_id = u.id;
+			} 
+			base.insert();
 		}
 	}
 }

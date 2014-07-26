@@ -5,6 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Collections;
 using Mono.Data.Sqlite;
+using Newtonsoft.Json;
 
 namespace project.Tools
 {
@@ -78,8 +79,27 @@ namespace project.Tools
 		}
 
 		// inserisce un valore dentro una tabella (campi espliciti)
-		public void insertData(String tableName, ConvertibleHashtable data) {
+		public int insertData(String tableName, ConvertibleHashtable data) {
+			// interrogo il db per ottenere informazioni sulla tabella 
+			ConvertibleHashtable[] h = _executeQuery("pragma table_info(`" + tableName + "`);");
+			List<String> keys = new List<String>();
+			List<String> invalidKeys = new List<String>();
+
+			// aggiungo i nomi delle colonne alle chiavi
+			foreach(ConvertibleHashtable x in h) 
+				keys.Add(x["name"].ToString());
+
+			// aggiungo le chiavi invalide a una lista
+			foreach(var k in data.Keys) {
+				if(!(keys.Contains(k.ToString()))) 
+					invalidKeys.Add(k.ToString());
+			}
+
+			// rimuovo i campi invalidi e l'id che viene autogenerato
+			foreach(String k in invalidKeys)
+				data.Remove(k);
 			data.Remove("id");
+
 			String sql = "INSERT INTO `" + tableName + "` (";
 			foreach(var d in data.Keys) {
 				sql += "`" + d.ToString() + "`, ";
@@ -89,7 +109,11 @@ namespace project.Tools
 				sql += "'" + data[d.ToString()] + "', ";
 			}
 			sql += "NULL);" ;
-			_executeQuery(sql);
+			lock (_lock) {
+				_executeQuery(sql);
+				return int.Parse(_executeQuery("SELECT last_insert_rowid() FROM `" + 
+				                 tableName + "`;")[0]["last_insert_rowid()"].ToString()); 
+			}
 		}
 
 		// ritorna tutti i record della tabella scelta
