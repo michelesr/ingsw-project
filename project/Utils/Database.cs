@@ -7,7 +7,7 @@ using System.Collections;
 using Mono.Data.Sqlite;
 using Newtonsoft.Json;
 
-namespace project.Tools
+namespace project.Utils
 {
 	// api di alto livello di astrazione per database sqlite
 	public class Database

@@ -29,9 +29,7 @@ namespace project.Models {
 			this.id = id;
 		}
 
-		protected User() : base () {
-			this._tableName = "User";
-		}
+		protected User() : base () {}
 
 		public override void update () {
 		    base.update();

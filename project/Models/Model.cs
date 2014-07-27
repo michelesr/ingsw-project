@@ -3,12 +3,14 @@ using System.Collections;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using project.Tools;
+using project.Utils;
 
 namespace project.Models {
 	public abstract class Model {
 		protected static readonly Database _db = Database.Istance;
-		protected String _tableName;
+		protected String _tableName {
+			get { return this.GetType().ToString().Split('.').Last(); }
+		}
 		public int id { get; set; }
 
 		protected ConvertibleHashtable _toConvertibleHashtable() {

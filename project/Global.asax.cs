@@ -48,8 +48,8 @@ namespace project
 			s.supplier_name = "boiamond";
 			a.update();
 			s.update();
-			//s.delete();
-			//a.delete();
+			s.delete();
+			a.delete();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

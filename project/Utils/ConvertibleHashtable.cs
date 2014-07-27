@@ -3,7 +3,7 @@ using System.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace project.Tools {
+namespace project.Utils {
 	public class ConvertibleHashtable : Hashtable {
 		// converte l'hashtable nell'oggetto .NET desiderato
 		public T toObject<T>() {
