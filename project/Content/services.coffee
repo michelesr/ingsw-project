@@ -2,20 +2,20 @@ mainServices = angular.module 'mainServices', ['ngResource']
 
 
 mainServices.factory 'User', ($resource) ->
-  $resource '/api/user/:userId/:action', {}, {
+  $resource '/api/users/:action/:resourceId', {}, {
     query: {
       method: 'GET'
-      params: { userId: '', action: 'list' }
+      params: { resourceId: '', action: 'list' }
       isArray: true
     }
   }
 
 
 mainServices.factory 'Product', ($resource) ->
-  $resource '/api/product/:productId/:action', {}, {
+  $resource '/api/products/:resourceId/:action', {}, {
     query: {
       method: 'GET'
-      params: { productId: '', action: 'list' }
+      params: { resourceId: '', action: '' }
       isArray: true
     }
   }

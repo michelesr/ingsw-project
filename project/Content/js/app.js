@@ -7,24 +7,24 @@
   mainApp.config([
     '$routeProvider', function($routeProvider) {
       return $routeProvider.when('/', {
-        templateUrl: 'Content/templates/main.html',
-        controller: 'MainCtl'
-      }).when('/user/list', {
-        templateUrl: 'Content/templates/user_list.html',
+        templateUrl: 'Content/templates/home.html',
+        controller: 'HomeCtl'
+      }).when('/users/list', {
+        templateUrl: 'Content/templates/resource_list.html',
         controller: 'UserListCtl'
-      }).when('/user/:userId/detail', {
+      }).when('/users/:resourceId/detail', {
         templateUrl: 'Content/templates/user_detail.html',
         controller: 'UserDetailCtl'
-      }).when('/user/:userId/create', {
+      }).when('/users/:resourceId/create', {
         templateUrl: 'Content/templates/user_form.html',
         controller: 'UserCreateCtl'
-      }).when('/product/list', {
-        templateUrl: 'Content/templates/product_list.html',
+      }).when('/products/list', {
+        templateUrl: 'Content/templates/resource_list.html',
         controller: 'ProductListCtl'
-      }).when('/product/:productId/detail', {
+      }).when('/products/:resourceId/detail', {
         templateUrl: 'Content/templates/product_detail.html',
         controller: 'ProductDetailCtl'
-      }).when('/product/:productId/create', {
+      }).when('/products/:resourceId/create', {
         templateUrl: 'Content/templates/product_form.html',
         controller: 'ProductCreateCtl'
       }).otherwise({

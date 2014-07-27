@@ -1,13 +1,15 @@
 mainCtls = angular.module 'mainCtls', []
 
-mainCtls.controller 'MainCtl', ($scope, $http) ->
+mainCtls.controller 'HomeCtl', ($scope, $http) ->
   $scope.title = 'Web project'
 
 
 # User
 mainCtls.controller 'UserListCtl', ($scope, User) ->
-  $scope.users = User.query()
-  $scope.headers = [
+  $scope.resourceName = 'users'
+  $scope.resourceList = User.query()
+  $scope.fields = [
+    'id'
     'email'
     'first_name'
     'last_name'
@@ -24,15 +26,17 @@ mainCtls.controller 'UserDetailCtl', ($scope, $routeParams, User) ->
 
 # Product
 mainCtls.controller 'ProductListCtl', ($scope, Product) ->
-  $scope.products = Product.query()
-  $scope.headers = [
+  $scope.resourceName = 'products'
+  $scope.resourceList = Product.query()
+  $scope.fields = [
+    'id'
     'name'
   ]
 
 mainCtls.controller 'ProductDetailCtl', ($scope, $routeParams, Product) ->
-  $scope.product = Product.get(
+  $scope.resource = Product.get(
     {
-      productId: $routeParams.productId
-      action: 'index'
+      resourceId: $routeParams.resourceId
+      action: ''
     }
   )

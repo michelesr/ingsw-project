@@ -5,11 +5,11 @@
   mainServices = angular.module('mainServices', ['ngResource']);
 
   mainServices.factory('User', function($resource) {
-    return $resource('/api/user/:userId/:action', {}, {
+    return $resource('/api/users/:action/:resourceId', {}, {
       query: {
         method: 'GET',
         params: {
-          userId: '',
+          resourceId: '',
           action: 'list'
         },
         isArray: true
@@ -18,12 +18,12 @@
   });
 
   mainServices.factory('Product', function($resource) {
-    return $resource('/api/product/:productId/:action', {}, {
+    return $resource('/api/products/:resourceId/:action', {}, {
       query: {
         method: 'GET',
         params: {
-          productId: '',
-          action: 'list'
+          resourceId: '',
+          action: ''
         },
         isArray: true
       }

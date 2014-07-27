@@ -4,13 +4,14 @@
 
   mainCtls = angular.module('mainCtls', []);
 
-  mainCtls.controller('MainCtl', function($scope, $http) {
+  mainCtls.controller('HomeCtl', function($scope, $http) {
     return $scope.title = 'Web project';
   });
 
   mainCtls.controller('UserListCtl', function($scope, User) {
-    $scope.users = User.query();
-    return $scope.headers = ['email', 'first_name', 'last_name'];
+    $scope.resourceName = 'users';
+    $scope.resourceList = User.query();
+    return $scope.fields = ['id', 'email', 'first_name', 'last_name'];
   });
 
   mainCtls.controller('UserDetailCtl', function($scope, $routeParams, User) {
@@ -21,14 +22,15 @@
   });
 
   mainCtls.controller('ProductListCtl', function($scope, Product) {
-    $scope.products = Product.query();
-    return $scope.headers = ['name'];
+    $scope.resourceName = 'products';
+    $scope.resourceList = Product.query();
+    return $scope.fields = ['id', 'name'];
   });
 
   mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
-    return $scope.product = Product.get({
-      productId: $routeParams.productId,
-      action: 'index'
+    return $scope.resource = Product.get({
+      resourceId: $routeParams.resourceId,
+      action: ''
     });
   });
 

@@ -8,20 +8,22 @@ using project.Models;
 
 namespace project.Controllers {
 
-	public class ProductController : Controller {
+	public class ProductsController : Controller {
 
-        // GET /api/product/
-        // GET /api/product/list/
-		public ActionResult List () {
+		// GET /api/products/list
+		[AcceptVerbs(HttpVerbs.Get)]
+		public JsonResult List () {
 			var movies = new List<object>();
 			movies.Add(new { id = 1, name = "Saponette profumate" });
 			movies.Add(new { id = 2, name = "Pizza Margherita" });
 			movies.Add(new { id = 3, name = "Pasta buona" });
 
-			return Json(movies, JsonRequestBehavior.AllowGet); }
+			return Json(movies, JsonRequestBehavior.AllowGet);
+		}
 
-		// GET /api/product/1/index
-		public ActionResult Index (int id) {
+		// GET /api/product/1
+		[AcceptVerbs(HttpVerbs.Get)]
+		public JsonResult Index (int id) {
 			var myProduct = new { id = id, name = "Saponette profumate", cat = "Saponi" };
 
 			return Json(myProduct, JsonRequestBehavior.AllowGet); }
@@ -42,5 +44,25 @@ namespace project.Controllers {
 		public ActionResult ProdCat () {
 			return Json(Models.ProductCategory.getAll(), JsonRequestBehavior.AllowGet); }
         */
+
+
+
+		// /#/user/list
+		// GET /api/user/
+		// GET /api/user/list/
+		/*[AcceptVerbs(HttpVerbs.Get)]
+		public JsonResult Index(int id) {
+			if (id == -1)
+				return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
+			else 
+				return Detail(id);
+		}
+
+		// /#/user/1/detail
+		// GET /api/user/detail/<id>/
+		public JsonResult Detail(int id) {
+			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
+		}
+ 		*/
 	}
 }
