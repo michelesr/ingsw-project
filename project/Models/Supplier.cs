@@ -3,12 +3,6 @@ using project.Utils;
 
 namespace project.Models {
 	public class Supplier : User {
-		new private static readonly String[][] _model = new string[][] {
-			new String[] {"vat", "VARCHAR", "NOT NULL"},
-			new String[] {"supplier_name", "VARCHAR", "NOT NULL"},
-			new String[] {"city", "VARCHAR"},
-			new String[] {"user_id", "INTEGER", "NOT NULL", Database.getForeignKeyOption("user_id", "User", "id")},
-		};
 		public String vat {get; set;}
 		public String supplier_name {get; set;}
 		public String city {get; set;}

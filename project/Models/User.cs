@@ -2,12 +2,6 @@ using System;
 
 namespace project.Models {
 	public class User : Model {
-		new public static readonly String[][] _model = {
-			new String[] {"email", "VARCHAR", "UNIQUE NOT NULL"},
-			new String[] {"password", "VARCHAR", "NOT NULL"},
-			new String[] {"first_name", "VARCHAR", "NOT NULL"},
-			new String[] {"last_name", "VARCHAR", "NOT NULL"}
-		};
 		public String email {get; set;}
 		public String password {get; set;}
 		public String first_name {get; set;}

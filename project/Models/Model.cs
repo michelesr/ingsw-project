@@ -9,12 +9,16 @@ namespace project.Models {
 	public abstract class Model {
 		protected static readonly Database _db = Database.Istance;
 		protected String _tableName {
-			get { return this.GetType().ToString().Split('.').Last(); }
+			get { return _getTableNameByType(this.GetType()); }
 		}
 		public int id { get; set; }
 
-		protected ConvertibleHashtable _toConvertibleHashtable() {
+		private ConvertibleHashtable _toConvertibleHashtable() {
 			return JObject.FromObject(this).ToObject<ConvertibleHashtable>();
+		}
+
+		private static ConvertibleHashtable _getById(int id, String tableName) {
+			return _db.getData(tableName, "id", id.ToString())[0];
 		}
 
 		public virtual void insert() {
@@ -23,7 +27,7 @@ namespace project.Models {
 		}
 
 		public virtual void update() {
-			ConvertibleHashtable old = _getById(id);
+			ConvertibleHashtable old = _getById(id, _tableName);
 			ConvertibleHashtable current = this._toConvertibleHashtable();
 			foreach(var k in old.Keys) 
 				if (old[k].ToString() != current[k].ToString())
@@ -34,12 +38,8 @@ namespace project.Models {
 			_db.deleteData(_tableName, "id", id.ToString());
 		}
 
-		private ConvertibleHashtable _getById(int id) {
-			return _db.getData(_tableName, "id", id.ToString())[0];
-		}
-
 		public static T getById<T> (int id) {
-			return _db.getData(_getTableName<T>(), "id", id.ToString())[0].toObject<T>();
+			return _getById(id, _getTableNameByType(typeof(T))).toObject<T>();
 		}
 
 		public static Hashtable[] getAll<T>() {
@@ -50,19 +50,12 @@ namespace project.Models {
 			new String[] {"name", "VARCHAR"}
 		};
 
-		public static void createSchema() {
-			String[] tables = new String[] {"Admin", "User", "Supplier"};
-			String[][][] models = new String[][][] { Admin._model, User._model, Supplier._model };
-			for(int i = 0; i < tables.Length; i++) 
-				_initTable(tables[i], models[i]);
-		}
-
-		private static void _initTable(String tableName, String[][] model) {
-			_db.createTable(tableName, model);
-		}
-
 		private static String _getTableName<T>() {
-			return typeof(T).ToString().Split('.').Last();
+			return _getTableNameByType(typeof(T));
+		}
+
+		private static String _getTableNameByType(Type type) {
+			return type.ToString().Split('.').Last();
 		}
 	}
 }

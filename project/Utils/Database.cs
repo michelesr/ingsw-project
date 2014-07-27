@@ -2,10 +2,9 @@ using System;
 using System.Data;
 using System.Text;
 using System.IO;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Data.Sqlite;
-using Newtonsoft.Json;
 
 namespace project.Utils
 {
@@ -171,12 +170,6 @@ namespace project.Utils
 				tableString += rowText + "\n";
 			}
 			return tableString;
-		}
-
-		// ritorna una stringa che rappresenta l'istruzione sql di creazione di una chiave esterna
-		// da usare nella definizione dei modelli per definire le chiavi esterne
-		public static String getForeignKeyOption(String localField, String foreignTable, String foreignField) {
-			return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`)"; 
 		}
 	}
 }
