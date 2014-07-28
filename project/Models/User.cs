@@ -1,4 +1,5 @@
 using System;
+using project.Utils;
 
 namespace project.Models {
 	public class User : Model {
@@ -47,6 +48,18 @@ namespace project.Models {
 				user_id = u.id;
 			} 
 			base.insert();
+		}
+
+		public static User getUserByEmail(String email) {
+			return getUserHashtableByEmail(email).toObject<User>();
+		}
+
+		public static ConvertibleHashtable getUserHashtableByEmail(String email) {
+			return _db.getData("User", "email", email)[0];
+		}
+
+		public static bool checkPassword(String email, String password) {
+			return getUserHashtableByEmail(email)["password"] == password;
 		}
 	}
 }

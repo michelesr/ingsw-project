@@ -7,8 +7,6 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using project.Models;
 using project.Utils;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
 
@@ -27,6 +25,7 @@ namespace project.Controllers {
 
 		// /#/user/1/detail
 		// GET /api/user/detail/<id>/
+		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail(int id) {
 			return Json(filter(Model.getHashtableById<Models.User>(id)), JsonRequestBehavior.AllowGet);
 		}
