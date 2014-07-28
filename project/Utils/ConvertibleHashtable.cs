@@ -9,6 +9,17 @@ namespace project.Utils {
 		public T toObject<T>() {
 			return JObject.Parse(JsonConvert.SerializeObject(this)).ToObject<T>();
 		}
+
+		public ConvertibleHashtable filter(String[] keys) {
+			foreach (String k in keys)
+				this.filter(k);
+			return this;
+		}
+
+		public ConvertibleHashtable filter(String key) {
+			this.Remove(key);
+			return this;
+		}
 	}
 }
 

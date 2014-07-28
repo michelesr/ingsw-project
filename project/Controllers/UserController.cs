@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using project.Models;
+using project.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -19,7 +20,7 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			if (id == -1)
-				return Json(Model.getAll<Models.User>(), JsonRequestBehavior.AllowGet);
+				return Json(filter(Model.getAll<Models.User>()), JsonRequestBehavior.AllowGet);
 			else 
 				return Detail(id);
 		}
@@ -27,7 +28,17 @@ namespace project.Controllers {
 		// /#/user/1/detail
 		// GET /api/user/detail/<id>/
 		public JsonResult Detail(int id) {
-			return Json(Model.getHashtableById<Models.User>(id), JsonRequestBehavior.AllowGet);
+			return Json(filter(Model.getHashtableById<Models.User>(id)), JsonRequestBehavior.AllowGet);
+		}
+
+		public static ConvertibleHashtable filter(ConvertibleHashtable h) {
+			return h.filter("password");
+		}
+
+		public static ConvertibleHashtable[] filter(ConvertibleHashtable[] h) {
+			foreach(ConvertibleHashtable x in h) 
+				x.filter("password");
+			return h;
 		}
 
 		// /#/user/1/create
