@@ -15,10 +15,21 @@
     return $scope.fields = ['id', 'email', 'first_name', 'last_name'];
   });
 
+  mainCtls.controller('UserAddCtl', function($scope, User) {
+    $scope.resourceName = 'user';
+    $scope.resourcesName = 'users';
+    $scope.resource = {};
+    $scope.master = {};
+    return $scope.add = function(resource) {
+      $scope.master = angular.copy(resource);
+      return $scope.resource = User.add(resource);
+    };
+  });
+
   mainCtls.controller('UserDetailCtl', function($scope, $routeParams, User) {
     return $scope.user = User.get({
-      userId: $routeParams.userId,
-      action: 'index'
+      action: 'detail',
+      id: $routeParams.id
     });
   });
 
@@ -33,6 +44,7 @@
     $scope.resourceName = 'product';
     $scope.resourcesName = 'products';
     $scope.resource = {};
+    $scope.master = {};
     return $scope.add = function(resource) {
       $scope.master = angular.copy(resource);
       return $scope.resource = Product.add(resource);

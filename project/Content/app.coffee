@@ -19,13 +19,13 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/resource_list.html'
         controller: 'UserListCtl'
 
-      .when '/users/:id/detail',
+      .when '/users/add',
+        templateUrl: 'Content/templates/user_form.html'
+        controller: 'UserAddCtl'
+
+      .when '/users/detail/:id',
         templateUrl: 'Content/templates/resource_detail.html'
         controller: 'UserDetailCtl'
-
-      .when '/users/:id/create',
-        templateUrl: 'Content/templates/user_form.html'
-        controller: 'UserCreateCtl'
 
 
       .when '/products/list',

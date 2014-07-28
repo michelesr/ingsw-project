@@ -16,13 +16,23 @@ mainCtls.controller 'UserListCtl', ($scope, User) ->
     'last_name'
   ]
 
+
+mainCtls.controller 'UserAddCtl', ($scope, User) ->
+  $scope.resourceName = 'user'
+  $scope.resourcesName = 'users'
+  $scope.resource = {}
+  $scope.master = {}
+
+  $scope.add = (resource) ->
+    $scope.master = angular.copy(resource)
+    $scope.resource = User.add(resource)
+
+
 mainCtls.controller 'UserDetailCtl', ($scope, $routeParams, User) ->
-  $scope.user = User.get(
-    {
-      userId: $routeParams.userId
-      action: 'index'
-    }
-  )
+  $scope.user = User.get({
+    action: 'detail'
+    id: $routeParams.id
+  })
 
 
 # Product
@@ -40,6 +50,7 @@ mainCtls.controller 'ProductAddCtl', ($scope, Product) ->
   $scope.resourceName = 'product'
   $scope.resourcesName = 'products'
   $scope.resource = {}
+  $scope.master = {}
 
   $scope.add = (resource) ->
     $scope.master = angular.copy(resource)

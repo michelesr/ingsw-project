@@ -6,13 +6,20 @@
 
   mainServices.factory('User', function($resource) {
     return $resource('/api/users/:action/:id', {}, {
-      query: {
+      list: {
         method: 'GET',
         params: {
-          id: '',
-          action: 'list'
+          action: 'index',
+          id: -1
         },
         isArray: true
+      },
+      add: {
+        method: 'POST',
+        params: {
+          action: 'add',
+          id: -1
+        }
       }
     });
   });
@@ -22,14 +29,16 @@
       list: {
         method: 'GET',
         params: {
-          action: 'list'
+          action: 'index',
+          id: -1
         },
         isArray: true
       },
       add: {
         method: 'POST',
         params: {
-          action: 'add'
+          action: 'add',
+          id: -1
         }
       }
     });
