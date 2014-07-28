@@ -19,7 +19,7 @@ namespace project
 			routes.MapRoute (
 				"DefaultApi",
 				"api/{controller}/{action}/{id}",
-				new { action = "List", id = "" }
+				new { action = "Index", id = -1 }
 			);
 
 			routes.MapRoute (
