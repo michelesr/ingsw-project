@@ -16,7 +16,7 @@ namespace project.Controllers {
 
 		// GET /api/products/list
 		[AcceptVerbs(HttpVerbs.Get)]
-		public JsonResult List () {
+		public JsonResult Index () {
 			var movies = new List<object>();
 			movies.Add(new { id = 1, name = "Saponette profumate" });
 			movies.Add(new { id = 2, name = "Pizza Margherita" });
