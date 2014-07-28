@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,13 +27,14 @@ namespace project.Controllers {
 
 		// POST /api/products/add
 		[HttpPost]
-		[AcceptVerbs(HttpVerbs.Post)]
-		public JsonResult Add (String data) {
+		public string Add (string data) {
+			Debug.Assert(data != null);
 
-			return Json(data);
+			return data;
+			//return Json(data);
         }
 
-		// GET /api/products/1/detail
+		// GET /api/products/detail/1
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail (int id) {
 			var myProduct = new { id = id, name = "Saponette profumate", cat = "Saponi" };

@@ -48,6 +48,6 @@ mainCtls.controller 'ProductAddCtl', ($scope, Product) ->
 
 mainCtls.controller 'ProductDetailCtl', ($scope, $routeParams, Product) ->
   $scope.resource = Product.get({
-    id: $routeParams.id
     action: 'detail'
+    id: $routeParams.id
   })

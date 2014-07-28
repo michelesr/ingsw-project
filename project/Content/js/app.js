@@ -24,7 +24,7 @@
       }).when('/products/add', {
         templateUrl: 'Content/templates/product_form.html',
         controller: 'ProductAddCtl'
-      }).when('/products/:id/detail', {
+      }).when('/products/detail/:id', {
         templateUrl: 'Content/templates/resource_detail.html',
         controller: 'ProductDetailCtl'
       }).otherwise({

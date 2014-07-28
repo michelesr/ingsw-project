@@ -12,7 +12,7 @@ mainServices.factory 'User', ($resource) ->
 
 
 mainServices.factory 'Product', ($resource) ->
-  $resource '/api/products/:id/:action', {}, {
+  $resource '/api/products/:action/:id', {}, {
     list: { method: 'GET', params: { action: 'list' }, isArray: true }
     add: { method: 'POST', params: { action: 'add' } }
   }

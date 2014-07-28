@@ -18,7 +18,7 @@
   });
 
   mainServices.factory('Product', function($resource) {
-    return $resource('/api/products/:id/:action', {}, {
+    return $resource('/api/products/:action/:id', {}, {
       list: {
         method: 'GET',
         params: {

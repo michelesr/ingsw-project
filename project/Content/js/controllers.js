@@ -41,8 +41,8 @@
 
   mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
     return $scope.resource = Product.get({
-      id: $routeParams.id,
-      action: 'detail'
+      action: 'detail',
+      id: $routeParams.id
     });
   });
 

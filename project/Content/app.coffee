@@ -5,6 +5,7 @@ mainApp = angular.module 'mainApp', [
   'mainServices'
 ]
 
+
 mainApp.config ['$routeProvider'
   ($routeProvider) ->
     $routeProvider
@@ -35,7 +36,7 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/product_form.html'
         controller: 'ProductAddCtl'
 
-      .when '/products/:id/detail',
+      .when '/products/detail/:id',
         templateUrl: 'Content/templates/resource_detail.html'
         controller: 'ProductDetailCtl'
 

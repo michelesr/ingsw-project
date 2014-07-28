@@ -18,7 +18,7 @@
         <tbody>
             <tr ng-repeat="resource in resourceList">
                 <td ng-repeat="field in resource">{{ field }}</td>
-                <td><a href="#/{{ resourcesName }}/{{ resource.id }}/detail">Detail</a></td>
+                <td><a href="#/{{ resourcesName }}/detail/{{ resource.id }}">Detail</a></td>
         </tr>
         </tbody>
         </table>
