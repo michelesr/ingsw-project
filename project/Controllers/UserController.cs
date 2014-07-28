@@ -19,7 +19,7 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			if (id == -1)
-				return Json(Models.User.getAll<Models.User>(), JsonRequestBehavior.AllowGet);
+				return Json(Model.getAll<Models.User>(), JsonRequestBehavior.AllowGet);
 			else 
 				return Detail(id);
 		}
@@ -27,7 +27,7 @@ namespace project.Controllers {
 		// /#/user/1/detail
 		// GET /api/user/detail/<id>/
 		public JsonResult Detail(int id) {
-			return Json(Model.getById<User>(id), JsonRequestBehavior.AllowGet);
+			return Json(Model.getHashtableById<Models.User>(id), JsonRequestBehavior.AllowGet);
 		}
 
 		// /#/user/1/create

@@ -17,17 +17,13 @@ namespace project.Models {
 			return JObject.FromObject(this).ToObject<ConvertibleHashtable>();
 		}
 
-		private static ConvertibleHashtable _getById(int id, String tableName) {
-			return _db.getData(tableName, "id", id.ToString())[0];
-		}
-
 		public virtual void insert() {
 			id = _db.insertData(_tableName, this._toConvertibleHashtable());
 			Console.WriteLine(id);
 		}
 
 		public virtual void update() {
-			ConvertibleHashtable old = _getById(id, _tableName);
+			ConvertibleHashtable old = _getHashtableById(id, _tableName);
 			ConvertibleHashtable current = this._toConvertibleHashtable();
 			foreach(var k in old.Keys) 
 				if (old[k].ToString() != current[k].ToString())
@@ -38,17 +34,21 @@ namespace project.Models {
 			_db.deleteData(_tableName, "id", id.ToString());
 		}
 
-		public static T getById<T> (int id) {
-			return _getById(id, _getTableNameByType(typeof(T))).toObject<T>();
+		public static ConvertibleHashtable getHashtableById<T>(int id) {
+			return _getHashtableById(id, _getTableNameByType(typeof(T)));
 		}
 
-		public static Hashtable[] getAll<T>() {
+		private static ConvertibleHashtable _getHashtableById(int id, String tableName) {
+			return _db.getData(tableName, "id", id.ToString())[0];
+		}
+
+		public static T getById<T> (int id) {
+			return _getHashtableById(id, _getTableNameByType(typeof(T))).toObject<T>();
+		}
+
+		public static ConvertibleHashtable[] getAll<T>() {
 			return _db.getData(_getTableName<T>());
 		}
-
-		protected static readonly String[][] _model = {
-			new String[] {"name", "VARCHAR"}
-		};
 
 		private static String _getTableName<T>() {
 			return _getTableNameByType(typeof(T));

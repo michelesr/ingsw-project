@@ -4,7 +4,7 @@ namespace project.Utils
 {
 	public static class Schema {
 		private static Database _db = Database.Istance;
-		private static String[] _tables = new String[] {"Admin", "User", "Supplier"};
+		private static String[] _tables = new String[] {"User", "Admin", "Supplier"};
 
 		private static readonly String[][] _user = {
 			new String[] {"email", "VARCHAR", "UNIQUE NOT NULL"},
