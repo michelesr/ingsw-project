@@ -1,4 +1,24 @@
-<h1>Create/Edit a product</h1>
-<p>POST /api/product/</p>
+<h1>Add a {{ resourceName }}</h1>
+<br/><br/><br/>
 
-TODO
+<form novalidate class="form-horizontal" role="form">
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+      <input ng-model="resource.name" type="text" class="form-control" placeholder="e.g. Coffee"/><br/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-click="add(resource)" type="submit" class="btn btn-primary">Add {{ resourceName }}</button>
+    </div>
+  </div>
+
+</form>
+
+<br/><br/><br/>
+
+<pre>form = {{ resource | json }}</pre>
+<pre>master = {{ master | json }}</pre>

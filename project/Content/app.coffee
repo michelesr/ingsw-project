@@ -18,11 +18,11 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/resource_list.html'
         controller: 'UserListCtl'
 
-      .when '/users/:resourceId/detail',
-        templateUrl: 'Content/templates/user_detail.html'
+      .when '/users/:id/detail',
+        templateUrl: 'Content/templates/resource_detail.html'
         controller: 'UserDetailCtl'
 
-      .when '/users/:resourceId/create',
+      .when '/users/:id/create',
         templateUrl: 'Content/templates/user_form.html'
         controller: 'UserCreateCtl'
 
@@ -31,13 +31,13 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/resource_list.html'
         controller: 'ProductListCtl'
 
-      .when '/products/:resourceId/detail',
-        templateUrl: 'Content/templates/product_detail.html'
-        controller: 'ProductDetailCtl'
-
-      .when '/products/:resourceId/create',
+      .when '/products/add',
         templateUrl: 'Content/templates/product_form.html'
-        controller: 'ProductCreateCtl'
+        controller: 'ProductAddCtl'
+
+      .when '/products/:id/detail',
+        templateUrl: 'Content/templates/resource_detail.html'
+        controller: 'ProductDetailCtl'
 
 
       .otherwise

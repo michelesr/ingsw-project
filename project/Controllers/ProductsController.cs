@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using project.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
 
@@ -21,48 +24,21 @@ namespace project.Controllers {
 			return Json(movies, JsonRequestBehavior.AllowGet);
 		}
 
-		// GET /api/product/1
+		// POST /api/products/add
+		[HttpPost]
+		[AcceptVerbs(HttpVerbs.Post)]
+		public JsonResult Add (String data) {
+
+			return Json(data);
+        }
+
+		// GET /api/products/1/detail
 		[AcceptVerbs(HttpVerbs.Get)]
-		public JsonResult Index (int id) {
+		public JsonResult Detail (int id) {
 			var myProduct = new { id = id, name = "Saponette profumate", cat = "Saponi" };
 
-			return Json(myProduct, JsonRequestBehavior.AllowGet); }
-
-		// POST /api/product/
-		/*
-		public ActionResult Post (Product data) {
-            if (ModelState.IsValid) {
-                return Json(new ProductViewModel { Message = "Product successfully created"} );
-            }
-            else {
-                return Json(new ProductViewModel { Message = "Error" } );
-            }
-        }
-		*/
-
-        /*
-		public ActionResult ProdCat () {
-			return Json(Models.ProductCategory.getAll(), JsonRequestBehavior.AllowGet); }
-        */
-
-
-
-		// /#/user/list
-		// GET /api/user/
-		// GET /api/user/list/
-		/*[AcceptVerbs(HttpVerbs.Get)]
-		public JsonResult Index(int id) {
-			if (id == -1)
-				return Json(Models.User.getAll(), JsonRequestBehavior.AllowGet);
-			else 
-				return Detail(id);
+			return Json(myProduct, JsonRequestBehavior.AllowGet);
 		}
 
-		// /#/user/1/detail
-		// GET /api/user/detail/<id>/
-		public JsonResult Detail(int id) {
-			return Json(Models.User.getById(id), JsonRequestBehavior.AllowGet);
-		}
- 		*/
 	}
 }

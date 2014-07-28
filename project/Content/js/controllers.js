@@ -9,8 +9,9 @@
   });
 
   mainCtls.controller('UserListCtl', function($scope, User) {
-    $scope.resourceName = 'users';
-    $scope.resourceList = User.query();
+    $scope.resourceName = 'user';
+    $scope.resourcesName = 'users';
+    $scope.resourceList = User.list();
     return $scope.fields = ['id', 'email', 'first_name', 'last_name'];
   });
 
@@ -22,15 +23,26 @@
   });
 
   mainCtls.controller('ProductListCtl', function($scope, Product) {
-    $scope.resourceName = 'products';
-    $scope.resourceList = Product.query();
+    $scope.resourceName = 'product';
+    $scope.resourcesName = 'products';
+    $scope.resourceList = Product.list();
     return $scope.fields = ['id', 'name'];
+  });
+
+  mainCtls.controller('ProductAddCtl', function($scope, Product) {
+    $scope.resourceName = 'product';
+    $scope.resourcesName = 'products';
+    $scope.resource = {};
+    return $scope.add = function(resource) {
+      $scope.master = angular.copy(resource);
+      return $scope.resource = Product.add(resource);
+    };
   });
 
   mainCtls.controller('ProductDetailCtl', function($scope, $routeParams, Product) {
     return $scope.resource = Product.get({
-      resourceId: $routeParams.resourceId,
-      action: ''
+      id: $routeParams.id,
+      action: 'detail'
     });
   });
 

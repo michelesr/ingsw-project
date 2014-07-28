@@ -1,4 +1,7 @@
-<h1>{{ resourceName }} list</h1>
+<h1>{{ resourcesName }} list</h1>
+<br/><br/><br/>
+
+<div align="right"><a href="#/{{ resourcesName }}/add"><button type="button" class="btn btn-primary">Add a {{ resourceName }}</button></a></div>
 <br/><br/>
 
 <span ng-switch="resourceList.length">
@@ -15,7 +18,7 @@
         <tbody>
             <tr ng-repeat="resource in resourceList">
                 <td ng-repeat="field in resource">{{ field }}</td>
-                <td><a href="#/{{ resourceName }}/{{ resource.id }}/detail">Detail</a></td>
+                <td><a href="#/{{ resourcesName }}/{{ resource.id }}/detail">Detail</a></td>
         </tr>
         </tbody>
         </table>
