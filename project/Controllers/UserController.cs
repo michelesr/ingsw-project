@@ -18,7 +18,7 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			if (id == -1)
-				return Json(filter(Model.getAll<Models.User>()), JsonRequestBehavior.AllowGet);
+				return Json(ConvertibleHashtable.filterPassword(Model.getAll<Models.User>()), JsonRequestBehavior.AllowGet);
 			else 
 				return Detail(id);
 		}
@@ -27,18 +27,9 @@ namespace project.Controllers {
 		// GET /api/user/detail/<id>/
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail(int id) {
-			return Json(filter(Model.getHashtableById<Models.User>(id)), JsonRequestBehavior.AllowGet);
+			return Json(Model.getHashtableById<Models.User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
 		}
 
-		public static ConvertibleHashtable filter(ConvertibleHashtable h) {
-			return h.filter("password");
-		}
-
-		public static ConvertibleHashtable[] filter(ConvertibleHashtable[] h) {
-			foreach(ConvertibleHashtable x in h) 
-				x.filter("password");
-			return h;
-		}
 
 		// /#/user/1/create
 		// POST /api/user/add/

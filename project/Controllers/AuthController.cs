@@ -12,11 +12,11 @@ namespace project.Controllers {
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		public JsonResult Index(int id, String data) {
-			ConvertibleHashtable d = JObject.Parse(data).ToObject<ConvertibleHashtable>(); 
+			ConvertibleHashtable d = ConvertibleHashtable.fromString(data); 
 			ConvertibleHashtable h = new ConvertibleHashtable();
 			h.Add("auth", Models.User.checkPassword(d["email"].ToString(), d["password"].ToString()));
 			if((bool) h["auth"]) {
-				h.Add("user", Models.User.getUserHashtableByEmail(d["email"].ToString()).filter("password"));
+				h.Add("user", Models.User.getUserHashtableByEmail(d["email"].ToString()).filterPassword());
 			}
 			return Json(h, JsonRequestBehavior.AllowGet);
 		}

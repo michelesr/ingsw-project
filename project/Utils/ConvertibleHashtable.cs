@@ -10,6 +10,10 @@ namespace project.Utils {
 			return JObject.Parse(JsonConvert.SerializeObject(this)).ToObject<T>();
 		}
 
+		public static ConvertibleHashtable fromString(String s) {
+			return JObject.Parse(s).ToObject<ConvertibleHashtable>();
+		}
+
 		public ConvertibleHashtable filter(String[] keys) {
 			foreach (String k in keys)
 				this.filter(k);
@@ -19,6 +23,16 @@ namespace project.Utils {
 		public ConvertibleHashtable filter(String key) {
 			this.Remove(key);
 			return this;
+		}
+
+		public ConvertibleHashtable filterPassword() {
+			return this.filter("password");
+		}
+
+		public static ConvertibleHashtable[] filterPassword(ConvertibleHashtable[] h) {
+			foreach(ConvertibleHashtable x in h) 
+				x.filterPassword();
+			return h;
 		}
 	}
 }
