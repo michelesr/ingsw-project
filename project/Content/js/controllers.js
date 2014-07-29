@@ -8,6 +8,15 @@
     return $scope.title = 'Web project';
   });
 
+  mainCtls.controller('LoginCtl', function($scope, $http) {
+    $scope.auth = {};
+    $scope.master = {};
+    return $scope.$scope.add = function(resource) {
+      $scope.master = angular.copy(resource);
+      return $scope.resource = Product.add(resource);
+    };
+  });
+
   mainCtls.controller('UserListCtl', function($scope, User) {
     $scope.resourceName = 'user';
     $scope.resourcesName = 'users';

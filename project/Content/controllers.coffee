@@ -1,7 +1,16 @@
 mainCtls = angular.module 'mainCtls', []
 
+
 mainCtls.controller 'HomeCtl', ($scope, $http) ->
   $scope.title = 'Web project'
+
+mainCtls.controller 'LoginCtl', ($scope, $http) ->
+  $scope.auth = {}
+  $scope.master = {}
+  $scope.
+  $scope.add = (resource) ->
+    $scope.master = angular.copy(resource)
+    $scope.resource = Product.add(resource)
 
 
 # User

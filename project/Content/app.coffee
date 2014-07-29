@@ -14,6 +14,10 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/home.html'
         controller: 'HomeCtl'
 
+      .when '/login',
+        templateUrl: 'Content/templates/login.html'
+        controller: 'LoginCtl'
+
 
       .when '/users/list',
         templateUrl: 'Content/templates/resource_list.html'
