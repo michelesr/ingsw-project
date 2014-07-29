@@ -85,6 +85,7 @@
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\Schema.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

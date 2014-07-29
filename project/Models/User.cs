@@ -63,7 +63,11 @@ namespace project.Models {
 		}
 
 		public static bool checkPassword(String email, String password) {
-			return getUserHashtableByEmail(email)["password"].ToString() == password;
+			bool x = false;
+			ConvertibleHashtable h = getUserHashtableByEmail(email); 
+			if (h.ContainsKey("password")) 
+				x = h["password"].ToString() == password;
+			return x;
 		}
 
 		protected virtual void _setUserType(User u) {
