@@ -13,6 +13,9 @@ namespace project.Models {
 			this.supplier_name = supplier_name;
 			this.city = city;
 		}
+		protected override void _setUserType(User u) {
+			u.type = userType.supplier;
+		}
 	}
 }
 

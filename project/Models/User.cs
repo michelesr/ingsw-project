@@ -2,12 +2,14 @@ using System;
 using project.Utils;
 
 namespace project.Models {
+	public enum userType {supplier, admin, undefined};
 	public class User : Model {
 		public String email {get; set;}
 		public String password {get; set;}
 		public String first_name {get; set;}
 		public String last_name {get; set;}
 		public int user_id {get; set;}
+		public userType type = userType.undefined;
 
 		protected int getUserId() {
 			return int.Parse(_db.getData("User", "email", email, new string[] {"id"})[0]["id"].ToString());
@@ -31,6 +33,7 @@ namespace project.Models {
 			if (this is Supplier || this is Admin) {
 				User u = new User(email, password, first_name, last_name);
 				u.id = user_id;
+				_setUserType(u);
 				u.update();
 			}
 		}
@@ -44,6 +47,7 @@ namespace project.Models {
 		public override void insert() {
 			if ((this is Supplier || this is Admin)) {
 				User u = new User(email, password, first_name, last_name);
+				_setUserType(u);
 				u.insert();
 				user_id = u.id;
 			} 
@@ -59,7 +63,13 @@ namespace project.Models {
 		}
 
 		public static bool checkPassword(String email, String password) {
-			return getUserHashtableByEmail(email)["password"] == password;
+			return getUserHashtableByEmail(email)["password"].ToString() == password;
 		}
+
+		protected virtual void _setUserType(User u) {
+			u.type = userType.undefined;
+		}
+
+
 	}
 }
