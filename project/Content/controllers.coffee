@@ -12,6 +12,12 @@ mainCtls.controller 'LoginCtl', ($scope, $http) ->
     $scope.master = angular.copy(resource)
     $scope.resource = Product.add(resource)
 
+mainCtls.controller 'AdminCtl', ($scope) ->
+  return
+
+mainCtls.controller 'SupplierCtl', ($scope) ->
+  return
+
 
 # User
 mainCtls.controller 'UserListCtl', ($scope, User) ->

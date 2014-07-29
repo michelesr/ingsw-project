@@ -18,6 +18,14 @@ mainApp.config ['$routeProvider'
         templateUrl: 'Content/templates/login.html'
         controller: 'LoginCtl'
 
+      .when '/admin',
+        templateUrl: 'Content/templates/admin.html'
+        controller: 'AdminCtl'
+
+      .when '/supplier',
+        templateUrl: 'Content/templates/supplier.html'
+        controller: 'SupplierCtl'
+
 
       .when '/users/list',
         templateUrl: 'Content/templates/resource_list.html'

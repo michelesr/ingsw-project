@@ -109,13 +109,15 @@
     <Content Include="Content\js\ui-bootstrap.js" />
     <Content Include="Content\js\ui-bootstrap.min.js" />
     <Content Include="packages.config" />
+    <Content Include="Content\templates\admin.html" />
     <Content Include="Content\templates\base.html" />
     <Content Include="Content\templates\home.html" />
+    <Content Include="Content\templates\login.html" />
     <Content Include="Content\templates\none_message.html" />
-    <Content Include="Content\templates\product_detail.html" />
     <Content Include="Content\templates\product_form.html" />
+    <Content Include="Content\templates\resource_detail.html" />
     <Content Include="Content\templates\resource_list.html" />
-    <Content Include="Content\templates\user_detail.html" />
+    <Content Include="Content\templates\supplier.html" />
     <Content Include="Content\templates\user_form.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -129,7 +131,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <None Include="Content\app.coffee" />
-    <None Include="Content\coffee.sh" />
     <None Include="Content\coffee_dev.sh" />
     <None Include="Content\controllers.coffee" />
     <None Include="Content\services.coffee" />

@@ -17,6 +17,10 @@
     };
   });
 
+  mainCtls.controller('AdminCtl', function($scope) {});
+
+  mainCtls.controller('SupplierCtl', function($scope) {});
+
   mainCtls.controller('UserListCtl', function($scope, User) {
     $scope.resourceName = 'user';
     $scope.resourcesName = 'users';
