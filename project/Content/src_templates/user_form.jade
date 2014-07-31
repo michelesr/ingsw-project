@@ -1,0 +1,43 @@
+h1 Add a {{ resourceName }}
+br
+br
+br
+form(name="signForm" ng-controller="FormController" novalidate class="form-horizontal")
+  div(ng-repeat="f in fields")
+    ng-form(name="signFormIn")
+      input(type="text" name="theInput" ng-required="f.isRequired")
+      div(ng-show="signFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
+        span(class="error" ng-show="signFormIn.theInput.$error.required") The field is required.
+
+form(novalidate class="form-horizontal" role="form")
+
+  .form-group
+    label(class="col-sm-2 control-label") Email
+    .col-sm-10
+      input(ng-model="resource.email" type="email" class="form-control" placeholder="e.g. user@example.org")
+
+  .form-group
+    label(class="col-sm-2 control-label") Password
+    .col-sm-10
+      input(ng-model="resource.password" type="password" class="form-control" placeholder="e.g. myP@s$wOrD")
+
+  .form-group
+    label(class="col-sm-2 control-label") First Name
+    .col-sm-10
+      input(ng-model="resource.first_name" type="text" class="form-control" placeholder="e.g. Mario")
+
+  .form-group
+    label(class="col-sm-2 control-label") Last Name
+    .col-sm-10
+      input(ng-model="resource.last_name" type="text" class="form-control" placeholder="e.g. Rossi")
+      br
+
+  .form-group
+    div(class="col-sm-offset-2 col-sm-10")
+      button(ng-click="add(resource)" type="submit" class="btn btn-primary") Add {{ resourceName }}
+
+br
+br
+br
+pre form = {{ resource | json }}
+pre master = {{ master | json }}

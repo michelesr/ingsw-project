@@ -33,6 +33,29 @@
     $scope.resourcesName = 'users';
     $scope.resource = {};
     $scope.master = {};
+    $scope.fields = [
+      {
+        name: 'email',
+        type: 'email',
+        ph: 'user@example.org',
+        isRequired: true
+      }, {
+        name: 'password',
+        type: 'password',
+        ph: 'password',
+        isRequired: true
+      }, {
+        name: 'first_name',
+        type: 'text',
+        ph: 'Mario',
+        isRequired: false
+      }, {
+        name: 'last_name',
+        type: 'text',
+        ph: 'Rossi',
+        isRequired: false
+      }
+    ];
     return $scope.add = function(resource) {
       $scope.master = angular.copy(resource);
       return $scope.resource = User.add(resource);

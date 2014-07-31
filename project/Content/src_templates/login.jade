@@ -1,0 +1,26 @@
+h1 Login
+br
+br
+br
+form(novalidate class="form-horizontal" role="form")
+
+  .form-group
+    label(class="col-sm-2 control-label") Email
+    .col-sm-10
+      input(ng-model="auth.email" type="email" class="form-control" placeholder="e.g. user@example.org")
+      br
+
+  .form-group
+    label(class="col-sm-2 control-label") Password
+    .col-sm-10
+      input(ng-model="auth.password" type="password" class="form-control" placeholder="e.g. myP@s$wOrD")
+      br
+
+  .form-group
+    div(class="col-sm-offset-2 col-sm-10")
+      button(ng-click="login(auth)" type="submit" class="btn btn-primary") Sign in
+br
+br
+br
+pre form = {{ auth | json }}
+pre master = {{ master | json }}

@@ -37,6 +37,12 @@ mainCtls.controller 'UserAddCtl', ($scope, User) ->
   $scope.resourcesName = 'users'
   $scope.resource = {}
   $scope.master = {}
+  $scope.fields = [
+    { name: 'email', type: 'email', ph: 'user@example.org', isRequired: true }
+    { name: 'password', type: 'password', ph: 'password', isRequired: true }
+    { name: 'first_name', type: 'text', ph: 'Mario', isRequired: false }
+    { name: 'last_name', type: 'text', ph: 'Rossi', isRequired: false }
+  ]
 
   $scope.add = (resource) ->
     $scope.master = angular.copy(resource)
