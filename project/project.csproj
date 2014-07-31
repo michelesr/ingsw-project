@@ -63,6 +63,7 @@
     <Folder Include="Views\Home\" />
     <Folder Include="Utils\" />
     <Folder Include="Content\templates\" />
+    <Folder Include="Content\src_templates\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -144,5 +145,16 @@
     <None Include="Content\js\angular-resource.min.js.map" />
     <None Include="Content\js\angular-route.min.js.map" />
     <None Include="Content\js\angular.min.js.map" />
+    <None Include="Content\src_templates\admin.jade" />
+    <None Include="Content\src_templates\base.jade" />
+    <None Include="Content\src_templates\home.jade" />
+    <None Include="Content\src_templates\login.jade" />
+    <None Include="Content\src_templates\none_message.jade" />
+    <None Include="Content\src_templates\product_form.jade" />
+    <None Include="Content\src_templates\resource_detail.jade" />
+    <None Include="Content\src_templates\resource_list.jade" />
+    <None Include="Content\src_templates\supplier.jade" />
+    <None Include="Content\src_templates\user_form.jade" />
+    <None Include="Content\jade_dev.sh" />
   </ItemGroup>
 </Project>
