@@ -1,6 +1,6 @@
 var app, mainCtrl, mainServices;
 
-app = angular.module('app', ['ui.router', 'ui.router.stateHelper', 'mainCtrl', 'mainServices']);
+app = angular.module('app', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap', 'mainCtrl', 'mainServices']);
 
 mainCtrl = angular.module('mainCtrl', []);
 
