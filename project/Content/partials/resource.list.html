@@ -1,0 +1,23 @@
+
+<h1 class="page-header"><span class="fa {{ resourceMeta.icon }}"></span><span> {{ resourceMeta.namePlural }} list</span></h1>
+<div align="right"><a ui-sref=".add">
+    <button type="button" class="btn btn-primary">Add a {{ resourceMeta.name }}</button></a></div><span ng-switch="resourceList.length"><span ng-switch-when="0">
+    <ng-include src="'Content/partials/none_message.html'"></ng-include></span>
+  <div ng-switch-default="ng-switch-default" class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th ng-repeat="field in fields">{{ field | uppercase }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="r in resourceList">
+          <td ng-repeat="field in r">{{ field }}</td>
+          <td><a ui-sref=".detail({id: r.id})">Detail</a></td>
+          <td><a ui-sref=".edit({id: r.id})" class="fa fa-pencil"></a></td>
+          <td><a ui-sref=".remove({id: r.id})" class="fa fa-trash-o"></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div></span>

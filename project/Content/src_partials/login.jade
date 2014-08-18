@@ -1,0 +1,13 @@
+h1.page-header Login
+
+form.form-signin(role='form')
+  h2.form-signin-heading Please sign in
+  input.form-control(ng-model='auth.email', type='email', placeholder='Email address', required='', autofocus='')
+  input.form-control(ng-model='auth.password', type='password', placeholder='Password', required='')
+  br
+  button.btn.btn-md.btn-primary.btn-block(ng-click='login(auth)', type='submit') Sign in
+
+br
+br
+pre form = {{ auth | json }}
+pre master = {{ master | json }}

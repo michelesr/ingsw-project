@@ -54,16 +54,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\" />
     <Folder Include="Scripts\" />
     <Folder Include="Models\" />
-    <Folder Include="Content\css\" />
-    <Folder Include="Content\fonts\" />
-    <Folder Include="Content\js\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Utils\" />
-    <Folder Include="Content\templates\" />
-    <Folder Include="Content\src_templates\" />
+    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -92,35 +87,43 @@
     <Content Include="Views\Web.config" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
-    <Content Include="Content\app.orig.js" />
-    <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.min.css" />
-    <Content Include="Content\js\angular-resource.js" />
-    <Content Include="Content\js\angular-resource.min.js" />
-    <Content Include="Content\js\angular-route.js" />
-    <Content Include="Content\js\angular-route.min.js" />
-    <Content Include="Content\js\angular.js" />
-    <Content Include="Content\js\angular.min.js" />
-    <Content Include="Content\js\app.js" />
-    <Content Include="Content\js\bootstrap.js" />
-    <Content Include="Content\js\bootstrap.min.js" />
-    <Content Include="Content\js\controllers.js" />
-    <Content Include="Content\js\services.js" />
-    <Content Include="Content\js\ui-bootstrap.js" />
-    <Content Include="Content\js\ui-bootstrap.min.js" />
     <Content Include="packages.config" />
-    <Content Include="Content\templates\admin.html" />
-    <Content Include="Content\templates\base.html" />
-    <Content Include="Content\templates\home.html" />
-    <Content Include="Content\templates\login.html" />
-    <Content Include="Content\templates\none_message.html" />
-    <Content Include="Content\templates\product_form.html" />
-    <Content Include="Content\templates\resource_detail.html" />
-    <Content Include="Content\templates\resource_list.html" />
-    <Content Include="Content\templates\supplier.html" />
-    <Content Include="Content\templates\user_form.html" />
+    <Content Include="Content\base.html" />
+    <Content Include="Content\partials\admin.html" />
+    <Content Include="Content\partials\error.html" />
+    <Content Include="Content\partials\example.html" />
+    <Content Include="Content\partials\home.html" />
+    <Content Include="Content\partials\login.html" />
+    <Content Include="Content\partials\none_message.html" />
+    <Content Include="Content\partials\product_form.html" />
+    <Content Include="Content\partials\resource.detail.html" />
+    <Content Include="Content\partials\resource.list.html" />
+    <Content Include="Content\partials\supplier.html" />
+    <Content Include="Content\partials\user_form.html" />
+    <Content Include="Content\scripts\angular-resource.js" />
+    <Content Include="Content\scripts\angular-resource.min.js" />
+    <Content Include="Content\scripts\angular-route.js" />
+    <Content Include="Content\scripts\angular-route.min.js" />
+    <Content Include="Content\scripts\angular-ui-router.js" />
+    <Content Include="Content\scripts\angular-ui-router.min.js" />
+    <Content Include="Content\scripts\angular.js" />
+    <Content Include="Content\scripts\angular.min.js" />
+    <Content Include="Content\scripts\app.js" />
+    <Content Include="Content\scripts\bootstrap.js" />
+    <Content Include="Content\scripts\bootstrap.min.js" />
+    <Content Include="Content\scripts\routes.js" />
+    <Content Include="Content\scripts\statehelper.js" />
+    <Content Include="Content\scripts\statehelper.min.js" />
+    <Content Include="Content\scripts\ui-bootstrap.js" />
+    <Content Include="Content\scripts\ui-bootstrap.min.js" />
+    <Content Include="Content\styles\bootstrap-theme.css" />
+    <Content Include="Content\styles\bootstrap-theme.min.css" />
+    <Content Include="Content\styles\bootstrap.css" />
+    <Content Include="Content\styles\bootstrap.min.css" />
+    <Content Include="Content\styles\dashboard.css" />
+    <Content Include="Content\styles\font-awesome.css" />
+    <Content Include="Content\styles\font-awesome.min.css" />
+    <Content Include="Content\styles\signin.css" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -132,29 +135,33 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <None Include="Content\app.coffee" />
-    <None Include="Content\coffee_dev.sh" />
-    <None Include="Content\controllers.coffee" />
-    <None Include="Content\services.coffee" />
-    <None Include="Content\css\bootstrap-theme.css.map" />
-    <None Include="Content\css\bootstrap.css.map" />
+    <None Include="Content\base.jade" />
+    <None Include="Content\dev.sh" />
+    <None Include="Content\dev_coffee.sh" />
+    <None Include="Content\dev_jade.sh" />
+    <None Include="Content\fonts\FontAwesome.otf" />
+    <None Include="Content\fonts\fontawesome-webfont.eot" />
+    <None Include="Content\fonts\fontawesome-webfont.svg" />
+    <None Include="Content\fonts\fontawesome-webfont.ttf" />
+    <None Include="Content\fonts\fontawesome-webfont.woff" />
     <None Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <None Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Content\js\angular-resource.min.js.map" />
-    <None Include="Content\js\angular-route.min.js.map" />
-    <None Include="Content\js\angular.min.js.map" />
-    <None Include="Content\src_templates\admin.jade" />
-    <None Include="Content\src_templates\base.jade" />
-    <None Include="Content\src_templates\home.jade" />
-    <None Include="Content\src_templates\login.jade" />
-    <None Include="Content\src_templates\none_message.jade" />
-    <None Include="Content\src_templates\product_form.jade" />
-    <None Include="Content\src_templates\resource_detail.jade" />
-    <None Include="Content\src_templates\resource_list.jade" />
-    <None Include="Content\src_templates\supplier.jade" />
-    <None Include="Content\src_templates\user_form.jade" />
-    <None Include="Content\jade_dev.sh" />
+    <None Include="Content\src_partials\admin.jade" />
+    <None Include="Content\src_partials\error.jade" />
+    <None Include="Content\src_partials\example.jade" />
+    <None Include="Content\src_partials\home.jade" />
+    <None Include="Content\src_partials\login.jade" />
+    <None Include="Content\src_partials\none_message.jade" />
+    <None Include="Content\src_partials\product_form.jade" />
+    <None Include="Content\src_partials\resource.detail.jade" />
+    <None Include="Content\src_partials\resource.list.jade" />
+    <None Include="Content\src_partials\supplier.jade" />
+    <None Include="Content\src_partials\user_form.jade" />
+    <None Include="Content\src_scripts\app.coffee" />
+    <None Include="Content\src_scripts\controllers.coffee" />
+    <None Include="Content\src_scripts\routes.coffee" />
+    <None Include="Content\src_scripts\services.coffee" />
   </ItemGroup>
 </Project>

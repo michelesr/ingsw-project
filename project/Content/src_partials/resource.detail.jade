@@ -1,0 +1,9 @@
+h1.page-header {{ resourceMeta.name }}
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    tbody
+      tr(ng-repeat='(key, value) in resource')
+        td
+          b {{ key }}
+        td {{ value }}
