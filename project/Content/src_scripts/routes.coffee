@@ -1,6 +1,6 @@
 app.config (stateHelperProvider, $urlRouterProvider) ->
   $urlRouterProvider
-    .otherwise('/error')
+    .otherwise '/error'
 
   stateHelperProvider.setNestedState
     name: 'root'
@@ -40,7 +40,6 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
       abstract: true
       template: '<ui-view/>'
       controller: 'UserCtrl'
-
       children: [
         name: 'list'
         url: ''
@@ -64,7 +63,6 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
       template: '<ui-view/>'
       controller: 'ProductCtrl'
       abstract: true
-
       children: [
         name: 'list'
         url: ''

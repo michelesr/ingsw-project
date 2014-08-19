@@ -3,7 +3,7 @@ h1.page-header
   span  {{ resourceMeta.namePlural }} list
 
 div(align='right')
-  a(ui-sref='.add')
+  a(ui-sref='root.{{ resourceMeta.namePlural }}.add')
     button(type='button', class='btn btn-primary') Add a {{ resourceMeta.name }}
 
 span(ng-switch='resourceList.length')
@@ -20,8 +20,8 @@ span(ng-switch='resourceList.length')
         tr(ng-repeat='r in resourceList')
           td(ng-repeat='field in r') {{ field }}
           td
-            a(ui-sref='.detail({id: r.id})') Detail
+            a(ui-sref='root.{{ resourceMeta.namePlural }}.detail({id: r.id})') Detail
           td
-            a.fa.fa-pencil(ui-sref='.edit({id: r.id})')
+            a.fa.fa-pencil(ui-sref='root.{{ resourceMeta.namePlural }}.edit({id: r.id})')
           td
-            a.fa.fa-trash-o(ui-sref='.remove({id: r.id})')
+            a.fa.fa-trash-o(ui-sref='root.{{ resourceMeta.namePlural }}.remove({id: r.id})')
