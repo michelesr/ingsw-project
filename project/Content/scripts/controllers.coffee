@@ -1,20 +1,34 @@
 mainCtrl = angular.module 'mainCtrl', []
 
-mainCtrl.controller 'HomeCtrl', ($scope, $http) ->
-  $scope.title = 'Web project'
-
-mainCtrl.controller 'LoginCtrl', ($scope, $http) ->
+# Root ----------------------------------------------------
+mainCtrl.controller 'RootCtrl', ($scope, $state) ->
   $scope.auth = {}
   $scope.master = {}
+  $scope.sidebar = []
+
   $scope.add = (newResource) ->
     $scope.master = angular.copy(newResource)
     $scope.newResource = Product.add(newResource)
 
-mainCtrl.controller 'AdminCtrl', ($scope) ->
-  return
+  $scope.login = ($scope) ->
+    if $scope.auth.type == 'admin'
+      $scope.sidebar = [
+        name: 'Users'
+        state: 'root.users.list'
+        icon: 'fa-users'
+      ]
+    else if $scope.auth.type == 'supplier'
+      $scope.sidebar = [
+        name: 'Products'
+        state: 'root.products.list'
+        icon: 'fa-coffee'
+      ]
+    else
+      $scope.sidebar = []
 
-mainCtrl.controller 'SupplierCtrl', ($scope) ->
-  return
+#    name: 'Overview'
+#    state: 'root.home'
+#    icon: 'fa-square'
 
 
 # Users ---------------------------------------------------
@@ -44,7 +58,6 @@ mainCtrl.controller 'UserCtrl', ($scope, $stateParams, User) ->
     $scope.master = angular.copy(newResource)
     $scope.newResource = User.add(newResource)
 
-mainCtrl.controller 'UserDetailCtrl', ($scope, $stateParams, User) ->
   # Detail
   $scope.user = User.get({
     action: 'detail'
@@ -72,7 +85,6 @@ mainCtrl.controller 'ProductCtrl', ($scope, $stateParams, Product) ->
     $scope.master = angular.copy(newResource)
     $scope.newResource = Product.add(newResource)
 
-#mainCtrl.controller 'ProductDetailCtrl', ($scope, $stateParams, Product) ->
   # Detail
   $scope.resource = Product.get({
     action: 'detail'

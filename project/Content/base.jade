@@ -39,20 +39,9 @@ html(lang='en', ng-app='app')
       .row
         .col-sm-3.col-md-2.sidebar
           ul.nav.nav-sidebar
-            li(ui-sref-active='active')
-              a(href='#/') Overview
-            li(ui-sref-active='active')
-              a(ui-sref='root.users.list')
-                span.fa.fa-users
-                span  Users
-            li(ui-sref-active='active')
-              a(ui-sref='root.products.list')
-                span.fa.fa-navicon
-                span  Products
-            li(ui-sref-active='active')
-              a(href='#/') Export
-          ul.nav.nav-sidebar
-            li
-              a(href='') Nav item
+            li(ng-repeat='c in contents' ui-sref-active='active')
+              a(ui-sref='{{ c.state }}')
+                span.fa.{{ c.icon }}
+                span  {{ c.name }}
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           ui-view

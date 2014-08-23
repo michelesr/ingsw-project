@@ -6,6 +6,7 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
     name: 'root'
     template: '<ui-view/>'
     abstract: true
+    controller: 'RootCtrl'
     children: [
 
     # General ---------------------------------------------
@@ -16,23 +17,24 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
       name: 'home'
       url: '/'
       templateUrl: 'Content/partials/home.html'
-      controller: 'HomeCtrl'
     ,
       name: 'login'
       url: '/login'
       templateUrl: 'Content/partials/login.html'
-      controller: 'LoginCtrl'
     ,
       name: 'admin'
       url: '/admin'
       templateUrl: 'Content/partials/admin.html'
-      controller: 'AdminCtrl'
     ,
       name: 'supplier'
       url: '/supplier'
       templateUrl: 'Content/partials/supplier.html'
-      controller: 'SupplierCtrl'
     ,
+#      name: 'sidebar'
+#      url: '/supplier'
+#      templateUrl: 'Content/partials/supplier.html'
+#      controller: 'SidebarCtrl'
+#    ,
 
     # Users -----------------------------------------------
       name: 'users'
@@ -48,12 +50,10 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
         name: 'add'
         url: '/add'
         templateUrl: 'Content/partials/user_form.html'
-        controller: 'UserCtrl'
       ,
         name: 'detail'
         url: '/detail/:id'
         templateUrl: 'Content/partials/resource.detail.html'
-        controller: 'UserDetailCtrl'
       ]
     ,
 
@@ -79,3 +79,7 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
 
     # End -------------------------------------------------
     ]
+
+
+app.run ($state) ->
+  $state.transitionTo 'root.login'

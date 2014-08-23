@@ -4,22 +4,36 @@ app = angular.module('app', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap
 
 mainCtrl = angular.module('mainCtrl', []);
 
-mainCtrl.controller('HomeCtrl', function($scope, $http) {
-  return $scope.title = 'Web project';
-});
-
-mainCtrl.controller('LoginCtrl', function($scope, $http) {
+mainCtrl.controller('RootCtrl', function($scope, $state) {
   $scope.auth = {};
   $scope.master = {};
-  return $scope.add = function(newResource) {
+  $scope.sidebar = [];
+  $scope.add = function(newResource) {
     $scope.master = angular.copy(newResource);
     return $scope.newResource = Product.add(newResource);
   };
+  return $scope.login = function($scope) {
+    if ($scope.auth.type === 'admin') {
+      return $scope.sidebar = [
+        {
+          name: 'Users',
+          state: 'root.users.list',
+          icon: 'fa-users'
+        }
+      ];
+    } else if ($scope.auth.type === 'supplier') {
+      return $scope.sidebar = [
+        {
+          name: 'Products',
+          state: 'root.products.list',
+          icon: 'fa-coffee'
+        }
+      ];
+    } else {
+      return $scope.sidebar = [];
+    }
+  };
 });
-
-mainCtrl.controller('AdminCtrl', function($scope) {});
-
-mainCtrl.controller('SupplierCtrl', function($scope) {});
 
 mainCtrl.controller('UserCtrl', function($scope, $stateParams, User) {
   $scope.resourceMeta = {
@@ -54,13 +68,10 @@ mainCtrl.controller('UserCtrl', function($scope, $stateParams, User) {
       isRequired: false
     }
   ];
-  return $scope.add = function(newResource) {
+  $scope.add = function(newResource) {
     $scope.master = angular.copy(newResource);
     return $scope.newResource = User.add(newResource);
   };
-});
-
-mainCtrl.controller('UserDetailCtrl', function($scope, $stateParams, User) {
   return $scope.user = User.get({
     action: 'detail',
     id: $stateParams.id
@@ -93,6 +104,7 @@ app.config(function(stateHelperProvider, $urlRouterProvider) {
     name: 'root',
     template: '<ui-view/>',
     abstract: true,
+    controller: 'RootCtrl',
     children: [
       {
         name: 'error',
@@ -101,23 +113,19 @@ app.config(function(stateHelperProvider, $urlRouterProvider) {
       }, {
         name: 'home',
         url: '/',
-        templateUrl: 'Content/partials/home.html',
-        controller: 'HomeCtrl'
+        templateUrl: 'Content/partials/home.html'
       }, {
         name: 'login',
         url: '/login',
-        templateUrl: 'Content/partials/login.html',
-        controller: 'LoginCtrl'
+        templateUrl: 'Content/partials/login.html'
       }, {
         name: 'admin',
         url: '/admin',
-        templateUrl: 'Content/partials/admin.html',
-        controller: 'AdminCtrl'
+        templateUrl: 'Content/partials/admin.html'
       }, {
         name: 'supplier',
         url: '/supplier',
-        templateUrl: 'Content/partials/supplier.html',
-        controller: 'SupplierCtrl'
+        templateUrl: 'Content/partials/supplier.html'
       }, {
         name: 'users',
         url: '/users',
@@ -132,13 +140,11 @@ app.config(function(stateHelperProvider, $urlRouterProvider) {
           }, {
             name: 'add',
             url: '/add',
-            templateUrl: 'Content/partials/user_form.html',
-            controller: 'UserCtrl'
+            templateUrl: 'Content/partials/user_form.html'
           }, {
             name: 'detail',
             url: '/detail/:id',
-            templateUrl: 'Content/partials/resource.detail.html',
-            controller: 'UserDetailCtrl'
+            templateUrl: 'Content/partials/resource.detail.html'
           }
         ]
       }, {
@@ -165,6 +171,10 @@ app.config(function(stateHelperProvider, $urlRouterProvider) {
       }
     ]
   });
+});
+
+app.run(function($state) {
+  return $state.transitionTo('root.login');
 });
 
 mainServices = angular.module('mainServices', ['ngResource']);
