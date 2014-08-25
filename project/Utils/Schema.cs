@@ -4,7 +4,12 @@ namespace project.Utils
 {
 	public static class Schema {
 		private static Database _db = Database.Istance;
-		private static String[] _tables = new String[] {"User", "Admin", "Supplier"};
+		private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier"};
+
+		private static readonly String[][] _apiKey = {
+			new String[] { "user_id", "INTEGER", "NOT NULL", _getFK ("user_id", "User", "id") },
+			new String[] { "key", "VARCHAR", "UNIQUE NOT NULL" }
+		};
 
 		private static readonly String[][] _user = {
 			new String[] {"email", "VARCHAR", "UNIQUE NOT NULL"},
@@ -28,7 +33,7 @@ namespace project.Utils
 			return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`)"; 
 		}
 
-		private static String[][][] _models = new String[][][] { _user, _admin, _supplier };
+		private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier };
 
 		public static void createSchema() {
 			for(int i = 0; i < _tables.Length; i++) 

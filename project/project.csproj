@@ -52,6 +52,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
@@ -82,6 +83,8 @@
     <Compile Include="Utils\Schema.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Models\ApiKey.cs" />
+    <Compile Include="Utils\Hashing.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
