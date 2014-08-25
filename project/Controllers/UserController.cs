@@ -17,19 +17,27 @@ namespace project.Controllers {
 		// GET /api/user/list/
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
-			if (id == -1)
-				return Json(ConvertibleHashtable.filterPassword(Model.getAll<Models.User>()), JsonRequestBehavior.AllowGet);
+			ApiKey k = ApiKey.getApiKey();
+			if (k.user_id != 0) {
+				if (id == -1 && k.utype == userType.admin)
+					return Json (ConvertibleHashtable.filterPassword (Model.getAll<Models.User> ()), JsonRequestBehavior.AllowGet);
+				else 
+					return Detail (id);
+			}
 			else 
-				return Detail(id);
+				return Json(Utils.Costants.unauthorized, JsonRequestBehavior.AllowGet);
 		}
 
 		// /#/user/1/detail
 		// GET /api/user/detail/<id>/
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail(int id) {
-			return Json(Model.getHashtableById<Models.User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
+			ApiKey k = ApiKey.getApiKey();
+			if (k.user_id == id || (k.user_id != 0 && k.utype == userType.admin))
+			    return Json(Model.getHashtableById<Models.User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
+			else
+				return Json(Utils.Costants.unauthorized, JsonRequestBehavior.AllowGet);
 		}
-
 
 		// /#/user/1/create
 		// POST /api/user/add/

@@ -85,6 +85,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Utils\Hashing.cs" />
+    <Compile Include="Utils\Costants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
