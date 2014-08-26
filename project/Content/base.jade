@@ -28,20 +28,20 @@ html(lang='en', ng-app='app')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Web Project
+          a.navbar-brand(ui-sref='root.home') Web Project
         .navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
             li
-              a(href='#/login') Login
+              a(ui-sref='root.login') Login
             li
-              a(href='#') Profile
+              a(ui-sref='root.users.{{ auth.user }}') Profile
             li
-              a(href='#/info') Info
+              a(ui-sref='root.info') Info
     .container-fluid
       .row
         .col-sm-3.col-md-2.sidebar
           ul.nav.nav-sidebar
-            li(ng-repeat='c in contents' ui-sref-active='active')
+            li(ng-repeat='c in sidebar' ui-sref-active='active')
               a(ui-sref='{{ c.state }}')
                 span(class='fa {{ c.icon }}')
                 span  {{ c.name }}

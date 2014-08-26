@@ -33,14 +33,6 @@ app.config(function(stateHelperProvider, $urlRouterProvider) {
         templateUrl: 'Content/partials/login.html',
         controller: 'LoginCtrl'
       }, {
-        name: 'admin',
-        url: '/admin',
-        templateUrl: 'Content/partials/admin.html'
-      }, {
-        name: 'supplier',
-        url: '/supplier',
-        templateUrl: 'Content/partials/supplier.html'
-      }, {
         name: 'users',
         url: '/users',
         abstract: true,
