@@ -77,7 +77,6 @@
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Utils\ConvertibleHashtable.cs" />
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\Schema.cs" />
@@ -86,6 +85,7 @@
     <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Utils\Hashing.cs" />
     <Compile Include="Utils\Costants.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

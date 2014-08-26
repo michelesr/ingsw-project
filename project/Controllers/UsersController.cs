@@ -10,7 +10,7 @@ using project.Utils;
 
 namespace project.Controllers {
 
-	public class UserController : Controller {
+	public class UsersController : Controller {
 
 		// /#/user/list
 		// GET /api/user/
@@ -37,29 +37,10 @@ namespace project.Controllers {
 
 		// /#/user/1/create
 		// POST /api/user/add/
-		/*[AcceptVerbs(HttpVerbs.Post)]
-		public String Index(String data, String type, String supplierData) {
-			String returnMsg = "OK\n";
-			ConvertibleHashtable d = JsonConvert.DeserializeObject<ConvertibleHashtable>(data);
-			try {
-				if (type == "admin")
-				    Models.Admin.add(d, new ConvertibleHashtable());
-				else if (type == "supplier") {
-					if (supplierData != null) { 
-						ConvertibleHashtable sd = JsonConvert.DeserializeObject<ConvertibleHashtable>(supplierData);
-						Models.Supplier.add(d, sd); 
-					}
-					else
-						returnMsg = "Invalid supplier data\n";
-				}
-				else
-					returnMsg = "Invalid user type\n";
-			}
-			catch(Mono.Data.Sqlite.SqliteException e) {
-				returnMsg = "Error in sqlite db: " + e.Message + "\n";
-			}
-			return returnMsg;
-		}*/
+		[AcceptVerbs(HttpVerbs.Post)]
+		public String Index(int id, String data) {
+			return "add user " +  "id " + id;
+		}
 
 		/*public String Test(String data) {
 			ConvertibleHashtable d = JsonConvert.DeserializeObject<ConvertibleHashtable>(data);
