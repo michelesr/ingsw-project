@@ -38,19 +38,7 @@ namespace project
 		protected void Application_Start ()
 		{
 			Schema.createSchema();
-			Admin a = new Admin("michele@gmail.com", "jigrweijeriogjeio", "Michele", "Verdi");
-			Supplier s = new Supplier("pincopallino@gmail.com", "4ijijrojiiojioo3r90", "Pinco","Pallino", "498959jijgir", "PincoPallino&co", "Marotta");
-			a.insert();
-			s.insert();
-			a.email = "michele@libero.it";
-			a.last_name = "Verdino";
-			s.first_name = "Tonio";
-			s.last_name = "Sempronio";
-			s.supplier_name = "boiamond";
-			a.update();
-			s.update();
-			//s.delete();
-			//a.delete();
+            new Admin("admin@example.org", "admin", "admin", "admin").insert();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);
