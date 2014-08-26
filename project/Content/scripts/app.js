@@ -1,105 +1,18 @@
-var app, mainCtrl, mainServices;
+var app, controllers, services;
 
-app = angular.module('app', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap', 'mainCtrl', 'mainServices']);
+app = angular.module('app', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap', 'controllers', 'services']);
 
-mainCtrl = angular.module('mainCtrl', []);
+controllers = angular.module('controllers', []);
 
-mainCtrl.controller('RootCtrl', function($scope, $state) {
-  $scope.auth = {};
-  $scope.master = {};
-  $scope.sidebar = [];
-  $scope.add = function(newResource) {
-    $scope.master = angular.copy(newResource);
-    return $scope.newResource = Product.add(newResource);
+controllers.controller('RootCtrl', function($scope, $state, AuthService) {
+  $scope.currentUser = null;
+  return $scope.setCurrentUser = function(user) {
+    return $scope.currentUser = user;
   };
-  return $scope.login = function($scope) {
-    if ($scope.auth.type === 'admin') {
-      return $scope.sidebar = [
-        {
-          name: 'Users',
-          state: 'root.users.list',
-          icon: 'fa-users'
-        }
-      ];
-    } else if ($scope.auth.type === 'supplier') {
-      return $scope.sidebar = [
-        {
-          name: 'Products',
-          state: 'root.products.list',
-          icon: 'fa-coffee'
-        }
-      ];
-    } else {
-      return $scope.sidebar = [];
-    }
-  };
-});
-
-mainCtrl.controller('UserCtrl', function($scope, $stateParams, User) {
-  $scope.resourceMeta = {
-    name: 'user',
-    namePlural: 'users',
-    icon: 'fa-users'
-  };
-  $scope.resourceList = User.list();
-  $scope.fields = ['id', 'email', 'first_name', 'last_name'];
-  $scope.newResource = {};
-  $scope.master = {};
-  $scope.fields = [
-    {
-      name: 'email',
-      type: 'email',
-      ph: 'user@example.org',
-      isRequired: true
-    }, {
-      name: 'password',
-      type: 'password',
-      ph: 'password',
-      isRequired: true
-    }, {
-      name: 'first_name',
-      type: 'text',
-      ph: 'Mario',
-      isRequired: false
-    }, {
-      name: 'last_name',
-      type: 'text',
-      ph: 'Rossi',
-      isRequired: false
-    }
-  ];
-  $scope.add = function(newResource) {
-    $scope.master = angular.copy(newResource);
-    return $scope.newResource = User.add(newResource);
-  };
-  return $scope.user = User.get({
-    action: 'detail',
-    id: $stateParams.id
-  });
-});
-
-mainCtrl.controller('ProductCtrl', function($scope, $stateParams, Product) {
-  $scope.resourceMeta = {
-    name: 'product',
-    namePlural: 'products',
-    icon: 'fa-coffee'
-  };
-  $scope.resourceList = Product.list();
-  $scope.fields = ['id', 'name'];
-  $scope.newResource = {};
-  $scope.master = {};
-  $scope.add = function(newResource) {
-    $scope.master = angular.copy(newResource);
-    return $scope.newResource = Product.add(newResource);
-  };
-  return $scope.resource = Product.get({
-    action: 'detail',
-    id: $stateParams.id
-  });
 });
 
 app.config(function(stateHelperProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/error');
+  $urlRouterProvider.when('', '/').otherwise('/error');
   return stateHelperProvider.setNestedState({
     name: 'root',
     template: '<ui-view/>',
@@ -113,11 +26,12 @@ app.config(function(stateHelperProvider, $urlRouterProvider) {
       }, {
         name: 'home',
         url: '/',
-        templateUrl: 'Content/partials/home.html'
+        template: ''
       }, {
         name: 'login',
         url: '/login',
-        templateUrl: 'Content/partials/login.html'
+        templateUrl: 'Content/partials/login.html',
+        controller: 'LoginCtrl'
       }, {
         name: 'admin',
         url: '/admin',
@@ -177,9 +91,9 @@ app.run(function($state) {
   return $state.transitionTo('root.login');
 });
 
-mainServices = angular.module('mainServices', ['ngResource']);
+services = angular.module('services', ['ngResource']);
 
-mainServices.factory('User', function($resource) {
+services.factory('User', function($resource) {
   return $resource('/api/users/:action/:id', {}, {
     list: {
       method: 'GET',
@@ -199,7 +113,7 @@ mainServices.factory('User', function($resource) {
   });
 });
 
-mainServices.factory('Product', function($resource) {
+services.factory('Product', function($resource, AuthService) {
   return $resource('/api/products/:action/:id', {}, {
     list: {
       method: 'GET',

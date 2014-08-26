@@ -1,13 +1,15 @@
 h1.page-header Login
 
-form.form-signin(role='form')
+form.form-signin(ng-submit='login(credentials)', novalidate, role='form')
   h2.form-signin-heading Please sign in
-  input.form-control(ng-model='auth.email', type='email', placeholder='Email address', required='', autofocus='')
-  input.form-control(ng-model='auth.password', type='password', placeholder='Password', required='')
+  input.form-control(ng-model='credentials.email', type='email', placeholder='Email address', required='', autofocus='')
+  input.form-control(ng-model='credentials.password', type='password', placeholder='Password', required='')
   br
-  button.btn.btn-md.btn-primary.btn-block(ng-click='login(auth)', type='submit') Sign in
+  button.btn.btn-md.btn-primary.btn-block(type='submit') Sign in
 
+p {{ msg }}
 br
 br
-pre form = {{ auth | json }}
+pre credentials = {{ credentials | json }}
 pre master = {{ master | json }}
+pre sidebar = {{ sidebar | json }}

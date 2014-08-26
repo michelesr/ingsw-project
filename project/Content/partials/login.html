@@ -1,10 +1,12 @@
 
 <h1 class="page-header">Login</h1>
-<form role="form" class="form-signin">
+<form ng-submit="login(credentials)" novalidate="novalidate" role="form" class="form-signin">
   <h2 class="form-signin-heading">Please sign in</h2>
-  <input ng-model="auth.email" type="email" placeholder="Email address" required="" autofocus="" class="form-control"/>
-  <input ng-model="auth.password" type="password" placeholder="Password" required="" class="form-control"/><br/>
-  <button ng-click="login(auth)" type="submit" class="btn btn-md btn-primary btn-block">Sign in</button>
-</form><br/><br/>
-<pre>form = {{ auth | json }}</pre>
+  <input ng-model="credentials.email" type="email" placeholder="Email address" required="" autofocus="" class="form-control"/>
+  <input ng-model="credentials.password" type="password" placeholder="Password" required="" class="form-control"/><br/>
+  <button type="submit" class="btn btn-md btn-primary btn-block">Sign in</button>
+</form>
+<p>{{ msg }}</p><br/><br/>
+<pre>credentials = {{ credentials | json }}</pre>
 <pre>master = {{ master | json }}</pre>
+<pre>sidebar = {{ sidebar | json }}</pre>

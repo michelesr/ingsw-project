@@ -1,5 +1,6 @@
 app.config (stateHelperProvider, $urlRouterProvider) ->
   $urlRouterProvider
+    .when '', '/'
     .otherwise '/error'
 
   stateHelperProvider.setNestedState
@@ -16,11 +17,12 @@ app.config (stateHelperProvider, $urlRouterProvider) ->
     ,
       name: 'home'
       url: '/'
-      templateUrl: 'Content/partials/home.html'
+      template: ''
     ,
       name: 'login'
       url: '/login'
       templateUrl: 'Content/partials/login.html'
+      controller: 'LoginCtrl'
     ,
       name: 'admin'
       url: '/admin'
