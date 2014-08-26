@@ -47,12 +47,11 @@ namespace project.Controllers {
 			ApiKey k = ApiKey.getApiKey();
 			if (k.isAdmin ()) {
 				if (h ["type"].ToString () == "supplier") {
-					ConvertibleHashtable sd = ((JObject)h ["supplier_data"]).ToObject<ConvertibleHashtable> ();
-					new Supplier (ud ["email"].ToString (), ud ["password"].ToString (), ud ["first_name"].ToString (), ud ["last_name"].ToString (), 
-						sd ["vat"].ToString (), sd ["supplier_name"].ToString (), sd ["city"].ToString ()).insert ();
+					ud.merge(((JObject)h["supplier_data"]).ToObject<ConvertibleHashtable>());
+					ud.toObject<Supplier>().insert();
 				} 
-				else if (h ["type"].ToString () == "admin") 
-					new Admin (ud ["email"].ToString (), ud["password"].ToString (), ud["first_name"].ToString(), ud["last_name"].ToString()).insert();
+				else if (h ["type"].ToString () == "admin")
+					ud.toObject<Admin>().insert();
 				else
       				return Json(Utils.Costants.WRONG_USER_TYPE, JsonRequestBehavior.AllowGet);
 				return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);

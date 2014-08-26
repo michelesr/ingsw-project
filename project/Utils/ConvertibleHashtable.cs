@@ -34,6 +34,13 @@ namespace project.Utils {
 				x.filterPassword();
 			return h;
 		}
+
+		public void merge(ConvertibleHashtable h) {
+			foreach (var k in h.Keys) {
+				if (!this.ContainsKey(k))
+					this.Add(k, h[k]);
+			}
+		}
 	}
 }
 
