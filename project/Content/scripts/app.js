@@ -11,7 +11,8 @@ controllers.controller('RootCtrl', function($scope, $state, AuthService) {
   };
 });
 
-app.config(function(stateHelperProvider, $urlRouterProvider) {
+app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.defaults.headers.post['Content-Type'] = '';
   $urlRouterProvider.when('', '/').otherwise('/error');
   return stateHelperProvider.setNestedState({
     name: 'root',

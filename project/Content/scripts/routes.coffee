@@ -1,4 +1,7 @@
-app.config (stateHelperProvider, $urlRouterProvider) ->
+app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
+
+  $httpProvider.defaults.headers.post['Content-Type'] = ''
+
   $urlRouterProvider
     .when '', '/'
     .otherwise '/error'
