@@ -18,14 +18,10 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			ApiKey k = ApiKey.getApiKey();
-			if (k.user_id != 0) {
-				if (id == -1 && k.utype == userType.admin)
-					return Json (ConvertibleHashtable.filterPassword (Model.getAll<Models.User> ()), JsonRequestBehavior.AllowGet);
-				else 
-					return Detail (id);
-			}
+			if (id == -1 &&  k.isAdmin())
+				return Json (ConvertibleHashtable.filterPassword (Model.getAll<Models.User> ()), JsonRequestBehavior.AllowGet);
 			else 
-				return Json(Utils.Costants.unauthorized, JsonRequestBehavior.AllowGet);
+				return Detail (id);
 		}
 
 		// /#/user/1/detail
@@ -33,7 +29,7 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail(int id) {
 			ApiKey k = ApiKey.getApiKey();
-			if (k.user_id == id || (k.user_id != 0 && k.utype == userType.admin))
+			if (k.isAdmin() || k.checkUser(id))
 			    return Json(Model.getHashtableById<Models.User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
 			else
 				return Json(Utils.Costants.unauthorized, JsonRequestBehavior.AllowGet);

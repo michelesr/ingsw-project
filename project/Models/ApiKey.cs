@@ -25,5 +25,11 @@ namespace project.Models {
 		public static ApiKey getApiKey() {
 			return getApiKey(HttpContext.Current.Request.Headers["api_key"]);
 		}
+		public bool isAdmin() {
+			return this.user_id != 0 && this.utype == userType.admin;
+		}
+		public bool checkUser(int id) {
+			return this.user_id == id;
+		}
 	}
 }
