@@ -38,6 +38,7 @@ namespace project.Controllers {
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             if(k.isAdmin() || k.checkUser(id)) {
+                ApiKey.fromUserId(id).delete();
                 Admin a = Admin.getByUserId(id);
                 if (a.user_id == id)
                     a.delete();
@@ -48,8 +49,6 @@ namespace project.Controllers {
                     else
                         return Json(Utils.Costants.USER_NOT_FOUND, JsonRequestBehavior.AllowGet);
                 }
-                ApiKey.fromUserId(id).delete();
-                Model.getById<User>(id).delete();
                 return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
             }
             else

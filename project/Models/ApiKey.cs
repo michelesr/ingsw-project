@@ -17,22 +17,22 @@ namespace project.Models {
 		}
 
         public override void update() {
-            User u = Model.getById<User>(id);
+            User u = Model.getById<User>(user_id);
             key = Utils.Hashing.CalculateMD5Hash(u.email + u.password);
             base.update();
         }
 
-		public ApiKey(int id, string mail, string password) {
-			user_id = id;
-			key = Utils.Hashing.CalculateMD5Hash(mail + password);
+        public ApiKey(int uid, string email, string password) {
+            user_id = uid;
+            key = Utils.Hashing.CalculateMD5Hash(email + password);
 		}
 
 		public static ApiKey getApiKey(String k) {
 			return _db.getData("ApiKey", "key", k)[0].toObject<ApiKey>();
 		}
 
-        public static ApiKey fromUserId(int id) {
-            return _db.getData("ApiKey", "user_id", id.ToString())[0].toObject<ApiKey>();
+        public static ApiKey fromUserId(int uid) {
+            return _db.getData("ApiKey", "user_id", uid.ToString())[0].toObject<ApiKey>();
         }
 
 		public static ApiKey getApiKey() {
