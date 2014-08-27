@@ -19,9 +19,10 @@ namespace project.Controllers {
 			h.Add("auth", Models.User.checkPassword(d["email"].ToString(), d["password"].ToString()));
 			if((bool) h["auth"]) {
 				h.Add("user_id", Models.User.getUserHashtableByEmail(d["email"].ToString())["id"]);
-				// generare la chiave, inserirla nel db e aggiungerla ai dati
+                // generare la chiave, inserirla nel db e aggiungerla ai dati
 				ApiKey ak = new ApiKey (int.Parse(h["user_id"].ToString()), d["email"].ToString(), d["password"].ToString());
-				ak.insert();
+                if (!(ApiKey.getApiKey(ak.key).key == ak.key))
+				    ak.insert();
 				h.Add("api_key", ak.key);
 			}
 			return Json(h, JsonRequestBehavior.AllowGet);
