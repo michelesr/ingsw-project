@@ -27,7 +27,7 @@ namespace project.Controllers {
 
 		// POST /api/products/add
 		[HttpPost]
-		public string Add (string data) {
+        public string Add(String data) {
 			Debug.Assert(data != null);
 
 			return data;
@@ -38,7 +38,6 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail (int id) {
 			var myProduct = new { id = id, name = "Saponette profumate", cat = "Saponi" };
-
 			return Json(myProduct, JsonRequestBehavior.AllowGet);
 		}
 
