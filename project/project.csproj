@@ -66,7 +66,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
-    <Compile Include="Models\Catalog.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\GeneralStats.cs" />
     <Compile Include="Models\Model.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="Utils\Hashing.cs" />
     <Compile Include="Utils\Costants.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Models\Catalog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

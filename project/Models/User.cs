@@ -69,10 +69,14 @@ namespace project.Models {
 				x = h["password"].ToString() == password;
 			return x;
 		}
-
+            
 		protected virtual void _setUserType(User u) {
 			u.type = userType.undefined;
 		}
+
+        protected static T _getAdminOrSupplierByUserId<T>(int user_id) {
+            return _db.getData(_getTableName<T>(), "user_id", user_id.ToString())[0].toObject<T>();
+        }
 
 
 	}

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Web;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -13,6 +15,10 @@ namespace project.Utils {
 		public static ConvertibleHashtable fromString(String s) {
 			return JObject.Parse(s).ToObject<ConvertibleHashtable>();
 		}
+
+        public static ConvertibleHashtable fromRequest() {
+            return fromString(new StreamReader(HttpContext.Current.Request.InputStream).ReadLine());
+        }
 
 		public ConvertibleHashtable filter(String[] keys) {
 			foreach (String k in keys)

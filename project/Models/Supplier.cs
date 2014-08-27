@@ -16,6 +16,9 @@ namespace project.Models {
 		protected override void _setUserType(User u) {
 			u.type = userType.supplier;
 		}
+        public static Supplier getByUserId(int user_id) {
+            return _getAdminOrSupplierByUserId<Supplier>(user_id);
+        }
 	}
 }
 

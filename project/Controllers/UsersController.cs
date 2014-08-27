@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
@@ -39,6 +38,17 @@ namespace project.Controllers {
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             if(k.isAdmin() || k.checkUser(id)) {
+                Admin a = Admin.getByUserId(id);
+                if (a.user_id == id)
+                    a.delete();
+                else {
+                    Supplier s = Supplier.getByUserId(id);
+                    if (s.user_id == id)
+                        s.delete();
+                    else
+                        return Json(Utils.Costants.USER_NOT_FOUND, JsonRequestBehavior.AllowGet);
+                }
+                ApiKey.fromUserId(id).delete();
                 Model.getById<User>(id).delete();
                 return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
             }
@@ -49,8 +59,7 @@ namespace project.Controllers {
         // POST /api/users/add/
 		[AcceptVerbs(HttpVerbs.Post)]
 		public JsonResult Index() {
-			String data = new StreamReader(Request.InputStream).ReadLine();
-			ConvertibleHashtable h = ConvertibleHashtable.fromString(data);
+            ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
 			ConvertibleHashtable ud = ((JObject)h ["user_data"]).ToObject<ConvertibleHashtable>();
 			ApiKey k = ApiKey.getApiKey();
 			if (k.isAdmin ()) {
@@ -68,5 +77,22 @@ namespace project.Controllers {
 				return Json(Utils.Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult Update(int id) {
+            ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
+            ApiKey k = ApiKey.getApiKey();
+            if (k.isAdmin() || k.checkUser(id)) {
+                ConvertibleHashtable cd = Model.getHashtableById<User>(id);
+                ConvertibleHashtable ud = ((JObject) h["user_data"]).ToObject<ConvertibleHashtable>();
+                foreach (var key in ud.Keys) 
+                    if (cd.ContainsKey(key))
+                        cd[key] = ud[key];
+                cd.toObject<User>().update();
+                ApiKey.fromUserId(id).update();
+                return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
+            }
+            else 
+                return Json(Utils.Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

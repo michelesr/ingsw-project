@@ -50,7 +50,7 @@ namespace project.Models {
 			return _db.getData(_getTableName<T>());
 		}
 
-		private static String _getTableName<T>() {
+        protected static String _getTableName<T>() {
 			return _getTableNameByType(typeof(T));
 		}
 
