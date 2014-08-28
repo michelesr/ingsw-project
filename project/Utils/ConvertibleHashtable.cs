@@ -13,8 +13,12 @@ namespace project.Utils {
 			return JObject.Parse(JsonConvert.SerializeObject(this)).ToObject<T>();
 		}
 
+        public static ConvertibleHashtable fromJObject(JObject j) {
+            return j.ToObject<ConvertibleHashtable>();
+        }
+
 		public static ConvertibleHashtable fromString(String s) {
-			return JObject.Parse(s).ToObject<ConvertibleHashtable>();
+            return fromJObject(JObject.Parse(s));
 		}
 
         public static ConvertibleHashtable fromRequest() {
@@ -41,6 +45,12 @@ namespace project.Utils {
 				x.filterPassword();
 			return h;
 		}
+
+        public void update(ConvertibleHashtable h) {
+            foreach (var key in h.Keys) 
+                if (this.ContainsKey(key))
+                    this[key] = h[key];
+        }
 
 		public void merge(ConvertibleHashtable h) {
 			foreach (var k in h.Keys) {

@@ -16,6 +16,11 @@ namespace project.Models {
 		protected override void _setUserType(User u) {
 			u.type = userType.supplier;
 		}
+
+        public static ConvertibleHashtable getHashtableByUserId(int user_id)  {
+            return _getAdminOrSupplierHashtableByUserId<Supplier>(user_id);
+        }
+
         public static Supplier getByUserId(int user_id) {
             return _getAdminOrSupplierByUserId<Supplier>(user_id);
         }

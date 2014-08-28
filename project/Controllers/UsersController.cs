@@ -59,7 +59,7 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Post)]
 		public JsonResult Index() {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
-			ConvertibleHashtable ud = ((JObject)h ["user_data"]).ToObject<ConvertibleHashtable>();
+            ConvertibleHashtable ud = ConvertibleHashtable.fromJObject((JObject) h["user_data"]);
 			ApiKey k = ApiKey.getApiKey();
 			if (k.isAdmin ()) {
                 if (h["type"].ToString() == "supplier") {
@@ -81,12 +81,22 @@ namespace project.Controllers {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
             ApiKey k = ApiKey.getApiKey();
             if (k.isAdmin() || k.checkUser(id)) {
-                ConvertibleHashtable cd = Model.getHashtableById<User>(id);
-                ConvertibleHashtable ud = ((JObject) h["user_data"]).ToObject<ConvertibleHashtable>();
-                foreach (var key in ud.Keys) 
-                    if (cd.ContainsKey(key))
-                        cd[key] = ud[key];
-                cd.toObject<User>().update();
+                // controlla se si deve modificare le informazioni specifiche di un supplier
+                ConvertibleHashtable supplierCurrentData = Supplier.getHashtableByUserId(id);
+                if (h.ContainsKey("supplier_data") && supplierCurrentData["user_id"].ToString() == id.ToString()) {
+                    ConvertibleHashtable newData = ConvertibleHashtable.fromJObject((JObject) h["supplier_data"]);
+                    newData.merge(ConvertibleHashtable.fromJObject((JObject) h["user_data"]));
+                    supplierCurrentData.update(newData);
+                    supplierCurrentData.toObject<Supplier>().update();
+                }
+                // modifica le info di base dell'utente, che sia admin o supplier
+                else {
+                    ConvertibleHashtable currentData = Model.getHashtableById<User>(id);
+                    ConvertibleHashtable newData = ConvertibleHashtable.fromJObject((JObject) h["user_data"]);
+                    currentData.update(newData);
+                    currentData.toObject<User>().update();
+                }
+                // aggiorna le api key per riflettere evenutali modifiche alla password o alla mail
                 ApiKey.fromUserId(id).update();
                 return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
             }

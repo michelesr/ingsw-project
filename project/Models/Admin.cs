@@ -9,6 +9,10 @@ namespace project.Models {
 			u.type = userType.admin;
 		}
 
+        public static ConvertibleHashtable getHashtableByUserId(int user_id)  {
+            return _getAdminOrSupplierHashtableByUserId<Admin>(user_id);
+        }
+
         public static Admin getByUserId(int user_id) {
             return _getAdminOrSupplierByUserId<Admin>(user_id);
         }

@@ -75,13 +75,16 @@ namespace project.Models {
 			u.type = userType.undefined;
 		}
 
-        protected static T _getAdminOrSupplierByUserId<T>(int user_id) {
+        protected static ConvertibleHashtable _getAdminOrSupplierHashtableByUserId<T>(int user_id) {
             ConvertibleHashtable userData = getHashtableById<User>(user_id);
             ConvertibleHashtable extraData = _db.getData(_getTableName<T>(), "user_id", user_id.ToString())[0];
             extraData.merge(userData);
-            return extraData.toObject<T>();
+            return extraData;
         }
 
+        protected static T _getAdminOrSupplierByUserId<T>(int user_id) {
+            return _getAdminOrSupplierHashtableByUserId<T>(user_id).toObject<T>();
+        }
 
 	}
 }
