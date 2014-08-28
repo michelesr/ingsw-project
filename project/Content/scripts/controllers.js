@@ -33,11 +33,18 @@ controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Me
 
 controllers.controller('ProductAddCtrl', function($scope, $stateParams, Product, Meta) {
   $scope.meta = Meta.product;
-  $scope.newResource = {};
-  $scope.master = {};
-  return $scope.add = function(newResource) {
-    $scope.master = angular.copy(newResource);
-    return $scope.newResource = Product.add(newResource);
+  $scope.resource = {};
+  $scope.result = {};
+  return $scope.add = function(form_fields) {
+    var f, k, v, _i, _len;
+    $scope.resource = {};
+    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
+      f = form_fields[_i];
+      k = f['model'];
+      v = f['value'];
+      $scope.resource[k] = v;
+    }
+    return $scope.result = Product.add($scope.resource);
   };
 });
 
@@ -62,34 +69,18 @@ controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
 
 controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
-  $scope.newResource = {};
-  $scope.master = {};
-  $scope.fields = [
-    {
-      name: 'email',
-      type: 'email',
-      ph: 'user@example.org',
-      isRequired: true
-    }, {
-      name: 'password',
-      type: 'password',
-      ph: 'password',
-      isRequired: true
-    }, {
-      name: 'first_name',
-      type: 'text',
-      ph: 'Mario',
-      isRequired: false
-    }, {
-      name: 'last_name',
-      type: 'text',
-      ph: 'Rossi',
-      isRequired: false
+  $scope.resource = {};
+  $scope.result = {};
+  return $scope.add = function(form_fields) {
+    var f, k, v, _i, _len;
+    $scope.resource = {};
+    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
+      f = form_fields[_i];
+      k = f['model'];
+      v = f['value'];
+      $scope.resource[k] = v;
     }
-  ];
-  return $scope.add = function(newResource) {
-    $scope.master = angular.copy(newResource);
-    return $scope.newResource = User.add(newResource);
+    return $scope.result = User.add(resource);
   };
 });
 

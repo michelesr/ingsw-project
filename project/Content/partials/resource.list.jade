@@ -26,4 +26,4 @@ span(ng-switch='list.length')
             span 
             a.fa.fa-pencil(ui-sref='root.{{ meta.namePlural }}.edit({id: r.id})')
             span 
-            a.fa.fa-trash-o(ui-sref='root.{{ meta.namePlural }}.remove({id: r.id})')
+            a.fa.fa-trash-o(ng-click='remove($id)')

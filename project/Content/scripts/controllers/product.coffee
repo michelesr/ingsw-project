@@ -7,12 +7,18 @@ controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
 controllers.controller 'ProductAddCtrl', ($scope, $stateParams, Product, Meta) ->
 
   $scope.meta = Meta.product
+  $scope.resource = {}
+  $scope.result = {}
 
-  $scope.newResource = {}
-  $scope.master = {}
-  $scope.add = (newResource) ->
-    $scope.master = angular.copy(newResource)
-    $scope.newResource = Product.add(newResource)
+  $scope.add = (form_fields) ->
+
+    $scope.resource = {}
+    for f in form_fields
+      k = f['model']
+      v = f['value']
+      $scope.resource[k] = v
+
+    $scope.result = Product.add($scope.resource)
 
 
 controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta) ->

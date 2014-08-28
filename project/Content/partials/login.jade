@@ -1,6 +1,6 @@
 h1.page-header Login
 
-form.form-signin(ng-submit='login(credentials)', novalidate, role='form')
+form.form-signin(ng-submit='login(credentials)', role='form', novalidate)
   h2.form-signin-heading Please sign in
   input.form-control(ng-model='credentials.email', type='email', placeholder='Email address', required='', autofocus='')
   input.form-control(ng-model='credentials.password', type='password', placeholder='Password', required='')

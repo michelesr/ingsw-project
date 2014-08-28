@@ -2,48 +2,20 @@ h1.page-header
   span.fa.fa-plus
   span  Add a {{ meta.name }}
 
-//form(name="signForm" ng-controller="FormController" novalidate class="form-horizontal")
-  //div(ng-repeat="f in meta.form_fields")
-    //ng-form(name="signFormIn")
-      //input(type="text" name="theInput" ng-required="f.isRequired")
-      //div(ng-show="signFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
-        //span(class="error" ng-show="signFormIn.theInput.$error.required") The field is required.
-
-form(novalidate class="form-horizontal" role="form")
+form.form-horizontal(ng-submit="add(meta.form_fields)", name="addForm", role="form", novalidate)
   .form-group(ng-repeat="f in meta.form_fields")
-    label(class="col-sm-2 control-label") {{ f.human }}
-    .col-sm-10
-      input.form-control(ng-model="newResource.{{ f.model }}", type="{{ f.type }}", placeholder="{{ f.placeholder }}")
-
-//
-
-form(novalidate class="form-horizontal" role="form")
-  .form-group
-    label(class="col-sm-2 control-label") Email
-    .col-sm-10
-      input(ng-model="newResource.email" type="email" class="form-control" placeholder="e.g. user@example.org")
+    ng-form(name="addFormIn")
+      label.col-sm-2.control-label {{ f.human }}
+      .col-sm-10
+        input.form-control(ng-model="f.value", type="{{ f.type }}", ng-required="{{ f.required }}", placeholder="{{ f.placeholder }}")
+        //div(ng-show="addFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
+          //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
 
   .form-group
-    label(class="col-sm-2 control-label") Password
-    .col-sm-10
-      input(ng-model="newResource.password" type="password" class="form-control" placeholder="e.g. myP@s$wOrD")
+    div.col-sm-offset-2.col-sm-10
+      button.btn.btn-primary(type="submit") Add {{ meta.name }}
 
-  .form-group
-    label(class="col-sm-2 control-label") First Name
-    .col-sm-10
-      input(ng-model="newResource.first_name" type="text" class="form-control" placeholder="e.g. Mario")
-
-  .form-group
-    label(class="col-sm-2 control-label") Last Name
-    .col-sm-10
-      input(ng-model="newResource.last_name" type="text" class="form-control" placeholder="e.g. Rossi")
-      br
-
-  .form-group
-    div(class="col-sm-offset-2 col-sm-10")
-      button(ng-click="add(newResource)" type="submit" class="btn btn-primary") Add {{ meta.name }}
-
-
-h2.sub-header Angular models
-pre form = {{ newResource | json }}
-pre master = {{ master | json }}
+h2.sub-header Models
+pre form = {{ meta.form_fields | json }}
+pre resource = {{ resource | json }}
+pre result = {{ result | json }}

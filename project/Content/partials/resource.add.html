@@ -1,53 +1,25 @@
 
 <h1 class="page-header"><span class="fa fa-plus"></span><span> Add a {{ meta.name }}</span></h1>
-<!--form(name="signForm" ng-controller="FormController" novalidate class="form-horizontal")
-//div(ng-repeat="f in meta.form_fields")
-  //ng-form(name="signFormIn")
-    //input(type="text" name="theInput" ng-required="f.isRequired")
-    //div(ng-show="signFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
-      //span(class="error" ng-show="signFormIn.theInput.$error.required") The field is required.
-
--->
-<form novalidate="novalidate" role="form" class="form-horizontal">
+<form ng-submit="add(meta.form_fields)" name="addForm" role="form" novalidate="novalidate" class="form-horizontal">
   <div ng-repeat="f in meta.form_fields" class="form-group">
-    <label class="col-sm-2 control-label">{{ f.human }}</label>
-    <div class="col-sm-10">
-      <input ng-model="newResource.{{ f.model }}" type="{{ f.type }}" placeholder="{{ f.placeholder }}" class="form-control"/>
-    </div>
-  </div>
-</form>
-<!---->
-<form novalidate="novalidate" role="form" class="form-horizontal">
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-10">
-      <input ng-model="newResource.email" type="email" placeholder="e.g. user@example.org" class="form-control"/>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-10">
-      <input ng-model="newResource.password" type="password" placeholder="e.g. myP@s$wOrD" class="form-control"/>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">First Name</label>
-    <div class="col-sm-10">
-      <input ng-model="newResource.first_name" type="text" placeholder="e.g. Mario" class="form-control"/>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Last Name</label>
-    <div class="col-sm-10">
-      <input ng-model="newResource.last_name" type="text" placeholder="e.g. Rossi" class="form-control"/><br/>
-    </div>
+    <ng-form name="addFormIn">
+      <label class="col-sm-2 control-label">{{ f.human }}</label>
+      <div class="col-sm-10">
+        <input ng-model="f.value" type="{{ f.type }}" ng-required="{{ f.required }}" placeholder="{{ f.placeholder }}" class="form-control"/>
+        <!--div(ng-show="addFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
+        //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
+        
+        -->
+      </div>
+    </ng-form>
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button ng-click="add(newResource)" type="submit" class="btn btn-primary">Add {{ meta.name }}</button>
+      <button type="submit" class="btn btn-primary">Add {{ meta.name }}</button>
     </div>
   </div>
 </form>
-<h2 class="sub-header">Angular models</h2>
-<pre>form = {{ newResource | json }}</pre>
-<pre>master = {{ master | json }}</pre>
+<h2 class="sub-header">Models</h2>
+<pre>form = {{ meta.form_fields | json }}</pre>
+<pre>resource = {{ resource | json }}</pre>
+<pre>result = {{ result | json }}</pre>

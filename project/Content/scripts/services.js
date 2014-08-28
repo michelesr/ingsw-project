@@ -33,21 +33,25 @@ services.factory('Meta', function() {
           human: 'Email',
           model: 'email',
           type: 'email',
+          required: true,
           placeholder: 'user@example.org'
         }, {
           human: 'Password',
           model: 'password',
           type: 'password',
+          required: true,
           placeholder: 'your password'
         }, {
           human: 'First name',
           model: 'first_name',
           type: 'text',
+          required: false,
           placeholder: 'Mario'
         }, {
           human: 'Last name',
           model: 'last_name',
           type: 'text',
+          required: false,
           placeholder: 'Rossi'
         }
       ]
@@ -62,6 +66,7 @@ services.factory('Meta', function() {
           human: 'Name',
           model: 'name',
           type: 'text',
+          required: true,
           placeholder: 'coffee'
         }
       ]
