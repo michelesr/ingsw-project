@@ -1,5 +1,6 @@
 using System;
 using project.Utils;
+using Newtonsoft.Json;
 
 namespace project.Models {
 	public enum userType {supplier, admin, undefined};
@@ -75,7 +76,10 @@ namespace project.Models {
 		}
 
         protected static T _getAdminOrSupplierByUserId<T>(int user_id) {
-            return _db.getData(_getTableName<T>(), "user_id", user_id.ToString())[0].toObject<T>();
+            ConvertibleHashtable userData = getHashtableById<User>(user_id);
+            ConvertibleHashtable extraData = _db.getData(_getTableName<T>(), "user_id", user_id.ToString())[0];
+            extraData.merge(userData);
+            return extraData.toObject<T>();
         }
 
 

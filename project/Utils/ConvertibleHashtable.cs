@@ -9,6 +9,7 @@ namespace project.Utils {
 	public class ConvertibleHashtable : Hashtable {
 		// converte l'hashtable nell'oggetto .NET desiderato
 		public T toObject<T>() {
+            //Console.WriteLine(JsonConvert.SerializeObject(this));
 			return JObject.Parse(JsonConvert.SerializeObject(this)).ToObject<T>();
 		}
 
