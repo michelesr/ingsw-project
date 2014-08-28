@@ -1,14 +1,23 @@
-h1.page-header Add a {{ resourceMeta.name }}
+h1.page-header
+  span.fa.fa-plus
+  span  Add a {{ meta.name }}
 
-form(name="signForm" ng-controller="FormController" novalidate class="form-horizontal")
-  div(ng-repeat="f in fields")
-    ng-form(name="signFormIn")
-      input(type="text" name="theInput" ng-required="f.isRequired")
-      div(ng-show="signFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
-        span(class="error" ng-show="signFormIn.theInput.$error.required") The field is required.
+//form(name="signForm" ng-controller="FormController" novalidate class="form-horizontal")
+  //div(ng-repeat="f in meta.form_fields")
+    //ng-form(name="signFormIn")
+      //input(type="text" name="theInput" ng-required="f.isRequired")
+      //div(ng-show="signFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
+        //span(class="error" ng-show="signFormIn.theInput.$error.required") The field is required.
 
 form(novalidate class="form-horizontal" role="form")
+  .form-group(ng-repeat="f in meta.form_fields")
+    label(class="col-sm-2 control-label") {{ f.human }}
+    .col-sm-10
+      input.form-control(ng-model="newResource.{{ f.model }}", type="{{ f.type }}", placeholder="{{ f.placeholder }}")
 
+//
+
+form(novalidate class="form-horizontal" role="form")
   .form-group
     label(class="col-sm-2 control-label") Email
     .col-sm-10
@@ -32,7 +41,7 @@ form(novalidate class="form-horizontal" role="form")
 
   .form-group
     div(class="col-sm-offset-2 col-sm-10")
-      button(ng-click="add(newResource)" type="submit" class="btn btn-primary") Add {{ resourceMeta.name }}
+      button(ng-click="add(newResource)" type="submit" class="btn btn-primary") Add {{ meta.name }}
 
 
 h2.sub-header Angular models

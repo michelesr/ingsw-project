@@ -4,12 +4,7 @@ app = angular.module('app', ['ui.router', 'ui.router.stateHelper', 'ui.bootstrap
 
 controllers = angular.module('controllers', []);
 
-controllers.controller('RootCtrl', function($scope, $state, AuthService) {
-  $scope.currentUser = null;
-  return $scope.setCurrentUser = function(user) {
-    return $scope.currentUser = user;
-  };
-});
+services = angular.module('services', ['ngResource']);
 
 app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
   $httpProvider.defaults.headers.post['Content-Type'] = '';
@@ -47,11 +42,13 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
           }, {
             name: 'add',
             url: '/add',
-            templateUrl: 'Content/partials/user_form.html'
+            templateUrl: 'Content/partials/resource.add.html',
+            controller: 'UserAddCtrl'
           }, {
             name: 'detail',
             url: '/detail/:id',
-            templateUrl: 'Content/partials/resource.detail.html'
+            templateUrl: 'Content/partials/resource.detail.html',
+            controller: 'UserDetailCtrl'
           }
         ]
       }, {
@@ -68,11 +65,13 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
           }, {
             name: 'add',
             url: '/add',
-            templateUrl: 'Content/partials/product_form.html'
+            templateUrl: 'Content/partials/resource.add.html',
+            controller: 'ProductAddCtrl'
           }, {
             name: 'detail',
             url: '/detail/:id',
-            templateUrl: 'Content/partials/resource.detail.html'
+            templateUrl: 'Content/partials/resource.detail.html',
+            controller: 'ProductDetailCtrl'
           }
         ]
       }
@@ -81,47 +80,5 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
 });
 
 app.run(function($state) {
-  return $state.transitionTo('root.login');
-});
-
-services = angular.module('services', ['ngResource']);
-
-services.factory('User', function($resource) {
-  return $resource('/api/users/:action/:id', {}, {
-    list: {
-      method: 'GET',
-      params: {
-        action: 'index',
-        id: -1
-      },
-      isArray: true
-    },
-    add: {
-      method: 'POST',
-      params: {
-        action: 'add',
-        id: -1
-      }
-    }
-  });
-});
-
-services.factory('Product', function($resource, AuthService) {
-  return $resource('/api/products/:action/:id', {}, {
-    list: {
-      method: 'GET',
-      params: {
-        action: 'index',
-        id: -1
-      },
-      isArray: true
-    },
-    add: {
-      method: 'POST',
-      params: {
-        action: 'add',
-        id: -1
-      }
-    }
-  });
+  return $state.go('root.login');
 });

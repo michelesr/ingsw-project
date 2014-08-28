@@ -12,40 +12,56 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, AuthService) {
   };
   return $scope.login = function(credentials) {
     AuthService.login(credentials).then(function(user) {
-      return $scope.setCurrentUser(user);
+      $scope.setCurrentUser(user);
+      switch (Session.user_type) {
+        case 'admin':
+          return $state.go('root.admin');
+        case 'supplier':
+          return $state.go('root.supplier');
+        default:
+          return $state.go('root.login');
+      }
     });
     return $scope.master = $scope.credentials;
   };
 });
 
-controllers.controller('ProductCtrl', function($scope, $stateParams, Product) {
-  $scope.resourceMeta = {
-    name: 'product',
-    namePlural: 'products',
-    icon: 'fa-coffee'
-  };
-  $scope.resourceList = Product.list();
-  $scope.fields = ['id', 'name'];
+controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Meta) {
+  $scope.meta = Meta.product;
+  return $scope.list = Product.list();
+});
+
+controllers.controller('ProductAddCtrl', function($scope, $stateParams, Product, Meta) {
+  $scope.meta = Meta.product;
   $scope.newResource = {};
   $scope.master = {};
-  $scope.add = function(newResource) {
+  return $scope.add = function(newResource) {
     $scope.master = angular.copy(newResource);
     return $scope.newResource = Product.add(newResource);
   };
-  return $scope.resource = Product.get({
-    action: 'detail',
+});
+
+controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Product, Meta) {
+  $scope.meta = Meta.product;
+  return $scope.resource = Product.detail({
     id: $stateParams.id
   });
 });
 
-controllers.controller('UserCtrl', function($scope, $stateParams, User) {
-  $scope.resourceMeta = {
-    name: 'user',
-    namePlural: 'users',
-    icon: 'fa-users'
+controllers.controller('RootCtrl', function($scope, $state, AuthService) {
+  $scope.currentUser = null;
+  return $scope.setCurrentUser = function(user) {
+    return $scope.currentUser = user;
   };
-  $scope.resourceList = User.list();
-  $scope.fields = ['id', 'email', 'first_name', 'last_name'];
+});
+
+controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
+  $scope.meta = Meta.user;
+  return $scope.list = User.list();
+});
+
+controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {
+  $scope.meta = Meta.user;
   $scope.newResource = {};
   $scope.master = {};
   $scope.fields = [
@@ -71,12 +87,15 @@ controllers.controller('UserCtrl', function($scope, $stateParams, User) {
       isRequired: false
     }
   ];
-  $scope.add = function(newResource) {
+  return $scope.add = function(newResource) {
     $scope.master = angular.copy(newResource);
     return $scope.newResource = User.add(newResource);
   };
-  return $scope.user = User.get({
-    action: 'detail',
+});
+
+controllers.controller('UserDetailCtrl', function($scope, $stateParams, User, Meta) {
+  $scope.meta = Meta.user;
+  return $scope.user = User.detail({
     id: $stateParams.id
   });
 });

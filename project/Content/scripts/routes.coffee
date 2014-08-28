@@ -54,11 +54,13 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
       ,
         name: 'add'
         url: '/add'
-        templateUrl: 'Content/partials/user_form.html'
+        templateUrl: 'Content/partials/resource.add.html'
+        controller: 'UserAddCtrl'
       ,
         name: 'detail'
         url: '/detail/:id'
         templateUrl: 'Content/partials/resource.detail.html'
+        controller: 'UserDetailCtrl'
       ]
     ,
 
@@ -75,11 +77,13 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
       ,
         name: 'add'
         url: '/add'
-        templateUrl: 'Content/partials/product_form.html'
+        templateUrl: 'Content/partials/resource.add.html'
+        controller: 'ProductAddCtrl'
       ,
         name: 'detail'
         url: '/detail/:id'
         templateUrl: 'Content/partials/resource.detail.html'
+        controller: 'ProductDetailCtrl'
       ]
 
     # End -------------------------------------------------
@@ -87,4 +91,4 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
 
 
 app.run ($state) ->
-  $state.transitionTo 'root.login'
+  $state.go 'root.login'

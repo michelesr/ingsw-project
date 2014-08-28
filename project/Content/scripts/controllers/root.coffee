@@ -1,6 +1,3 @@
-controllers = angular.module 'controllers', []
-
-
 controllers.controller 'RootCtrl', ($scope, $state, AuthService) ->
 
   $scope.currentUser = null

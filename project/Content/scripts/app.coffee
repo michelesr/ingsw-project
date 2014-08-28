@@ -5,3 +5,6 @@ app = angular.module 'app', [
   'controllers'
   'services'
 ]
+
+controllers = angular.module 'controllers', []
+services = angular.module 'services', ['ngResource']

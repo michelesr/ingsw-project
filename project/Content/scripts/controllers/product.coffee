@@ -1,24 +1,21 @@
-controllers.controller 'ProductCtrl', ($scope, $stateParams, Product) ->
-  $scope.resourceMeta =
-    name: 'product'
-    namePlural: 'products'
-    icon: 'fa-coffee'
+controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
 
-  $scope.resourceList = Product.list()
-  $scope.fields = [
-    'id'
-    'name'
-  ]
+  $scope.meta = Meta.product
+  $scope.list = Product.list()
 
-  # Add
+
+controllers.controller 'ProductAddCtrl', ($scope, $stateParams, Product, Meta) ->
+
+  $scope.meta = Meta.product
+
   $scope.newResource = {}
   $scope.master = {}
   $scope.add = (newResource) ->
     $scope.master = angular.copy(newResource)
     $scope.newResource = Product.add(newResource)
 
-  # Detail
-  $scope.resource = Product.get({
-    action: 'detail'
-    id: $stateParams.id
-  })
+
+controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta) ->
+
+  $scope.meta = Meta.product
+  $scope.resource = Product.detail({ id: $stateParams.id })

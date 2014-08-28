@@ -1,12 +1,14 @@
 h1.page-header
-  span(class='fa {{ resourceMeta.icon }}')
-  span  {{ resourceMeta.namePlural }} list
+  span(class='fa {{ meta.icon }}')
+  span  {{ meta.namePlural }} list
 
 div(align='right')
-  a(ui-sref='root.{{ resourceMeta.namePlural }}.add')
-    button(type='button', class='btn btn-primary') Add a {{ resourceMeta.name }}
+  a(ui-sref='root.{{ meta.namePlural }}.add')
+    button(type='button', class='btn btn-primary')
+      span.fa.fa-plus
+      span  Add a {{ meta.name }}
 
-span(ng-switch='resourceList.length')
+span(ng-switch='list.length')
   span(ng-switch-when='0')
     ng-include(src='\'Content/partials/none_message.html\'')
 
@@ -14,14 +16,14 @@ span(ng-switch='resourceList.length')
     table(class='table table-striped table-hover')
       thead
         tr
-          th(ng-repeat='field in fields') {{ field | uppercase }}
-          th
+          th(ng-repeat='field in meta.fields') {{ field | uppercase }}
+          th Actions
       tbody
-        tr(ng-repeat='r in resourceList')
+        tr(ng-repeat='r in list')
           td(ng-repeat='field in r') {{ field }}
           td
-            a(ui-sref='root.{{ resourceMeta.namePlural }}.detail({id: r.id})') Detail
-          td
-            a.fa.fa-pencil(ui-sref='root.{{ resourceMeta.namePlural }}.edit({id: r.id})')
-          td
-            a.fa.fa-trash-o(ui-sref='root.{{ resourceMeta.namePlural }}.remove({id: r.id})')
+            a.fa.fa-eye(ui-sref='root.{{ meta.namePlural }}.detail({id: r.id})')
+            span 
+            a.fa.fa-pencil(ui-sref='root.{{ meta.namePlural }}.edit({id: r.id})')
+            span 
+            a.fa.fa-trash-o(ui-sref='root.{{ meta.namePlural }}.remove({id: r.id})')

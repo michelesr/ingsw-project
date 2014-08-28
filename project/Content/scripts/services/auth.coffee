@@ -3,12 +3,14 @@ services.factory 'AuthService', ($http, Session) ->
   authService.login = (credentials) ->
     $http.post '/api/auth', credentials
       .then (res) ->
-        $http.defaults.headers.common['api_key'] = res.api_key
-        myself = User.detail(res.id)
-        Session.create(res.user_id)
-        res.user
+        console.log(res.api_key)
+        me = User.detail({ id: res.user_id })
+        Session.create(me, res.api_key)
+
+  authService.logout = () ->
+    Session.destroy()
 
   authService.isAuthenticated = () ->
-    !!Session.userId
+    !!Session.me.user_id
 
   authService
