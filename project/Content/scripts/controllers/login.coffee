@@ -1,24 +1,25 @@
 controllers.controller 'LoginCtrl', ($scope, $rootScope, AuthService) ->
 
+  if $rootScope.debug
+    $scope.credentials =
+      email: 'admin@example.org'
+      password: 'admin'
+  else
+    $scope.credentials =
+      email: ''
+      password: ''
+
   $scope.msg = ''
   $scope.auth = ''
   $scope.master = {}
 #  $scope.sidebar = []
 
-  $scope.credentials =
-    email: ''
-    password: ''
-
-  # dev -----------------------------
-  $scope.credentials =
-    email: 'admin@example.org'
-    password: 'admin'
-  # ---------------------------------
 
   $scope.login = (credentials) ->
     AuthService.login(credentials)
-      .then (user) ->
-        $scope.setCurrentUser(user)
+      .then (res) ->
+        $scope.user = User.detail(res.user_id)
+        $scope.setCurrentUser(res.user_id)
         switch Session.user_type
           when 'admin' then $state.go 'root.admin'
           when 'supplier' then $state.go 'root.supplier'

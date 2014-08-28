@@ -1,11 +1,11 @@
-controllers.controller 'RootCtrl', ($scope, $state, AuthService) ->
+controllers.controller 'RootCtrl', ($rootScope, $scope, $state, AuthService) ->
+
+  $rootScope.debug = true
 
   $scope.currentUser = null
 
   $scope.setCurrentUser = (user) ->
     $scope.currentUser = user
 
-
-#  $scope.add = (newResource) ->
-#    $scope.master = angular.copy(newResource)
-#    $scope.newResource = Product.add(newResource)
+  if $scope.currentUser is null
+    $state.go 'root.login'

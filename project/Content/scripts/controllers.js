@@ -1,18 +1,22 @@
 controllers.controller('LoginCtrl', function($scope, $rootScope, AuthService) {
+  if ($rootScope.debug) {
+    $scope.credentials = {
+      email: 'admin@example.org',
+      password: 'admin'
+    };
+  } else {
+    $scope.credentials = {
+      email: '',
+      password: ''
+    };
+  }
   $scope.msg = '';
   $scope.auth = '';
   $scope.master = {};
-  $scope.credentials = {
-    email: '',
-    password: ''
-  };
-  $scope.credentials = {
-    email: 'admin@example.org',
-    password: 'admin'
-  };
   return $scope.login = function(credentials) {
-    AuthService.login(credentials).then(function(user) {
-      $scope.setCurrentUser(user);
+    AuthService.login(credentials).then(function(res) {
+      $scope.user = User.detail(res.user_id);
+      $scope.setCurrentUser(res.user_id);
       switch (Session.user_type) {
         case 'admin':
           return $state.go('root.admin');
@@ -55,11 +59,15 @@ controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Produ
   });
 });
 
-controllers.controller('RootCtrl', function($scope, $state, AuthService) {
+controllers.controller('RootCtrl', function($rootScope, $scope, $state, AuthService) {
+  $rootScope.debug = true;
   $scope.currentUser = null;
-  return $scope.setCurrentUser = function(user) {
+  $scope.setCurrentUser = function(user) {
     return $scope.currentUser = user;
   };
+  if ($scope.currentUser === null) {
+    return $state.go('root.login');
+  }
 });
 
 controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
