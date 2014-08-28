@@ -85,7 +85,8 @@ namespace project.Controllers {
                 ConvertibleHashtable supplierCurrentData = Supplier.getHashtableByUserId(id);
                 if (h.ContainsKey("supplier_data") && supplierCurrentData["user_id"].ToString() == id.ToString()) {
                     ConvertibleHashtable newData = ConvertibleHashtable.fromJObject((JObject) h["supplier_data"]);
-                    newData.merge(ConvertibleHashtable.fromJObject((JObject) h["user_data"]));
+                    if (h.ContainsKey("user_data"))
+                        newData.merge(ConvertibleHashtable.fromJObject((JObject) h["user_data"]));
                     supplierCurrentData.update(newData);
                     supplierCurrentData.toObject<Supplier>().update();
                 }

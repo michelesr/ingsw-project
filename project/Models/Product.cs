@@ -1,16 +1,10 @@
 ﻿using System;
 
-namespace project.Models
-{
-	public class Product
-	{
-		public Product ()
-		{
-			// TODO
-            // id_supplier
-            // nome
-            // ProductCategory
-		}
+namespace project.Models {
+    public class Product {
+        public int supplier_id { get; set; }
+        public int product_category { get; set; }
+        public String name { get; set; }
+        public Product () {}
 	}
 }
-
