@@ -64,6 +64,8 @@ namespace project.Controllers {
 			if (k.isAdmin ()) {
                 if (h["type"].ToString() == "supplier") {
                     ud.merge(((JObject) h["supplier_data"]).ToObject<ConvertibleHashtable>());
+                    if (ud.ContainsKey("user_id"))
+                        ud.Remove("user_id");
                     ud.toObject<Supplier>().insert();
                 }
                 else if (h["type"].ToString() == "admin")
@@ -88,6 +90,8 @@ namespace project.Controllers {
                     if (h.ContainsKey("user_data"))
                         newData.merge(ConvertibleHashtable.fromJObject((JObject) h["user_data"]));
                     supplierCurrentData.update(newData);
+                    if (supplierCurrentData.ContainsKey("user_id"))
+                        supplierCurrentData.Remove("user_id");
                     supplierCurrentData.toObject<Supplier>().update();
                 }
                 // modifica le info di base dell'utente, che sia admin o supplier
