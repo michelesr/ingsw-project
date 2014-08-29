@@ -4,7 +4,7 @@ namespace project.Utils
 {
 	public static class Schema {
 		private static Database _db = Database.Istance;
-        private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier", "ProductCategory", "Product"};
+        private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier", "ProductCategory", "Product", "City"};
 
 		private static readonly String[][] _apiKey = {
 			new String[] {"user_id", "INTEGER", "NOT NULL", _getFK ("user_id", "User", "id")},
@@ -21,7 +21,7 @@ namespace project.Utils
 		private static readonly String[][] _supplier = {
             new String[] {"vat", "VARCHAR", "NOT NULL"},
             new String[] {"supplier_name", "VARCHAR", "NOT NULL"},
-            new String[] {"city", "VARCHAR"},
+            new String[] {"city", "INTEGER", "NOT NULL", _getFK("city", "City", "id")},
             new String[] {"user_id", "INTEGER", "NOT NULL", _getFK("user_id", "User", "id")},
         };
 
@@ -33,21 +33,39 @@ namespace project.Utils
             new String[] {"name", "VARCHAR", "UNIQUE NOT NULL"}
         };
 
+        private static readonly String[][] _city = {
+            new String[] {"name", "VARCHAR", "UNIQUE NOT NULL"}
+        };
+
         private static readonly String[][] _product = {
             new String[] {"name", "VARCHAR", "UNIQUE NOT NULL"},
             new String[] {"supplier_id", "INTEGER", "NOT NULL", _getFK("supplier_id", "Supplier", "id") },
             new String[] {"product_category", "INTEGER", "NOT NULL", _getFK("product_category", "ProductCategory", "id")}
         };
 
-        private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier, _productCategory, _product };
+        private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier, _productCategory, _product, _city };
+
+        private static readonly String[][] _insertTriggers = {
+            // trigger's table, trigger field, extern table
+            new String[] {"ApiKey", "user_id", "User"},
+            new String[] {"Supplier", "user_id", "User"},
+            new String[] {"Supplier", "city", "City"},
+            new String[] {"Admin", "user_id", "User"},
+            new String[] {"Product", "supplier_id", "Supplier"},
+            new String[] {"Product", "product_category", "ProductCategory"}
+        };
 
 		private static String _getFK(String localField, String foreignTable, String foreignField) {
             return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`) ON DELETE RESTRICT ON UPDATE CASCADE"; 
 		}
 
 		public static void createSchema() {
-			for(int i = 0; i < _tables.Length; i++) 
+            for (int i = 0; i < _tables.Length; i++) 
 				_db.createTable(_tables[i], _models[i]);
+            foreach (String[] trigger in _insertTriggers) {
+                _db.createInsertTrigger(trigger[0], trigger[1], trigger[2]);
+                _db.createUpdateTrigger(trigger[0], trigger[1], trigger[2]);
+            }
 		}
 	}
 }

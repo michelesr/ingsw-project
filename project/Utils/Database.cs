@@ -77,6 +77,21 @@ namespace project.Utils
 			_executeQuery(sql);
 		}
 
+        // crea un trigger per controllare che non venga inserito un valore relativo a un valore esterno inesistente
+        public void createInsertTrigger(String localTable, String localField, String foreignTable) {
+            String sql = "CREATE TRIGGER IF NOT EXISTS it__" + localTable + "__" + localField +
+                         " BEFORE INSERT ON `" + localTable + "` FOR EACH ROW BEGIN SELECT RAISE(ROLLBACK, 'FK value \"" + localField + "\" references null value') " +
+                         " WHERE NEW.`" + localField + "` IS NOT NULL AND ((SELECT `id` FROM `" + foreignTable + "` WHERE `id`=NEW.`" + localField + "`) IS NULL); END;";
+            _executeQuery(sql);
+        }
+
+        public void createUpdateTrigger(String localTable, String localField, String foreignTable) {
+            String sql = "CREATE TRIGGER IF NOT EXISTS ut__" + localTable + "__" + localField +
+                         " BEFORE UPDATE ON `" + localTable + "` FOR EACH ROW BEGIN SELECT RAISE(ROLLBACK, 'FK value \"" + localField + "\" references null value') " +
+                         " WHERE NEW.`" + localField + "` IS NOT NULL AND ((SELECT `id` FROM `" + foreignTable + "` WHERE `id`=NEW.`" + localField + "`) IS NULL); END;";
+            _executeQuery(sql);
+        }
+
 		// inserisce un valore dentro una tabella (campi espliciti)
 		public int insertData(String tableName, ConvertibleHashtable data) {
 			// interrogo il db per ottenere informazioni sulla tabella 
