@@ -2,7 +2,7 @@
 
 namespace project.Models
 {
-	public class ProductStock
+    public class ProductStock : Model
 	{
 		public ProductStock ()
 		{

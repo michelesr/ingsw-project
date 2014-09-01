@@ -13,41 +13,36 @@ using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
 
-	public class ProductsController : Controller {
+    public class CitiesController : Controller {
 
-        // get all products
-		// GET /api/products/
 		[AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else {
                 if (id == -1)
-                    return Json(Model.getAll<Product>(), JsonRequestBehavior.AllowGet);
+                    return Json(Model.getAll<City>(), JsonRequestBehavior.AllowGet);
                 else
                     return Detail(id);
             }
 
 		}
 
-        // GET /api/products/detail/<id>
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else
-                return Json(Model.getHashtableById<Product>(id), JsonRequestBehavior.AllowGet);
+                return Json(Model.getHashtableById<City>(id), JsonRequestBehavior.AllowGet);
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
 
-        // delete product
-        // GET /api/products/delete/<id>
         public JsonResult Delete(int id) {
             if (!ApiKey.isRegistered()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else  {
-                ConvertibleHashtable.fromRequest().toObject<Product>().delete();
+                ConvertibleHashtable.fromRequest().toObject<City>().delete();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
         }
@@ -57,21 +52,19 @@ namespace project.Controllers {
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else  {
                 ConvertibleHashtable newData = ConvertibleHashtable.fromRequest();
-                ConvertibleHashtable currentData = Model.getHashtableById<Product>(id);
+                ConvertibleHashtable currentData = Model.getHashtableById<City>(id);
                 currentData.update(newData);
-                currentData.toObject<Product>().update();
+                currentData.toObject<City>().update();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
         }
 
-        // add product
-		// POST /api/products/
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else {
-                ConvertibleHashtable.fromRequest().toObject<Product>().insert();
+                ConvertibleHashtable.fromRequest().toObject<City>().insert();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
         }

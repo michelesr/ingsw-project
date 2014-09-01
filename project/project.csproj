@@ -85,6 +85,9 @@
     <Compile Include="Utils\Costants.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Models\Catalog.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\StocksController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

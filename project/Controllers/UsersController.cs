@@ -19,7 +19,7 @@ namespace project.Controllers {
 		public JsonResult Index(int id) {
 			ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
-                return Json(ConvertibleHashtable.filterPassword(Model.getAll<Models.User>()), JsonRequestBehavior.AllowGet);
+                return Json(ConvertibleHashtable.filterPassword(Model.getAll<User>()), JsonRequestBehavior.AllowGet);
 			else 
 				return Detail (id);
 		}
@@ -29,9 +29,9 @@ namespace project.Controllers {
 		public JsonResult Detail(int id) {
 			ApiKey k = ApiKey.getApiKey();
 			if (k.isAdmin() || k.checkUser(id))
-			    return Json(Model.getHashtableById<Models.User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
+			    return Json(Model.getHashtableById<User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
 			else
-				return Json(Utils.Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}
 
         // GET /api/users/delete/<id>/
@@ -47,12 +47,12 @@ namespace project.Controllers {
                     if (s.user_id == id)
                         s.delete();
                     else
-                        return Json(Utils.Costants.USER_NOT_FOUND, JsonRequestBehavior.AllowGet);
+                        return Json(Costants.USER_NOT_FOUND, JsonRequestBehavior.AllowGet);
                 }
-                return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
+                return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
             else
-                return Json(Utils.Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
         // POST /api/users/add/
@@ -71,11 +71,11 @@ namespace project.Controllers {
                 else if (h["type"].ToString() == "admin")
 					ud.toObject<Admin>().insert();
 				else
-      				return Json(Utils.Costants.WRONG_USER_TYPE, JsonRequestBehavior.AllowGet);
-				return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
+      				return Json(Costants.WRONG_USER_TYPE, JsonRequestBehavior.AllowGet);
+				return Json(Costants.OK, JsonRequestBehavior.AllowGet);
 			}
 			else 
-				return Json(Utils.Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
+				return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -103,10 +103,10 @@ namespace project.Controllers {
                 }
                 // aggiorna le api key per riflettere evenutali modifiche alla password o alla mail
                 ApiKey.fromUserId(id).update();
-                return Json(Utils.Costants.OK, JsonRequestBehavior.AllowGet);
+                return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
             else 
-                return Json(Utils.Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 	}
 }

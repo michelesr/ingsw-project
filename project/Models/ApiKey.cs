@@ -46,5 +46,10 @@ namespace project.Models {
 		public bool checkUser(int id) {
 			return this.user_id == id;
 		}
+
+        public static bool isRegistered() {
+            return getApiKey().user_id != 0;
+        }
+
 	}
 }
