@@ -24,6 +24,15 @@ namespace project.Models {
         public static Supplier getByUserId(int user_id) {
             return _getAdminOrSupplierByUserId<Supplier>(user_id);
         }
+
+        public static int getUserIdBySupplierId(int supplier_id) {
+            return getById<Supplier>(supplier_id).user_id;
+        }
+
+        // check if user_id provided match with the supplier id provided
+        public static bool checkUserId(int uid, int sid) {
+            return getUserIdBySupplierId(sid) == uid;
+        }
 	}
 }
 

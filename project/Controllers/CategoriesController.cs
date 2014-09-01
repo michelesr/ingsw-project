@@ -36,8 +36,8 @@ namespace project.Controllers {
                 return Json(Model.getHashtableById<ProductCategory>(id), JsonRequestBehavior.AllowGet);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
 
+        [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
             if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -47,6 +47,7 @@ namespace project.Controllers {
             }
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);

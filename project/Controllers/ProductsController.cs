@@ -39,41 +39,47 @@ namespace project.Controllers {
                 return Json(Model.getHashtableById<Product>(id), JsonRequestBehavior.AllowGet);
         }
 
-        [AcceptVerbs(HttpVerbs.Get)]
-
         // delete product
         // GET /api/products/delete/<id>
+        [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
-            if (!ApiKey.isRegistered()) 
-                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
-            else  {
+            ApiKey k = ApiKey.getApiKey();
+            Product p = Model.getById<Product>(id);
+            if(k.isAdmin() || Supplier.checkUserId(k.user_id, p.supplier_id))  {
                 ConvertibleHashtable.fromRequest().toObject<Product>().delete();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
+            else
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
-            if (!ApiKey.isRegistered()) 
-                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
-            else  {
-                ConvertibleHashtable newData = ConvertibleHashtable.fromRequest();
-                ConvertibleHashtable currentData = Model.getHashtableById<Product>(id);
+            ApiKey k = ApiKey.getApiKey();
+            ConvertibleHashtable newData = ConvertibleHashtable.fromRequest();
+            ConvertibleHashtable currentData = Model.getHashtableById<Product>(id);
+            if(k.isAdmin() || Supplier.checkUserId(k.user_id, int.Parse(currentData["supplier_id"].ToString())))  {
                 currentData.update(newData);
                 currentData.toObject<Product>().update();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
+            else
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
         // add product
 		// POST /api/products/
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
-            if (!ApiKey.isRegistered())
-                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
-            else {
+            ApiKey k = ApiKey.getApiKey();
+            ConvertibleHashtable data = ConvertibleHashtable.fromRequest();
+            if (k.isAdmin() || (data.ContainsKey("supplier_id") && 
+                Supplier.checkUserId(k.user_id, int.Parse(data["supplier_id"].ToString())))) {
                 ConvertibleHashtable.fromRequest().toObject<Product>().insert();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
+            else
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
 	}

@@ -4,11 +4,15 @@ namespace project.Models
 {
     public class ProductStock : Model
 	{
-        int id_product { get; set; }
-        double price { get; set; }
-        int min { get; set; }
-        int max { get; set; }
-        int aviability { get; set; }
+        public int product_id { get; set; }
+        public double price { get; set; }
+        public int min { get; set; }
+        public int max { get; set; }
+        public int aviability { get; set; }
+
+        public bool checkUserId(int uid) {
+            return Model.getById<Product>(product_id).checkUserId(uid);
+        }
 	}
 }
 
