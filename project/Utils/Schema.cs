@@ -4,7 +4,7 @@ namespace project.Utils
 {
 	public static class Schema {
 		private static Database _db = Database.Istance;
-        private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier", "ProductCategory", "Product", "City", "Session"};
+        private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier", "ProductCategory", "ProductStock", "Product", "City", "Session"};
 
 		private static readonly String[][] _apiKey = {
 			new String[] {"user_id", "INTEGER", "NOT NULL", _getFK ("user_id", "User", "id")},
@@ -33,6 +33,14 @@ namespace project.Utils
             new String[] {"name", "VARCHAR", "UNIQUE NOT NULL"}
         };
 
+        private static readonly String[][] _productStock = {
+            new String[] {"product_id", "INTEGER", "NOT NULL", _getFK("product_id", "Product", "id")},
+            new String[] {"price", "DECIMAL", "NOT NULL"},
+            new String[] {"min", "INT"},
+            new String[] {"max", "INT"},
+            new String[] {"aviability", "INT", "NOT NULL"}
+        };
+
         private static readonly String[][] _city = {
             new String[] {"name", "VARCHAR", "UNIQUE NOT NULL"}
         };
@@ -49,7 +57,7 @@ namespace project.Utils
             new String[] { "end", "VARCHAR" }
         };
 
-        private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier, _productCategory, _product, _city, _session };
+        private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier, _productCategory, _productStock, _product, _city, _session };
 
         private static readonly String[][] _insertTriggers = {
             // trigger's table, trigger field, extern table
@@ -60,6 +68,7 @@ namespace project.Utils
             new String[] {"Product", "supplier_id", "Supplier"},
             new String[] {"Product", "product_category", "ProductCategory"},
             new String[] {"Session", "user_id", "User"},
+            new String[] {"ProductStock", "product_id", "Product"}
         };
 
 		private static String _getFK(String localField, String foreignTable, String foreignField) {

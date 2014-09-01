@@ -39,7 +39,7 @@ namespace project.Controllers {
         [AcceptVerbs(HttpVerbs.Get)]
 
         public JsonResult Delete(int id) {
-            if (!ApiKey.isRegistered()) 
+            if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else  {
                 ConvertibleHashtable.fromRequest().toObject<ProductCategory>().delete();
@@ -48,7 +48,7 @@ namespace project.Controllers {
         }
 
         public JsonResult Update(int id) {
-            if (!ApiKey.isRegistered()) 
+            if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else  {
                 ConvertibleHashtable newData = ConvertibleHashtable.fromRequest();
@@ -61,7 +61,7 @@ namespace project.Controllers {
 
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
-            if (!ApiKey.isRegistered())
+            if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else {
                 ConvertibleHashtable.fromRequest().toObject<ProductCategory>().insert();

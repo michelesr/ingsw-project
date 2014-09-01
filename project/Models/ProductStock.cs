@@ -4,16 +4,11 @@ namespace project.Models
 {
     public class ProductStock : Model
 	{
-		public ProductStock ()
-		{
-			// TODO
-            // id_product
-            // prezzo
-            // quantita minima
-            // quantita massima
-            // disponibilita'
-            // listino
-		}
+        int id_product { get; set; }
+        double price { get; set; }
+        int min { get; set; }
+        int max { get; set; }
+        int aviability { get; set; }
 	}
 }
 
