@@ -38,7 +38,8 @@ namespace project
 		protected void Application_Start ()
 		{
 			Schema.createSchema();
-            new Admin("admin@example.org", "admin", "admin", "admin").insert();
+            if (Admin.getByUserId(1).email != "admin@example.org")
+              new Admin("admin@example.org", "admin", "admin", "admin").insert();
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

@@ -21,6 +21,7 @@ namespace project.Controllers {
 			movies.Add(new { id = 1, name = "Saponette profumate" });
 			movies.Add(new { id = 2, name = "Pizza Margherita" });
 			movies.Add(new { id = 3, name = "Pasta buona" });
+            Console.WriteLine(movies.ElementAt(0).GetType());
 
 			return Json(movies, JsonRequestBehavior.AllowGet);
 		}
