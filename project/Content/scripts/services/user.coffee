@@ -19,3 +19,13 @@ services.factory 'User', ($resource) ->
       method: 'GET'
       params:
         action: 'detail'
+
+    update:
+      method: 'POST'
+      params:
+        action: 'update'
+
+    delete:
+      method: 'POST'
+      params:
+        action: 'delete'

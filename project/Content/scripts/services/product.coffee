@@ -24,3 +24,8 @@ services.factory 'Product', ($resource) ->
       method: 'POST'
       params:
         action: 'update'
+
+    delete:
+      method: 'POST'
+      params:
+        action: 'delete'

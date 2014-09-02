@@ -6,6 +6,10 @@ controllers = angular.module('controllers', []);
 
 services = angular.module('services', ['ngResource']);
 
+app.run(function($state) {
+  return $state.go('root.login');
+});
+
 app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
   $httpProvider.defaults.headers.post['Content-Type'] = '';
   $urlRouterProvider.when('', '/').otherwise('/error');

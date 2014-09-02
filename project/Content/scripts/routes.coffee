@@ -96,9 +96,4 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         controller: 'ProductEditCtrl'
       ]
 
-    # End -------------------------------------------------
     ]
-
-
-#app.run ($state) ->
-#  $state.go 'root.login'

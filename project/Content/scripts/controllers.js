@@ -53,7 +53,6 @@ controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Produ
 
 controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product, Meta) {
   $scope.meta = Meta.product;
-  $scope.result = {};
   Product.detail({
     id: $stateParams.id
   }, function(res) {
@@ -124,8 +123,21 @@ controllers.controller('UserDetailCtrl', function($scope, $stateParams, User, Me
 
 controllers.controller('UserEditCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
-  $scope.resource = {};
-  $scope.result = {};
+  User.detail({
+    id: $stateParams.id
+  }, function(res) {
+    var f, model, _i, _len, _ref, _results;
+    $scope.user = res;
+    _ref = $scope.meta['form_fields'];
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      model = f['model'];
+      $scope.result = model;
+      _results.push(f['value'] = $scope.user[model]);
+    }
+    return _results;
+  });
   return $scope.edit = function(form_fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
@@ -135,6 +147,6 @@ controllers.controller('UserEditCtrl', function($scope, $stateParams, User, Meta
       v = f['value'];
       $scope.resource[k] = v;
     }
-    return $scope.result = User.add(resource);
+    return $scope.result = User.update(resource);
   };
 });

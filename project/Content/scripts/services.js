@@ -102,6 +102,12 @@ services.factory('Product', function($resource) {
       params: {
         action: 'update'
       }
+    },
+    "delete": {
+      method: 'POST',
+      params: {
+        action: 'delete'
+      }
     }
   });
 });
@@ -141,6 +147,18 @@ services.factory('User', function($resource) {
       method: 'GET',
       params: {
         action: 'detail'
+      }
+    },
+    update: {
+      method: 'POST',
+      params: {
+        action: 'update'
+      }
+    },
+    "delete": {
+      method: 'POST',
+      params: {
+        action: 'delete'
       }
     }
   });

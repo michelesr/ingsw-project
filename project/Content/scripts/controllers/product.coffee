@@ -11,13 +11,11 @@ controllers.controller 'ProductAddCtrl', ($scope, $stateParams, Product, Meta) -
   $scope.result = {}
 
   $scope.add = (form_fields) ->
-
     $scope.resource = {}
     for f in form_fields
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
-
     $scope.result = Product.add($scope.resource)
 
 
@@ -30,7 +28,7 @@ controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta
 controllers.controller 'ProductEditCtrl', ($scope, $stateParams, Product, Meta) ->
 
   $scope.meta = Meta.product
-  $scope.result = {}
+#  $scope.result = {}
 
   Product.detail { id: $stateParams.id }, (res) ->
     $scope.product = res
@@ -45,5 +43,4 @@ controllers.controller 'ProductEditCtrl', ($scope, $stateParams, Product, Meta) 
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
-
     $scope.result = Product.update(resource)
