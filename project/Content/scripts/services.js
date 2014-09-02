@@ -1,7 +1,7 @@
-services.factory('AuthService', function($http, User, Session) {
-  var authService;
-  authService = {};
-  authService.login = function(credentials) {
+services.factory('Auth', function($http, User, Session) {
+  var auth;
+  auth = {};
+  auth.login = function(credentials) {
     return $http.post('/api/auth', credentials).then(function(res_auth) {
       $http.defaults.headers.common['api_key'] = res_auth.data.api_key;
       return User.detail({
@@ -11,11 +11,14 @@ services.factory('AuthService', function($http, User, Session) {
       });
     });
   };
-  authService.logout = function() {
+  auth.logout = function() {
     $http.defaults.headers.common['api_key'] = '';
     return Session.destroy();
   };
-  return authService;
+  auth.isAuthenticated = function() {
+    return Session.id;
+  };
+  return auth;
 });
 
 services.factory('Meta', function() {
@@ -68,7 +71,33 @@ services.factory('Meta', function() {
           placeholder: 'coffee'
         }
       ]
-    }
+    },
+    adminSidebar: [
+      {
+        name: 'Users',
+        state: 'root.users.list',
+        icon: 'fa-users'
+      }, {
+        name: 'Categories',
+        state: 'root.categories.list',
+        icon: 'fa-square'
+      }, {
+        name: 'Products',
+        state: 'root.products.list',
+        icon: 'fa-coffee'
+      }
+    ],
+    supplierSidebar: [
+      {
+        name: 'Products',
+        state: 'root.products.list',
+        icon: 'fa-coffee'
+      }, {
+        name: 'Catalog',
+        state: 'root.catalog',
+        icon: 'fa-coffee'
+      }
+    ]
   };
 });
 
@@ -107,7 +136,7 @@ services.factory('Product', function($resource) {
 });
 
 services.service('Session', function() {
-  this.create = function(user, apiKey) {
+  this.create = function(user) {
     this.id = user.id;
     this.email = user.email;
     this.name = user.first_name;
@@ -119,6 +148,12 @@ services.service('Session', function() {
     this.name = null;
     return this.type = null;
   };
+  return this;
+});
+
+services.service('Sidebar', function() {
+  this.admin = function() {};
+  this.supplier = function() {};
   return this;
 });
 

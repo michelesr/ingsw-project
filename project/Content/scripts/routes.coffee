@@ -22,24 +22,30 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
       url: '/'
       template: ''
     ,
+      name: 'about'
+      url: '/about'
+      templateUrl: 'Content/partials/about.html'
+    ,
       name: 'login'
       url: '/login'
       templateUrl: 'Content/partials/login.html'
       controller: 'LoginCtrl'
     ,
-#      name: 'admin'
-#      url: '/admin'
-#      templateUrl: 'Content/partials/admin.html'
-#    ,
-#      name: 'supplier'
-#      url: '/supplier'
-#      templateUrl: 'Content/partials/supplier.html'
-#    ,
-#      name: 'sidebar'
-#      url: '/supplier'
-#      templateUrl: 'Content/partials/supplier.html'
-#      controller: 'SidebarCtrl'
-#    ,
+      name: 'logout'
+      url: '/logout'
+      template: '<ui-view/>'
+      controller: 'LogoutCtrl'
+    ,
+      name: 'admin'
+      url: '/admin'
+      templateUrl: 'Content/partials/admin.html'
+      controller: 'AdminCtrl'
+    ,
+      name: 'supplier'
+      url: '/supplier'
+      templateUrl: 'Content/partials/supplier.html'
+      controller: 'SupplierCtrl'
+    ,
 
     # Users -----------------------------------------------
       name: 'users'

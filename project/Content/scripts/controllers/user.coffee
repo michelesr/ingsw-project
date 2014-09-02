@@ -6,6 +6,7 @@ controllers.controller 'UserCtrl', ($scope, $stateParams, User, Meta) ->
 
 controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->
 
+  $scope.meta = []
   $scope.meta = Meta.user
   $scope.resource = {}
   $scope.result = {}

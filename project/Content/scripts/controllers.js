@@ -1,4 +1,8 @@
-controllers.controller('LoginCtrl', function($scope, $rootScope, Auth) {
+controllers.controller('AdminCtrl', function($rootScope, Meta) {
+  return $rootScope.sidebar = Meta.adminSidebar;
+});
+
+controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth, Session) {
   if ($rootScope.debug) {
     $scope.credentials = {
       email: 'admin@example.org',
@@ -7,16 +11,15 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, Auth) {
   }
   return $scope.login = function(credentials) {
     return Auth.login(credentials).then(function(res) {
-      switch (Session.type) {
-        case 'admin':
-          return $state.go('root.admin');
-        case 'supplier':
-          return $state.go('root.supplier');
-        default:
-          return $state.go('root.login');
-      }
+      return $state.go('root.admin');
     });
   };
+});
+
+controllers.controller('LogoutCtrl', function($state, $rootScope, Auth) {
+  Auth.logout;
+  $rootScope.sidebar = [];
+  return $state.go('root.login');
 });
 
 controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Meta) {
@@ -78,16 +81,15 @@ controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product
   };
 });
 
-controllers.controller('RootCtrl', function($rootScope, $scope, $state) {
+controllers.controller('RootCtrl', function($rootScope, $scope, $state, Auth) {
   $rootScope.debug = true;
-  switch (Session.type) {
-    case 'admin':
-      return $state.go('root.admin');
-    case 'supplier':
-      return $state.go('root.supplier');
-    default:
-      return $state.go('root.login');
+  if (!Auth.isAuthenticated) {
+    return $state.go('root.login');
   }
+});
+
+controllers.controller('SupplierCtrl', function($rootScope, Meta) {
+  return $rootScope.sidebar = Meta.supplierSidebar;
 });
 
 controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
@@ -96,6 +98,7 @@ controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
 });
 
 controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {
+  $scope.meta = [];
   $scope.meta = Meta.user;
   $scope.resource = {};
   $scope.result = {};

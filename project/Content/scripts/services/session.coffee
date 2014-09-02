@@ -1,5 +1,6 @@
 services.service 'Session', () ->
-  this.create = (user, apiKey) ->
+
+  this.create = (user) ->
     this.id = user.id
     this.email = user.email
     this.name = user.first_name

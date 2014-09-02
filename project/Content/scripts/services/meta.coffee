@@ -2,6 +2,7 @@ services.factory 'Meta', () ->
 
   meta =
 
+    # Resources -------------------------------------------
     user:
       name: 'user'
       namePlural: 'users'
@@ -53,3 +54,32 @@ services.factory 'Meta', () ->
         required: true
         placeholder: 'coffee'
       ]
+
+
+    # Sidebars --------------------------------------------
+    adminSidebar: [
+      name: 'Users'
+      state: 'root.users.list'
+      icon: 'fa-users'
+    ,
+      name: 'Categories'
+      state: 'root.categories.list'
+      icon: 'fa-square'
+
+    # dev
+    ,
+      name: 'Products'
+      state: 'root.products.list'
+      icon: 'fa-coffee'
+    # end dev
+    ]
+
+    supplierSidebar: [
+      name: 'Products'
+      state: 'root.products.list'
+      icon: 'fa-coffee'
+    ,
+      name: 'Catalog'
+      state: 'root.catalog'
+      icon: 'fa-coffee'
+    ]
