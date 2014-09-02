@@ -3,24 +3,17 @@ services.factory('AuthService', function($http, User, Session) {
   authService = {};
   authService.login = function(credentials) {
     return $http.post('/api/auth', credentials).then(function(res_auth) {
-      console.log(res_auth);
-      console.log(res_auth.data);
-      console.log(res_auth.data.api_key);
+      $http.defaults.headers.common['api_key'] = res_auth.data.api_key;
       return User.detail({
         id: res_auth.data.user_id
       }, function(res_user) {
-        var me;
-        me = res_user;
-        console.log(me);
-        return Session.create(me, res_auth.data.api_key);
+        return Session.create(res_user);
       });
     });
   };
   authService.logout = function() {
+    $http.defaults.headers.common['api_key'] = '';
     return Session.destroy();
-  };
-  authService.isAuthenticated = function() {
-    return !!Session.me.user_id;
   };
   return authService;
 });
@@ -85,16 +78,12 @@ services.factory('Product', function($resource) {
       method: 'GET',
       params: {
         action: 'index',
-        id: 0
+        id: -1
       },
       isArray: true
     },
     add: {
-      method: 'POST',
-      params: {
-        action: 'add',
-        id: -1
-      }
+      method: 'POST'
     },
     detail: {
       method: 'GET',
@@ -109,7 +98,7 @@ services.factory('Product', function($resource) {
       }
     },
     "delete": {
-      method: 'POST',
+      method: 'GET',
       params: {
         action: 'delete'
       }
@@ -117,16 +106,18 @@ services.factory('Product', function($resource) {
   });
 });
 
-services.service('Session', function($http) {
-  this.create = function(me, apiKey) {
-    this.user_id = me.user_id;
-    this.user_type = me.user_type;
-    return $http.defaults.headers.common['api_key'] = apiKey;
+services.service('Session', function() {
+  this.create = function(user, apiKey) {
+    this.id = user.id;
+    this.email = user.email;
+    this.name = user.first_name;
+    return this.type = user.user_type;
   };
   this.destroy = function() {
-    this.user_id = null;
-    this.user_type = null;
-    return $http.defaults.headers.common['api_key'] = '';
+    this.id = null;
+    this.email = null;
+    this.name = null;
+    return this.type = null;
   };
   return this;
 });
@@ -137,16 +128,12 @@ services.factory('User', function($resource) {
       method: 'GET',
       params: {
         action: 'index',
-        id: 0
+        id: -1
       },
       isArray: true
     },
     add: {
-      method: 'POST',
-      params: {
-        action: 'add',
-        id: -1
-      }
+      method: 'POST'
     },
     detail: {
       method: 'GET',
@@ -161,7 +148,7 @@ services.factory('User', function($resource) {
       }
     },
     "delete": {
-      method: 'POST',
+      method: 'GET',
       params: {
         action: 'delete'
       }

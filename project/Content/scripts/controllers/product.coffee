@@ -28,7 +28,6 @@ controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta
 controllers.controller 'ProductEditCtrl', ($scope, $stateParams, Product, Meta) ->
 
   $scope.meta = Meta.product
-#  $scope.result = {}
 
   Product.detail { id: $stateParams.id }, (res) ->
     $scope.product = res

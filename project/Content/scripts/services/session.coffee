@@ -1,12 +1,14 @@
-services.service 'Session', ($http) ->
-  this.create = (me, apiKey) ->
-    this.user_id = me.user_id
-    this.user_type = me.user_type
-    $http.defaults.headers.common['api_key'] = apiKey
+services.service 'Session', () ->
+  this.create = (user, apiKey) ->
+    this.id = user.id
+    this.email = user.email
+    this.name = user.first_name
+    this.type = user.user_type
 
   this.destroy = () ->
-    this.user_id = null
-    this.user_type = null
-    $http.defaults.headers.common['api_key'] = ''
+    this.id = null
+    this.email = null
+    this.name = null
+    this.type = null
 
   this

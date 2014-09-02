@@ -6,14 +6,11 @@ services.factory 'Product', ($resource) ->
       method: 'GET'
       params:
         action: 'index'
-        id: 0
+        id: -1
       isArray: true
 
     add:
       method: 'POST'
-      params:
-        action: 'add'
-        id: -1
 
     detail:
       method: 'GET'
@@ -26,6 +23,6 @@ services.factory 'Product', ($resource) ->
         action: 'update'
 
     delete:
-      method: 'POST'
+      method: 'GET'
       params:
         action: 'delete'

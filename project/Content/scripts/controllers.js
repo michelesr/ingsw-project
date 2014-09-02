@@ -1,24 +1,21 @@
-controllers.controller('LoginCtrl', function($scope, $rootScope, AuthService) {
+controllers.controller('LoginCtrl', function($scope, $rootScope, Auth) {
   if ($rootScope.debug) {
     $scope.credentials = {
       email: 'admin@example.org',
       password: 'admin'
     };
-  } else {
-    $scope.credentials = {
-      email: '',
-      password: ''
-    };
   }
-  $scope.msg = '';
-  $scope.auth = '';
-  $scope.master = {};
   return $scope.login = function(credentials) {
-    AuthService.login(credentials).then(function(res) {
-      $scope.user = User.detail(res.user_id);
-      return $scope.setCurrentUser(res.user_id);
+    return Auth.login(credentials).then(function(res) {
+      switch (Session.type) {
+        case 'admin':
+          return $state.go('root.admin');
+        case 'supplier':
+          return $state.go('root.supplier');
+        default:
+          return $state.go('root.login');
+      }
     });
-    return $scope.master = $scope.credentials;
   };
 });
 
@@ -81,14 +78,15 @@ controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product
   };
 });
 
-controllers.controller('RootCtrl', function($rootScope, $scope, $state, AuthService) {
+controllers.controller('RootCtrl', function($rootScope, $scope, $state) {
   $rootScope.debug = true;
-  $scope.currentUser = null;
-  $scope.setCurrentUser = function(user) {
-    return $scope.currentUser = user;
-  };
-  if ($scope.currentUser === null) {
-    return $state.go('root.login');
+  switch (Session.type) {
+    case 'admin':
+      return $state.go('root.admin');
+    case 'supplier':
+      return $state.go('root.supplier');
+    default:
+      return $state.go('root.login');
   }
 });
 
@@ -116,7 +114,7 @@ controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta)
 
 controllers.controller('UserDetailCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
-  return $scope.user = User.detail({
+  return $scope.resource = User.detail({
     id: $stateParams.id
   });
 });

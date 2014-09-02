@@ -22,7 +22,7 @@ controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->
 controllers.controller 'UserDetailCtrl', ($scope, $stateParams, User, Meta) ->
 
   $scope.meta = Meta.user
-  $scope.user = User.detail({ id: $stateParams.id })
+  $scope.resource = User.detail({ id: $stateParams.id })
 
 
 controllers.controller 'UserEditCtrl', ($scope, $stateParams, User, Meta) ->

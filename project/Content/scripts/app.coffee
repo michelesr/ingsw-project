@@ -8,6 +8,3 @@ app = angular.module 'app', [
 
 controllers = angular.module 'controllers', []
 services = angular.module 'services', ['ngResource']
-
-app.run ($state) ->
-  $state.go 'root.login'

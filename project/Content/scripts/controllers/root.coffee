@@ -1,11 +1,8 @@
-controllers.controller 'RootCtrl', ($rootScope, $scope, $state, AuthService) ->
+controllers.controller 'RootCtrl', ($rootScope, $scope, $state) ->
 
   $rootScope.debug = true
 
-  $scope.currentUser = null
-
-  $scope.setCurrentUser = (user) ->
-    $scope.currentUser = user
-
-  if $scope.currentUser is null
-    $state.go 'root.login'
+  switch Session.type
+    when 'admin' then $state.go 'root.admin'
+    when 'supplier' then $state.go 'root.supplier'
+    else $state.go 'root.login'
