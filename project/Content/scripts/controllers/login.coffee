@@ -8,9 +8,9 @@ controllers.controller 'LoginCtrl', ($scope, $rootScope, $state, Auth, Session) 
   $scope.login = (credentials) ->
     Auth.login(credentials)
       .then (res) ->
-        $rootScope.isAuth = Auth.isAuthenticated
-        $state.go 'root.admin'
-#        switch Session.type
-#          when 'admin' then $state.go 'admin'
-#          when 'supplier' then $state.go 'root.supplier'
-#          else $state.go 'root.login'
+        console.log Session.type
+        $rootScope.isAuth = true
+
+        switch Session.type
+          when 0 then $state.go 'root.supplier'
+          when 1 then $state.go 'root.admin'

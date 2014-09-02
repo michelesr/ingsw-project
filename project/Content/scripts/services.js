@@ -140,15 +140,13 @@ services.service('Session', function() {
     this.id = user.id;
     this.email = user.email;
     this.name = user.first_name;
-    this.type = user.user_type;
-    return this.auth = true;
+    return this.type = user.type;
   };
   this.destroy = function() {
     this.id = null;
     this.email = null;
     this.name = null;
-    this.type = null;
-    return this.auth = false;
+    return this.type = null;
   };
   return this;
 });
