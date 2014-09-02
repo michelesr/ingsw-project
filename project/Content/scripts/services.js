@@ -1,14 +1,19 @@
-services.factory('AuthService', function($http, Session) {
+services.factory('AuthService', function($http, User, Session) {
   var authService;
   authService = {};
   authService.login = function(credentials) {
-    return $http.post('/api/auth', credentials).then(function(res) {
-      var me;
-      console.log(res.api_key);
-      me = User.detail({
-        id: res.user_id
+    return $http.post('/api/auth', credentials).then(function(res_auth) {
+      console.log(res_auth);
+      console.log(res_auth.data);
+      console.log(res_auth.data.api_key);
+      return User.detail({
+        id: res_auth.data.user_id
+      }, function(res_user) {
+        var me;
+        me = res_user;
+        console.log(me);
+        return Session.create(me, res_auth.data.api_key);
       });
-      return Session.create(me, res.api_key);
     });
   };
   authService.logout = function() {

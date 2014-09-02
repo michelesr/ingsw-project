@@ -16,7 +16,7 @@ controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
-    $scope.result = User.add(resource)
+    $scope.result = User.add($scope.resource)
 
 
 controllers.controller 'UserDetailCtrl', ($scope, $stateParams, User, Meta) ->

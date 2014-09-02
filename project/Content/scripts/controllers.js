@@ -110,7 +110,7 @@ controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta)
       v = f['value'];
       $scope.resource[k] = v;
     }
-    return $scope.result = User.add(resource);
+    return $scope.result = User.add($scope.resource);
   };
 });
 
