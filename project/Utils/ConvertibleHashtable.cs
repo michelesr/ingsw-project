@@ -22,7 +22,9 @@ namespace project.Utils {
 		}
 
         public static ConvertibleHashtable fromRequest() {
-            return fromString(new StreamReader(HttpContext.Current.Request.InputStream).ReadLine());
+            Stream input = HttpContext.Current.Request.InputStream;
+            input.Position = 0;
+            return fromString(new StreamReader(input).ReadToEnd());
         }
 
 		public ConvertibleHashtable filter(String[] keys) {
@@ -58,6 +60,10 @@ namespace project.Utils {
 					this.Add(k, h[k]);
 			}
 		}
+
+        public override string ToString() {
+            return JsonConvert.SerializeObject(this);
+        }
 	}
 }
 
