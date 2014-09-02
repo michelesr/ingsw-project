@@ -20,10 +20,10 @@ controllers.controller 'LoginCtrl', ($scope, $rootScope, AuthService) ->
       .then (res) ->
         $scope.user = User.detail(res.user_id)
         $scope.setCurrentUser(res.user_id)
-        switch Session.user_type
-          when 'admin' then $state.go 'root.admin'
-          when 'supplier' then $state.go 'root.supplier'
-          else $state.go 'root.login'
+#        switch Session.user_type
+#          when 'admin' then $state.go 'root.admin'
+#          when 'supplier' then $state.go 'root.supplier'
+#          else $state.go 'root.login'
 
     $scope.master = $scope.credentials
 

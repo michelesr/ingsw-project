@@ -19,3 +19,8 @@ services.factory 'Product', ($resource) ->
       method: 'GET'
       params:
         action: 'detail'
+
+    update:
+      method: 'POST'
+      params:
+        action: 'update'

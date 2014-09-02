@@ -96,6 +96,12 @@ services.factory('Product', function($resource) {
       params: {
         action: 'detail'
       }
+    },
+    update: {
+      method: 'POST',
+      params: {
+        action: 'update'
+      }
     }
   });
 });

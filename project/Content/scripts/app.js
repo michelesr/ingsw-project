@@ -49,6 +49,11 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
             url: '/detail/:id',
             templateUrl: 'Content/partials/resource.detail.html',
             controller: 'UserDetailCtrl'
+          }, {
+            name: 'edit',
+            url: '/edit/:id',
+            templateUrl: 'Content/partials/resource.edit.html',
+            controller: 'UserEditCtrl'
           }
         ]
       }, {
@@ -72,13 +77,14 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
             url: '/detail/:id',
             templateUrl: 'Content/partials/resource.detail.html',
             controller: 'ProductDetailCtrl'
+          }, {
+            name: 'edit',
+            url: '/edit/:id',
+            templateUrl: 'Content/partials/resource.edit.html',
+            controller: 'ProductEditCtrl'
           }
         ]
       }
     ]
   });
-});
-
-app.run(function($state) {
-  return $state.go('root.login');
 });

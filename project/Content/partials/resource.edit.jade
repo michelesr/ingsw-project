@@ -1,21 +1,23 @@
 h1.page-header
   span.fa.fa-plus
-  span  Add a {{ meta.name }}
+  span  Edit a {{ meta.name }}
 
-form.form-horizontal(ng-submit="add(meta.form_fields)", name="addForm", role="form", novalidate)
+form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidate)
   .form-group(ng-repeat="f in meta.form_fields")
-    ng-form(name="addFormIn")
+    ng-form(name="editFormIn")
       label.col-sm-2.control-label {{ f.human }}
       .col-sm-10
         input.form-control(ng-model="f.value", type="{{ f.type }}", ng-required="{{ f.required }}", placeholder="{{ f.placeholder }}")
-        //div(ng-show="addFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
+        //div(ng-show="editFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
           //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
 
   .form-group
-    div.col-sm-offset-2.col-sm-9
-      button.btn.btn-primary(type="submit") Add {{ meta.name }}
+    div.col-sm-offset-2.col-sm-10
+      button.btn.btn-primary(type="submit") Edit {{ meta.name }}
 
 h2.sub-header Models
 pre form = {{ meta.form_fields | json }}
+pre product = {{ product | json }}
 pre resource = {{ resource | json }}
 pre result = {{ result | json }}
+pre stocazzo = {{ stocazzo | json }}

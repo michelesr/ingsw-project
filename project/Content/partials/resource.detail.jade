@@ -1,5 +1,12 @@
 h1.page-header {{ meta.name }} detail
 
+div(align='right')
+  a(ui-sref='root.{{ meta.namePlural }}.edit')
+    button.btn.btn-primary(type='button')
+      span.fa.fa-pencil
+      span  Edit this {{ meta.name }}
+
+br
 .table-responsive
   table.table.table-striped.table-bordered.table-hover
     tbody

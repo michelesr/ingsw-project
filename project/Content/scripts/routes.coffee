@@ -61,6 +61,11 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         url: '/detail/:id'
         templateUrl: 'Content/partials/resource.detail.html'
         controller: 'UserDetailCtrl'
+      ,
+        name: 'edit'
+        url: '/edit/:id'
+        templateUrl: 'Content/partials/resource.edit.html'
+        controller: 'UserEditCtrl'
       ]
     ,
 
@@ -84,11 +89,16 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         url: '/detail/:id'
         templateUrl: 'Content/partials/resource.detail.html'
         controller: 'ProductDetailCtrl'
+      ,
+        name: 'edit'
+        url: '/edit/:id'
+        templateUrl: 'Content/partials/resource.edit.html'
+        controller: 'ProductEditCtrl'
       ]
 
     # End -------------------------------------------------
     ]
 
 
-app.run ($state) ->
-  $state.go 'root.login'
+#app.run ($state) ->
+#  $state.go 'root.login'

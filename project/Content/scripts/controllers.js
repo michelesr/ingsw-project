@@ -16,15 +16,7 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, AuthService) {
   return $scope.login = function(credentials) {
     AuthService.login(credentials).then(function(res) {
       $scope.user = User.detail(res.user_id);
-      $scope.setCurrentUser(res.user_id);
-      switch (Session.user_type) {
-        case 'admin':
-          return $state.go('root.admin');
-        case 'supplier':
-          return $state.go('root.supplier');
-        default:
-          return $state.go('root.login');
-      }
+      return $scope.setCurrentUser(res.user_id);
     });
     return $scope.master = $scope.credentials;
   };
@@ -57,6 +49,37 @@ controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Produ
   return $scope.resource = Product.detail({
     id: $stateParams.id
   });
+});
+
+controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product, Meta) {
+  $scope.meta = Meta.product;
+  $scope.result = {};
+  Product.detail({
+    id: $stateParams.id
+  }, function(res) {
+    var f, model, _i, _len, _ref, _results;
+    $scope.product = res;
+    _ref = $scope.meta['form_fields'];
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      model = f['model'];
+      $scope.result = model;
+      _results.push(f['value'] = $scope.product[model]);
+    }
+    return _results;
+  });
+  return $scope.edit = function(form_fields, $stateParams) {
+    var f, k, v, _i, _len;
+    $scope.resource = {};
+    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
+      f = form_fields[_i];
+      k = f['model'];
+      v = f['value'];
+      $scope.resource[k] = v;
+    }
+    return $scope.result = Product.update(resource);
+  };
 });
 
 controllers.controller('RootCtrl', function($rootScope, $scope, $state, AuthService) {
@@ -97,4 +120,21 @@ controllers.controller('UserDetailCtrl', function($scope, $stateParams, User, Me
   return $scope.user = User.detail({
     id: $stateParams.id
   });
+});
+
+controllers.controller('UserEditCtrl', function($scope, $stateParams, User, Meta) {
+  $scope.meta = Meta.user;
+  $scope.resource = {};
+  $scope.result = {};
+  return $scope.edit = function(form_fields) {
+    var f, k, v, _i, _len;
+    $scope.resource = {};
+    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
+      f = form_fields[_i];
+      k = f['model'];
+      v = f['value'];
+      $scope.resource[k] = v;
+    }
+    return $scope.result = User.add(resource);
+  };
 });
