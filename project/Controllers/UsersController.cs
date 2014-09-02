@@ -28,8 +28,12 @@ namespace project.Controllers {
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail(int id) {
 			ApiKey k = ApiKey.getApiKey();
-			if (k.isAdmin() || k.checkUser(id))
-			    return Json(Model.getHashtableById<User>(id).filterPassword(), JsonRequestBehavior.AllowGet);
+            if (k.isAdmin() || k.checkUser(id)) {
+                ConvertibleHashtable h = Model.getHashtableById<User>(id);
+                if (h.toObject<User>().type == userType.supplier)
+                    h = Supplier.getHashtableByUserId(id);
+                return Json(h.filterPassword(), JsonRequestBehavior.AllowGet);
+            }
 			else
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}

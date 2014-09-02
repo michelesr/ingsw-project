@@ -15,7 +15,8 @@ namespace project.Utils
             new String[] {"email", "VARCHAR", "UNIQUE NOT NULL"},
             new String[] {"password", "VARCHAR", "NOT NULL"},
             new String[] {"first_name", "VARCHAR", "NOT NULL"},
-            new String[] {"last_name", "VARCHAR", "NOT NULL"}
+            new String[] {"last_name", "VARCHAR", "NOT NULL"},
+            new String[] {"type", "INTEGER"}
         };
 
 		private static readonly String[][] _supplier = {
