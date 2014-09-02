@@ -24,16 +24,12 @@ html(lang='en', ng-app='app')
         .navbar-header
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
             span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(ui-sref='root.home') Web Project
         .navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
-            li
-              a(ui-sref='root.login') Login
-            li
+            li(ng-if='isAuth')
               a(ui-sref='root.logout') Logout
+            li(ng-if='!isAuth')
+              a(ui-sref='root.login') Login
             li
               a(ui-sref='root.about') About
     .container-fluid

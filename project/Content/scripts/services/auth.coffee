@@ -11,9 +11,9 @@ services.factory 'Auth', ($http, User, Session) ->
 
   auth.logout = () ->
     $http.defaults.headers.common['api_key'] = ''
-    Session.destroy()
+    Session.destroy
 
   auth.isAuthenticated = () ->
-    Session.id
+    Session.auth
 
   auth

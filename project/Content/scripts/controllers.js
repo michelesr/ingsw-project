@@ -11,6 +11,7 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth, S
   }
   return $scope.login = function(credentials) {
     return Auth.login(credentials).then(function(res) {
+      $rootScope.isAuth = Auth.isAuthenticated;
       return $state.go('root.admin');
     });
   };
@@ -19,6 +20,7 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth, S
 controllers.controller('LogoutCtrl', function($state, $rootScope, Auth) {
   Auth.logout;
   $rootScope.sidebar = [];
+  $rootScope.isAuth = false;
   return $state.go('root.login');
 });
 
@@ -81,10 +83,15 @@ controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product
   };
 });
 
-controllers.controller('RootCtrl', function($rootScope, $scope, $state, Auth) {
+controllers.controller('RootCtrl', function($rootScope, $scope, $state, Auth, Session) {
   $rootScope.debug = true;
-  if (!Auth.isAuthenticated) {
-    return $state.go('root.login');
+  switch (Session.type) {
+    case 'admin':
+      return $state.go('root.admin');
+    case 'supplier':
+      return $state.go('root.supplier');
+    default:
+      return $state.go('root.login');
   }
 });
 

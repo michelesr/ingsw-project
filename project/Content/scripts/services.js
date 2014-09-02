@@ -13,10 +13,10 @@ services.factory('Auth', function($http, User, Session) {
   };
   auth.logout = function() {
     $http.defaults.headers.common['api_key'] = '';
-    return Session.destroy();
+    return Session.destroy;
   };
   auth.isAuthenticated = function() {
-    return Session.id;
+    return Session.auth;
   };
   return auth;
 });
@@ -140,13 +140,15 @@ services.service('Session', function() {
     this.id = user.id;
     this.email = user.email;
     this.name = user.first_name;
-    return this.type = user.user_type;
+    this.type = user.user_type;
+    return this.auth = true;
   };
   this.destroy = function() {
     this.id = null;
     this.email = null;
     this.name = null;
-    return this.type = null;
+    this.type = null;
+    return this.auth = false;
   };
   return this;
 });
