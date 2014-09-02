@@ -50,21 +50,21 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
       children: [
         name: 'list'
         url: ''
-        templateUrl: 'Content/partials/resource.list.html'
+        templateUrl: 'Content/partials/resource/list.html'
       ,
         name: 'add'
         url: '/add'
-        templateUrl: 'Content/partials/resource.add.html'
+        templateUrl: 'Content/partials/resource/add.html'
         controller: 'UserAddCtrl'
       ,
         name: 'detail'
         url: '/detail/:id'
-        templateUrl: 'Content/partials/resource.detail.html'
+        templateUrl: 'Content/partials/resource/detail.html'
         controller: 'UserDetailCtrl'
       ,
         name: 'edit'
         url: '/edit/:id'
-        templateUrl: 'Content/partials/resource.edit.html'
+        templateUrl: 'Content/partials/resource/edit.html'
         controller: 'UserEditCtrl'
       ]
     ,
@@ -78,21 +78,21 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
       children: [
         name: 'list'
         url: ''
-        templateUrl: 'Content/partials/resource.list.html'
+        templateUrl: 'Content/partials/resource/list.html'
       ,
         name: 'add'
         url: '/add'
-        templateUrl: 'Content/partials/resource.add.html'
+        templateUrl: 'Content/partials/resource/add.html'
         controller: 'ProductAddCtrl'
       ,
         name: 'detail'
         url: '/detail/:id'
-        templateUrl: 'Content/partials/resource.detail.html'
+        templateUrl: 'Content/partials/resource/detail.html'
         controller: 'ProductDetailCtrl'
       ,
         name: 'edit'
         url: '/edit/:id'
-        templateUrl: 'Content/partials/resource.edit.html'
+        templateUrl: 'Content/partials/resource/edit.html'
         controller: 'ProductEditCtrl'
       ]
 
