@@ -13,11 +13,11 @@ namespace project.Controllers {
     // controller per l'esportazione dei listini
     public class CatalogsController : Controller {
 
-        // GET /api/catalogs/export/<id_supplier>
+        // GET /api/catalogs/detail/<id_supplier>
         // necessita api_key negli header della richiesta http
         // ritorna un JSON contenente tutte le informazioni su un produttore e i suoi stocks
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Export(int id) {
+        public ActionResult Detail(int id) {
             // controllo dei permessi
             ApiKey k = ApiKey.getApiKey();
             if (!k.isAdmin() && !k.checkUser(id))

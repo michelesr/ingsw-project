@@ -26,16 +26,21 @@ namespace project.Models {
             // per ogni prodotto del produttore
             foreach (ConvertibleHashtable product in products) {
                 // aggiunge gli stock relativi
-                foreach (ConvertibleHashtable h in _db.getData("ProductStock", "product_id", product["id"].ToString())) 
-                    stocks.Add(h);
-                // aggiunge la categoria del prodotto se non è già presente
-                foreach (ConvertibleHashtable h in _db.getData("ProductCategory", "id", product["product_category"].ToString())) {
-                    bool isAlreadyIn = false;
-                    foreach (ConvertibleHashtable c in categories)
-                        if (c["id"].ToString() == h["id"].ToString())
-                            isAlreadyIn = true;
-                    if(!isAlreadyIn)
-                        categories.Add(h);
+                try {
+                    foreach (ConvertibleHashtable h in _db.getData("ProductStock", "product_id", product["id"].ToString())) 
+                        stocks.Add(h);
+                    // aggiunge la categoria del prodotto se non è già presente
+                    foreach (ConvertibleHashtable h in _db.getData("ProductCategory", "id", product["product_category"].ToString())) {
+                        bool isAlreadyIn = false;
+                        foreach (ConvertibleHashtable c in categories)
+                            if (c["id"].ToString() == h["id"].ToString())
+                                isAlreadyIn = true;
+                        if(!isAlreadyIn)
+                            categories.Add(h);
+                    }
+                }
+                catch(NullReferenceException e) {
+                    Console.WriteLine(e);
                 }
             }
             // ottiene la città del supplier
