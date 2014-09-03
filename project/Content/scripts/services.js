@@ -1,4 +1,4 @@
-services.factory('Auth', function($http, User, Session) {
+services.factory('Auth', function($http, $rootScope, User) {
   var auth;
   auth = {};
   auth.login = function(credentials) {
@@ -7,16 +7,25 @@ services.factory('Auth', function($http, User, Session) {
       return User.detail({
         id: res_auth.data.user_id
       }, function(res_user) {
-        return Session.create(res_user);
+        $rootScope.authId = res_user.id;
+        $rootScope.authEmail = res_user.email;
+        $rootScope.authFirstName = res_user.first_name;
+        $rootScope.authLastName = res_user.last_name;
+        $rootScope.authType = res_user.type;
+        return $rootScope.isAuth = true;
       });
     });
   };
   auth.logout = function() {
+    $http.get('/api/auth/logout').then(function() {});
     $http.defaults.headers.common['api_key'] = '';
-    return Session.destroy;
-  };
-  auth.isAuthenticated = function() {
-    return Session.auth;
+    $rootScope.authId = null;
+    $rootScope.authEmail = null;
+    $rootScope.authFistName = '';
+    $rootScope.authLastName = null;
+    $rootScope.authType = null;
+    $rootScope.sidebar = [{}];
+    return $rootScope.isAuth = false;
   };
   return auth;
 });

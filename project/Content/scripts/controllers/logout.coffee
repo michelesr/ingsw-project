@@ -1,8 +1,4 @@
-controllers.controller 'LogoutCtrl', ($state, $rootScope, Auth) ->
+controllers.controller 'LogoutCtrl', ($state, Auth) ->
 
-# implementa post /api/logout
-
-  Auth.logout
-  $rootScope.sidebar = []
-  $rootScope.isAuth = false
+  Auth.logout()
   $state.go 'root.login'

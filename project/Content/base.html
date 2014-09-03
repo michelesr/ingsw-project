@@ -26,6 +26,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
+            <li ng-if="isAuth"><a ng-href="/#/users/detail/{{ authId }}">Hello {{ authFirstName }}!</a></li>
             <li ng-if="isAuth"><a ui-sref="root.logout">Logout</a></li>
             <li ng-if="!isAuth"><a ui-sref="root.login">Login</a></li>
             <li><a ui-sref="root.about">About</a></li>

@@ -1,4 +1,4 @@
-services.factory 'Auth', ($http, User, Session) ->
+services.factory 'Auth', ($http, $rootScope, User) ->
 
   auth = {}
 
@@ -7,13 +7,26 @@ services.factory 'Auth', ($http, User, Session) ->
       .then (res_auth) ->
         $http.defaults.headers.common['api_key'] = res_auth.data.api_key
         User.detail { id: res_auth.data.user_id }, (res_user) ->
-          Session.create(res_user)
+          $rootScope.authId = res_user.id
+          $rootScope.authEmail = res_user.email
+          $rootScope.authFirstName = res_user.first_name
+          $rootScope.authLastName = res_user.last_name
+          $rootScope.authType = res_user.type
+
+          $rootScope.isAuth = true
 
   auth.logout = () ->
-    $http.defaults.headers.common['api_key'] = ''
-    Session.destroy
+    $http.get '/api/auth/logout'
+      .then () ->
+      $http.defaults.headers.common['api_key'] = ''
 
-  auth.isAuthenticated = () ->
-    Session.auth
+      $rootScope.authId = null
+      $rootScope.authEmail = null
+      $rootScope.authFistName = ''
+      $rootScope.authLastName = null
+      $rootScope.authType = null
+
+      $rootScope.sidebar = [{}]
+      $rootScope.isAuth = false
 
   auth

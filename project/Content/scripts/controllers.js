@@ -2,7 +2,7 @@ controllers.controller('AdminCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth, Session) {
+controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth) {
   if ($rootScope.debug) {
     $scope.credentials = {
       email: 'admin@example.org',
@@ -10,10 +10,8 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth, S
     };
   }
   return $scope.login = function(credentials) {
-    return Auth.login(credentials).then(function(res) {
-      console.log(Session.type);
-      $rootScope.isAuth = true;
-      switch (Session.type) {
+    return Auth.login(credentials).then(function() {
+      switch ($rootScope.authType) {
         case 0:
           return $state.go('root.supplier');
         case 1:
@@ -23,10 +21,8 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth, S
   };
 });
 
-controllers.controller('LogoutCtrl', function($state, $rootScope, Auth) {
-  Auth.logout;
-  $rootScope.sidebar = [];
-  $rootScope.isAuth = false;
+controllers.controller('LogoutCtrl', function($state, Auth) {
+  Auth.logout();
   return $state.go('root.login');
 });
 
