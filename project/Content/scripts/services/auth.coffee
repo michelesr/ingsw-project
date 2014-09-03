@@ -14,19 +14,21 @@ services.factory 'Auth', ($http, $rootScope, User) ->
           $rootScope.authType = res_user.type
 
           $rootScope.isAuth = true
+          console.log '1bissssssssssssssssss'
+          console.log $rootScope
 
   auth.logout = () ->
     $http.get '/api/auth/logout'
       .then () ->
-      $http.defaults.headers.common['api_key'] = ''
+        $http.defaults.headers.common['api_key'] = ''
 
-      $rootScope.authId = null
-      $rootScope.authEmail = null
-      $rootScope.authFistName = ''
-      $rootScope.authLastName = null
-      $rootScope.authType = null
+        $rootScope.authId = null
+        $rootScope.authEmail = null
+        $rootScope.authFistName = ''
+        $rootScope.authLastName = null
+        $rootScope.authType = null
 
-      $rootScope.sidebar = [{}]
-      $rootScope.isAuth = false
+        $rootScope.sidebar = [{}]
+        $rootScope.isAuth = false
 
   auth

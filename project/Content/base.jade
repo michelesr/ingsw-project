@@ -37,7 +37,7 @@ html(lang='en', ng-app='app')
     .container-fluid
       .row
         .col-sm-3.col-md-2.sidebar
-          ul.nav.nav-sidebar
+          ul.nav.nav-sidebar(ng-if='sidebar')
             li(ng-repeat='c in sidebar' ui-sref-active='active')
               a(ui-sref='{{ c.state }}')
                 span(class='fa {{ c.icon }}')

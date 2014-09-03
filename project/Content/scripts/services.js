@@ -12,20 +12,23 @@ services.factory('Auth', function($http, $rootScope, User) {
         $rootScope.authFirstName = res_user.first_name;
         $rootScope.authLastName = res_user.last_name;
         $rootScope.authType = res_user.type;
-        return $rootScope.isAuth = true;
+        $rootScope.isAuth = true;
+        console.log('1bissssssssssssssssss');
+        return console.log($rootScope);
       });
     });
   };
   auth.logout = function() {
-    $http.get('/api/auth/logout').then(function() {});
-    $http.defaults.headers.common['api_key'] = '';
-    $rootScope.authId = null;
-    $rootScope.authEmail = null;
-    $rootScope.authFistName = '';
-    $rootScope.authLastName = null;
-    $rootScope.authType = null;
-    $rootScope.sidebar = [{}];
-    return $rootScope.isAuth = false;
+    return $http.get('/api/auth/logout').then(function() {
+      $http.defaults.headers.common['api_key'] = '';
+      $rootScope.authId = null;
+      $rootScope.authEmail = null;
+      $rootScope.authFistName = '';
+      $rootScope.authLastName = null;
+      $rootScope.authType = null;
+      $rootScope.sidebar = [{}];
+      return $rootScope.isAuth = false;
+    });
   };
   return auth;
 });
@@ -104,7 +107,7 @@ services.factory('Meta', function() {
       }, {
         name: 'Catalog',
         state: 'root.catalog',
-        icon: 'fa-coffee'
+        icon: 'fa-list'
       }
     ]
   };

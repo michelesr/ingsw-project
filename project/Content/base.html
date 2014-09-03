@@ -37,7 +37,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
+          <ul ng-if="sidebar" class="nav nav-sidebar">
             <li ng-repeat="c in sidebar" ui-sref-active="active"><a ui-sref="{{ c.state }}"><span class="fa {{ c.icon }}"></span><span> {{ c.name }}</span></a></li>
           </ul>
         </div>

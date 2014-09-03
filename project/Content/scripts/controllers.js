@@ -10,7 +10,11 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth) {
     };
   }
   return $scope.login = function(credentials) {
-    return Auth.login(credentials).then(function() {
+    console.log('1111111111111111111');
+    console.log($rootScope);
+    Auth.login(credentials).then(function() {
+      console.log('2222222222222222');
+      console.log($rootScope);
       switch ($rootScope.authType) {
         case 0:
           return $state.go('root.supplier');
@@ -18,6 +22,8 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth) {
           return $state.go('root.admin');
       }
     });
+    console.log('33333333333333333');
+    return console.log($rootScope);
   };
 });
 

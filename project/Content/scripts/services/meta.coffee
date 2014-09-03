@@ -81,5 +81,5 @@ services.factory 'Meta', () ->
     ,
       name: 'Catalog'
       state: 'root.catalog'
-      icon: 'fa-coffee'
+      icon: 'fa-list'
     ]
