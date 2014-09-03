@@ -8,9 +8,9 @@ using Mono.Data.Sqlite;
 
 namespace project.Utils
 {
-	// api di alto livello di astrazione per database sqlite
-	public class Database
-	{
+    // wrapper di alto livello di astrazione per database sqlite
+    public class Database {
+
 		private const String _fileName = "db.sqlite"; // path del database
 		private SqliteConnection _con; // connessione al database 
 		private static volatile Database _istance = null; // istanza del database
@@ -24,16 +24,15 @@ namespace project.Utils
 						_istance = new Database();
 					}
 				}
-				return _istance;
+                return _istance;
 			}
 		}
 
-		// crea il Database 
-		private Database()
-		{
-			if (File.Exists(_fileName) == false) {
+        // crea il Database (costruttore privato, invocabile tramite istance) 
+        private Database() {
+			if (File.Exists(_fileName) == false) 
 				SqliteConnection.CreateFile(_fileName);
-			}
+
 			_con = new SqliteConnection("Data Source=" + _fileName);
 			_con.Open();
 		}
@@ -49,6 +48,7 @@ namespace project.Utils
 		// converte i risultati di una query in un array di ConvertibleHashtable 
 		private ConvertibleHashtable[] _parseTable(DataTable table) {
 			ConvertibleHashtable[] outputTable;
+
 			if (table.Rows.Count > 0) {
 				outputTable = new ConvertibleHashtable[table.Rows.Count];
 				foreach (DataRow row in table.Rows) { outputTable [table.Rows.IndexOf(row)] = new ConvertibleHashtable ();
@@ -59,20 +59,24 @@ namespace project.Utils
 			}
 			else
 				outputTable = new ConvertibleHashtable[] { new ConvertibleHashtable() };
+
 			return outputTable;
 		}
 
 		// crea una tabella col nome scelto e con le combinazioni dati/tipi scelte 
 		public void createTable(String tableName, String[][] fields) {
 			String sql = "CREATE TABLE IF NOT EXISTS `" + tableName + "` (";
+
 			foreach(String[] field in fields) {
 				String options = (field.Length < 3? "": " " + field[2]);
 				sql += "`" + field[0] + "` " + field[1] + options + ", ";
 			}
+
 			sql += "`id` INTEGER PRIMARY KEY NOT NULL";
 			foreach(String[] field in fields) 
 				if (field.Length >= 4) 
 					sql += field[3];
+
 			sql += ");";
 			_executeQuery(sql);
 		}
@@ -104,25 +108,27 @@ namespace project.Utils
 				keys.Add(x["name"].ToString());
 
 			// aggiungo le chiavi invalide a una lista
-			foreach(var k in data.Keys) {
+			foreach(var k in data.Keys) 
 				if(!(keys.Contains(k.ToString()))) 
 					invalidKeys.Add(k.ToString());
-			}
-
+			
 			// rimuovo i campi invalidi e l'id che viene autogenerato
 			foreach(String k in invalidKeys)
 				data.Remove(k);
 			data.Remove("id");
 
 			String sql = "INSERT INTO `" + tableName + "` (";
-			foreach(var d in data.Keys) {
+
+			foreach(var d in data.Keys) 
 				sql += "`" + d.ToString() + "`, ";
-			}
+			
 			sql += "`id`) VALUES (";
-			foreach(var d in data.Keys) {
+
+			foreach(var d in data.Keys) 
 				sql += "'" + data[d.ToString()] + "', ";
-			}
+			
 			sql += "NULL);" ;
+
 			lock (_lock) {
 				_executeQuery(sql);
 				return int.Parse(_executeQuery("SELECT last_insert_rowid() FROM `" + 
@@ -133,7 +139,6 @@ namespace project.Utils
 		// ritorna tutti i record della tabella scelta
 		public ConvertibleHashtable[] getData(String tableName) {
 			return _executeQuery("SELECT * FROM " + tableName);
-
 		}
 
 		// ritorna i record per i quali inputField = inputValue
@@ -144,12 +149,14 @@ namespace project.Utils
 		// ritorna i campi scelti per i record dove inputField = inputValue 
 		public ConvertibleHashtable[] getData(String tableName, String inputField, String inputValue, String[] outputFields) {
 			String sql = "SELECT ";
+
 			for(int i=0; i < outputFields.Length; i++) {
 				sql += outputFields[i];
 				if (i < outputFields.Length - 1) {
 					sql += ",";
 				}
 			}
+
 			sql += " FROM `" + tableName + "` WHERE `" + inputField + "`='" + inputValue + "'";
 			return _executeQuery(sql);
 		} 
@@ -169,21 +176,24 @@ namespace project.Utils
 			String sql = "SELECT * FROM " + tableName;
 			SqliteCommand cmd = new SqliteCommand(sql, _con);
 			DataTable table = new DataTable();
+            String columns = string.Empty;
+
 			table.Load(cmd.ExecuteReader());
 
-			String columns = string.Empty;
-			foreach (DataColumn column in table.Columns) {
+			foreach (DataColumn column in table.Columns) 
 				columns += column.ColumnName + " | ";
-			}
+
 			String tableString = columns + "\n";
 
 			foreach (DataRow row in table.Rows) {
 				String rowText = string.Empty;
-				foreach (DataColumn column in table.Columns) {
+
+				foreach (DataColumn column in table.Columns) 
 					rowText += row[column.ColumnName] + " | ";
-				}
+				
 				tableString += rowText + "\n";
 			}
+
 			return tableString;
 		}
 	}

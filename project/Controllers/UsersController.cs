@@ -14,7 +14,8 @@ namespace project.Controllers {
 	public class UsersController : Controller {
 
         // GET /api/users/
-        // GET /api/users/index/
+        // richiede una api_key negli headers http
+        // ritorna tutti gli utenti
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Index(int id) {
 			ApiKey k = ApiKey.getApiKey();
@@ -25,6 +26,10 @@ namespace project.Controllers {
 		}
 
         // GET /api/users/detail/<id>/
+        // richiede una api_key negli headers http
+        // ritorna i dettagli di un utente
+        // nota: se l'utente è un supplier ritorna anche le
+        // informazioni del supplier
 		[AcceptVerbs(HttpVerbs.Get)]
 		public JsonResult Detail(int id) {
 			ApiKey k = ApiKey.getApiKey();
@@ -39,6 +44,8 @@ namespace project.Controllers {
 		}
 
         // GET /api/users/delete/<id>/
+        // richiede una api_key negli headers http
+        // elimina un utente
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             if(k.isAdmin() || k.checkUser(id)) {
@@ -60,6 +67,10 @@ namespace project.Controllers {
         }
 
         // POST /api/users/add/
+        // richiede una admin api_key negli haeders http
+        // aggiunge un utente
+        // data: {type: "admin|supplier", user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
+        //        supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}}
 		[AcceptVerbs(HttpVerbs.Post)]
 		public JsonResult Index() {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
@@ -82,6 +93,11 @@ namespace project.Controllers {
 				return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}
 
+        // POST /api/users/update/<id>
+        // richiede una api_key negli headers http
+        // aggiorna le informazioni su un utente
+        // data: {user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
+        //        supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();

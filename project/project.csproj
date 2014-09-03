@@ -67,7 +67,6 @@
     </Compile>
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\City.cs" />
-    <Compile Include="Models\GeneralStats.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
@@ -88,7 +87,7 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
-    <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\CatalogsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

@@ -15,19 +15,22 @@ namespace project.Controllers {
 
     public class StocksController : Controller {
 
+        // GET /api/stocks/
+        // richiede api_key negli header http
+        // ritorna tutti gli stocks
 		[AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
-            else {
-                if (id == -1)
-                    return Json(Model.getAll<ProductStock>(), JsonRequestBehavior.AllowGet);
-                else
-                    return Detail(id);
-            }
-
+            else if (id == -1)
+                return Json(Model.getAll<ProductStock>(), JsonRequestBehavior.AllowGet);
+            else
+                return Detail(id);
 		}
 
+        // GET /api/stocks/detail/<id>
+        // richiede api_key negli header http
+        // ritorna uno stock
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
@@ -36,7 +39,10 @@ namespace project.Controllers {
                 return Json(Model.getHashtableById<ProductStock>(id), JsonRequestBehavior.AllowGet);
         }
 
-
+                
+        // GET /api/stocks/delete/<id>
+        // richiede una admin api_key negli header http
+        // elimina uno stock
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -47,6 +53,11 @@ namespace project.Controllers {
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
+
+        // POST /api/stocks/update/<id>
+        // richiede una admin api_key negli header http
+        // aggiorna uno stock
+        // data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, aviability:<av>}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -61,7 +72,11 @@ namespace project.Controllers {
             else
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
-
+                
+        // POST /api/stocks/
+        // richiede una admin api_key negli header http
+        // aggiunge uno stock
+        // data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, aviability:<av>}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
             ApiKey k = ApiKey.getApiKey();

@@ -2,11 +2,18 @@
 
 namespace project.Utils
 {
+    // classe contenente lo schema del database
 	public static class Schema {
+
+        // riferimento al db
 		private static Database _db = Database.Istance;
+        // tabelle
         private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier", "ProductCategory", "ProductStock", "Product", "City", "Session"};
 
+        // schemi delle tabelle
+
 		private static readonly String[][] _apiKey = {
+            // nome campo, tipo di dato, opzioni, chiave esterna(campo interno, tabella esterna, campo esterno)
 			new String[] {"user_id", "INTEGER", "NOT NULL", _getFK ("user_id", "User", "id")},
 			new String[] {"key", "VARCHAR", "UNIQUE NOT NULL"}
 		};
@@ -60,8 +67,10 @@ namespace project.Utils
 
         private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier, _productCategory, _productStock, _product, _city, _session };
 
+
+        // triggers per l'inserimento/aggiornamento
         private static readonly String[][] _insertTriggers = {
-            // trigger's table, trigger field, extern table
+            // tabella interna, campo interno, tabella esterna
             new String[] {"ApiKey", "user_id", "User"},
             new String[] {"Supplier", "user_id", "User"},
             new String[] {"Supplier", "city", "City"},
@@ -72,13 +81,16 @@ namespace project.Utils
             new String[] {"ProductStock", "product_id", "Product"}
         };
 
+        // metodo che restituisce la stringa sql per la generazione delle chiavi esterne
 		private static String _getFK(String localField, String foreignTable, String foreignField) {
             return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`) ON DELETE RESTRICT ON UPDATE CASCADE"; 
 		}
 
+        // metodo che inizializza il database
 		public static void createSchema() {
             for (int i = 0; i < _tables.Length; i++) 
 				_db.createTable(_tables[i], _models[i]);
+
             foreach (String[] trigger in _insertTriggers) {
                 _db.createInsertTrigger(trigger[0], trigger[1], trigger[2]);
                 _db.createUpdateTrigger(trigger[0], trigger[1], trigger[2]);

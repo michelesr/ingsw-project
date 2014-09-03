@@ -1,9 +1,11 @@
 ﻿using System;
 
-namespace project.Utils
-{
-	public class Costants
-	{
+namespace project.Utils {
+
+    // classe contenente le costanti dell'applicazione
+    public class Costants {
+
+        // json per utente non autorizzato
 		public static ConvertibleHashtable UNAUTHORIZED { 
             get { 
 				ConvertibleHashtable h = new ConvertibleHashtable();
@@ -12,6 +14,7 @@ namespace project.Utils
 			} 
 		}
 
+        // json per messaggio di successo dell'operazione
 		public static ConvertibleHashtable OK { 
             get { 
 				ConvertibleHashtable h = new ConvertibleHashtable ();
@@ -20,6 +23,7 @@ namespace project.Utils
 			} 
 		}
 
+        // json per il messaggio di errore relativo al tipo di utente specificato non valido
 		public static ConvertibleHashtable WRONG_USER_TYPE { 
             get { 
 				ConvertibleHashtable h = new ConvertibleHashtable ();
@@ -27,6 +31,8 @@ namespace project.Utils
 				return h;
 			} 
 		}
+
+        // json per utente non trovato
         public static ConvertibleHashtable USER_NOT_FOUND {
             get { 
                 ConvertibleHashtable h = new ConvertibleHashtable ();
@@ -36,4 +42,3 @@ namespace project.Utils
         }
 	}
 }
-

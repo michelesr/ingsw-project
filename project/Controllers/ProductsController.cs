@@ -15,22 +15,22 @@ namespace project.Controllers {
 
 	public class ProductsController : Controller {
 
-        // get all products
-		// GET /api/products/
+        // GET /api/products/
+        // richiede api_key negli header http
+        // ritorna tutte i prodotti
 		[AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
-            else {
-                if (id == -1)
-                    return Json(Model.getAll<Product>(), JsonRequestBehavior.AllowGet);
-                else
-                    return Detail(id);
-            }
-
+            else if (id == -1)
+                return Json(Model.getAll<Product>(), JsonRequestBehavior.AllowGet);
+            else
+                return Detail(id);
 		}
 
         // GET /api/products/detail/<id>
+        // richiede api_key negli header http
+        // ritorna un prodotto
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
@@ -39,8 +39,10 @@ namespace project.Controllers {
                 return Json(Model.getHashtableById<Product>(id), JsonRequestBehavior.AllowGet);
         }
 
-        // delete product
+        
         // GET /api/products/delete/<id>
+        // richiede una admin api_key negli header http
+        // elimina un prodotto
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -53,6 +55,11 @@ namespace project.Controllers {
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
+        
+        // POST /api/products/update/<id>
+        // richiede una admin api_key negli header http
+        // aggiorna un prodotto
+        // data: {supplier_id:<id>, product_category:<id>, name:"name"}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -66,9 +73,11 @@ namespace project.Controllers {
             else
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
-
-        // add product
-		// POST /api/products/
+        
+        // POST /api/products/
+        // richiede una admin api_key negli header http
+        // aggiunge un prodotto
+        // data: {supplier_id:<id>, product_category:<id>, name:"name"}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
             ApiKey k = ApiKey.getApiKey();

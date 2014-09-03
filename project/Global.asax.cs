@@ -10,8 +10,10 @@ using project.Utils;
 
 namespace project
 {
+    // classe di partenza del programma
 	public class MvcApplication : System.Web.HttpApplication
 	{
+        // registrazione del routing per le richieste http
 		public static void RegisterRoutes (RouteCollection routes)
 		{
 			routes.IgnoreRoute ("{resource}.axd/{*pathInfo}");
@@ -30,16 +32,21 @@ namespace project
 
 		}
 
+        // aggiunto dall'ide
 		public static void RegisterGlobalFilters (GlobalFilterCollection filters)
 		{
 			filters.Add (new HandleErrorAttribute ());
 		}
 
+        // punto di partenza del programma
 		protected void Application_Start ()
 		{
+            // crea lo schema e aggiunge un admin se non è già presente
 			Schema.createSchema();
             if (Admin.getByUserId(1).email != "admin@example.org")
               new Admin("admin@example.org", "admin", "admin", "admin").insert();
+
+            // aggiunti dall'ide
 			AreaRegistration.RegisterAllAreas ();
 			RegisterGlobalFilters (GlobalFilters.Filters);
 			RegisterRoutes (RouteTable.Routes);

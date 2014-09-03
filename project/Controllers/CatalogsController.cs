@@ -10,12 +10,20 @@ using project.Utils;
 
 namespace project.Controllers {
 
-    public class CatalogController : Controller {
+    // controller per l'esportazione dei listini
+    public class CatalogsController : Controller {
+
+        // GET /api/catalogs/export/<id_supplier>
+        // necessita api_key negli header della richiesta http
+        // ritorna un JSON contenente tutte le informazioni su un produttore e i suoi stocks
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Export(int id) {
-            if (!ApiKey.isRegistered())
+            // controllo dei permessi
+            ApiKey k = ApiKey.getApiKey();
+            if (!k.isAdmin() && !k.checkUser(id))
                 return Json(Costants.UNAUTHORIZED);
             else {
+                // crea un file per l'esportazione e lo restituisce
                 StreamWriter s = new StreamWriter("Content/export.json");
                 Catalog c = new Catalog(id);
                 Console.WriteLine(c);
