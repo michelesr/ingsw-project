@@ -18,35 +18,7 @@ services.factory('AuthAPI', function($resource) {
 services.factory('Auth', function($http, $rootScope, User, AuthAPI) {
   var auth;
   auth = {};
-  auth.login = function(credentials) {
-    return AuthAPI.login(credentials, function(res_auth) {
-      $http.defaults.headers.common['api_key'] = res_auth.api_key;
-      return User.detail({
-        id: res_auth.user_id
-      }, function(res_user) {
-        $rootScope.authId = res_user.id;
-        $rootScope.authEmail = res_user.email;
-        $rootScope.authFirstName = res_user.first_name;
-        $rootScope.authLastName = res_user.last_name;
-        $rootScope.authType = res_user.type;
-        $rootScope.isAuth = true;
-        console.log('1bissssssssssssssssss');
-        return console.log($rootScope);
-      });
-    });
-  };
-  auth.logout = function() {
-    return AuthAPI.logout(function() {
-      $http.defaults.headers.common['api_key'] = '';
-      $rootScope.authId = null;
-      $rootScope.authEmail = null;
-      $rootScope.authFistName = '';
-      $rootScope.authLastName = null;
-      $rootScope.authType = null;
-      $rootScope.sidebar = null;
-      return $rootScope.isAuth = false;
-    });
-  };
+  auth.login = function(credentials) {};
   return auth;
 });
 

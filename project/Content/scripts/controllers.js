@@ -2,32 +2,46 @@ controllers.controller('AdminCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('LoginCtrl', function($scope, $rootScope, $state, Auth) {
-  if ($rootScope.debug) {
-    $scope.credentials = {
-      email: 'admin@example.org',
-      password: 'admin'
-    };
-  }
+controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, AuthAPI, User) {
+  $scope.credentials = {
+    email: 'admin@example.org',
+    password: 'admin'
+  };
   return $scope.login = function(credentials) {
-    console.log('1111111111111111111');
-    console.log($rootScope);
-    return Auth.login(credentials).then(function() {
-      console.log('2222222222222222');
-      console.log($rootScope);
-      switch ($rootScope.authType) {
-        case 0:
-          return $state.go('root.supplier');
-        case 1:
-          return $state.go('root.admin');
-      }
+    return AuthAPI.login(credentials, function(res_auth) {
+      $http.defaults.headers.common['api_key'] = res_auth.api_key;
+      return User.detail({
+        id: res_auth.user_id
+      }, function(res_user) {
+        $rootScope.authId = res_user.id;
+        $rootScope.authEmail = res_user.email;
+        $rootScope.authFirstName = res_user.first_name;
+        $rootScope.authLastName = res_user.last_name;
+        $rootScope.authType = res_user.type;
+        $rootScope.isAuth = true;
+        switch ($rootScope.authType) {
+          case 0:
+            return $state.go('root.supplier');
+          case 1:
+            return $state.go('root.admin');
+        }
+      });
     });
   };
 });
 
-controllers.controller('LogoutCtrl', function($state, Auth) {
-  Auth.logout();
-  return $state.go('root.login');
+controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state, AuthAPI) {
+  return AuthAPI.logout(function() {
+    delete $http.defaults.headers.common['api_key'];
+    $rootScope.authId = null;
+    $rootScope.authEmail = null;
+    $rootScope.authFistName = '';
+    $rootScope.authLastName = null;
+    $rootScope.authType = null;
+    $rootScope.sidebar = null;
+    $rootScope.isAuth = false;
+    return $state.go('root.login');
+  });
 });
 
 controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Meta) {

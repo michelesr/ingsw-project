@@ -1,20 +1,21 @@
-controllers.controller 'LoginCtrl', ($scope, $rootScope, $state, Auth) ->
+controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, AuthAPI, User) ->
 
-  if $rootScope.debug
-    $scope.credentials =
-      email: 'admin@example.org'
-      password: 'admin'
+  $scope.credentials =
+    email: 'admin@example.org'
+    password: 'admin'
 
   $scope.login = (credentials) ->
-    console.log '1111111111111111111'
-    console.log $rootScope
-    Auth.login credentials
-    .then () ->
-      console.log '2222222222222222'
-      console.log $rootScope
-      switch $rootScope.authType
-        when 0 then $state.go 'root.supplier'
-        when 1 then $state.go 'root.admin'
+    AuthAPI.login credentials, (res_auth) ->
+      $http.defaults.headers.common['api_key'] = res_auth.api_key
+      User.detail { id: res_auth.user_id }, (res_user) ->
+        $rootScope.authId = res_user.id
+        $rootScope.authEmail = res_user.email
+        $rootScope.authFirstName = res_user.first_name
+        $rootScope.authLastName = res_user.last_name
+        $rootScope.authType = res_user.type
 
-#    console.log '33333333333333333'
-#    console.log $rootScope
+        $rootScope.isAuth = true
+
+        switch $rootScope.authType
+          when 0 then $state.go 'root.supplier'
+          when 1 then $state.go 'root.admin'
