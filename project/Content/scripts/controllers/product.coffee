@@ -3,7 +3,7 @@ controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
   $scope.meta = Meta.product
   Product.list (list) ->
     $scope.list = list
-    $scope.empty = _.isEmpty $scope.list[0]
+    $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
 
 
 controllers.controller 'ProductAddCtrl', ($scope, $state, $stateParams, Product, Meta) ->

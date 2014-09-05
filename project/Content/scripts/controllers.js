@@ -2,13 +2,81 @@ controllers.controller('AdminCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, AuthAPI, User) {
+controllers.controller('CategoryCtrl', function($scope, $stateParams, Category, Meta) {
+  $scope.meta = Meta.category;
+  Category.list(function(list) {
+    $scope.list = list;
+    return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
+  });
+  return $scope["delete"] = function(id) {
+    return Category["delete"](id, function(res) {
+      return $scope.msg = 'Category deleted successfully';
+    });
+  };
+});
+
+controllers.controller('CategoryAddCtrl', function($scope, $stateParams, Category, Meta) {
+  $scope.meta = [];
+  $scope.meta = Meta.category;
+  $scope.resource = {};
+  $scope.result = {};
+  return $scope.add = function(form_fields) {
+    var f, k, v, _i, _len;
+    $scope.resource = {};
+    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
+      f = form_fields[_i];
+      k = f['model'];
+      v = f['value'];
+      $scope.resource[k] = v;
+    }
+    return $scope.result = Category.add($scope.resource);
+  };
+});
+
+controllers.controller('CategoryDetailCtrl', function($scope, $stateParams, Category, Meta) {
+  $scope.meta = Meta.category;
+  return $scope.resource = Category.detail({
+    id: $stateParams.id
+  });
+});
+
+controllers.controller('CategoryEditCtrl', function($scope, $stateParams, Category, Meta) {
+  $scope.meta = Meta.category;
+  Category.detail({
+    id: $stateParams.id
+  }, function(res) {
+    var f, model, _i, _len, _ref, _results;
+    $scope.category = res;
+    _ref = $scope.meta['form_fields'];
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      model = f['model'];
+      $scope.result = model;
+      _results.push(f['value'] = $scope.category[model]);
+    }
+    return _results;
+  });
+  return $scope.edit = function(form_fields) {
+    var f, k, v, _i, _len;
+    $scope.resource = {};
+    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
+      f = form_fields[_i];
+      k = f['model'];
+      v = f['value'];
+      $scope.resource[k] = v;
+    }
+    return $scope.result = Category.update(resource);
+  };
+});
+
+controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, Auth, User) {
   $scope.credentials = {
     email: 'admin@example.org',
     password: 'admin'
   };
   return $scope.login = function(credentials) {
-    return AuthAPI.login(credentials, function(res_auth) {
+    return Auth.login(credentials, function(res_auth) {
       $http.defaults.headers.common['api_key'] = res_auth.api_key;
       return User.detail({
         id: res_auth.user_id
@@ -30,8 +98,8 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, 
   };
 });
 
-controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state, AuthAPI) {
-  return AuthAPI.logout(function() {
+controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state, Auth) {
+  return Auth.logout(function() {
     delete $http.defaults.headers.common['api_key'];
     $rootScope.authId = null;
     $rootScope.authEmail = null;
@@ -48,7 +116,7 @@ controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Me
   $scope.meta = Meta.product;
   return Product.list(function(list) {
     $scope.list = list;
-    return $scope.empty = _.isEmpty($scope.list[0]);
+    return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
   });
 });
 
@@ -123,10 +191,12 @@ controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
   User.list(function(list) {
     $scope.list = list;
-    return $scope.empty = _.isEmpty($scope.list[0]);
+    return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
   });
   return $scope["delete"] = function(id) {
-    return User["delete"](id);
+    return User["delete"](id, function(res) {
+      return $scope.msg = 'User deleted successfully';
+    });
   };
 });
 

@@ -1,7 +1,13 @@
-services.factory 'Auth', ($http, $rootScope, User, AuthAPI) ->
+services.factory 'Auth', ($resource) ->
 
-  auth = {}
+  $resource '/api/auth/:action', {},
 
-  auth.login = (credentials) ->
+    login:
+      method: 'POST'
+      params:
+        action: ''
 
-  auth
+    logout:
+      method: 'GET'
+      params:
+        action: 'logout'

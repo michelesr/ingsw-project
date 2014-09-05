@@ -15,7 +15,7 @@
       <tbody>
         <tr ng-repeat="r in list">
           <td ng-repeat="field in meta.list_fields">{{ r[field.model] }}</td>
-          <td><a ui-sref="root.{{ meta.namePlural }}.detail({id: r.id})" class="fa fa-eye"></a><span> </span><a ui-sref="root.{{ meta.namePlural }}.edit({id: r.id})" class="fa fa-pencil"></a><span> </span><a ng-click="remove(r.id)" class="fa fa-trash-o"></a></td>
+          <td><a ui-sref="root.{{ meta.namePlural }}.detail({id: r.id})" class="fa fa-eye"></a><span> </span><a ui-sref="root.{{ meta.namePlural }}.edit({id: r.id})" class="fa fa-pencil"></a><span> </span><a ng-click="remove(r[&quot;id&quot;])" class="fa fa-trash-o"></a></td>
         </tr>
       </tbody>
     </table>

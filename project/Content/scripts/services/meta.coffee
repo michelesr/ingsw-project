@@ -61,6 +61,23 @@ services.factory 'Meta', () ->
         placeholder: 'coffee'
       ]
 
+    category:
+      name: 'category'
+      namePlural: 'categories'
+      nameHuman: 'Categories'
+      icon: 'fa-square'
+      list_fields: [
+        model: 'name'
+        human: 'Name'
+      ]
+      form_fields: [
+        human: 'Name'
+        model: 'name'
+        type: 'text'
+        required: true
+        placeholder: 'food'
+      ]
+
 
     # Sidebars --------------------------------------------
     adminSidebar: [

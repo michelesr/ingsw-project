@@ -3,10 +3,11 @@ controllers.controller 'UserCtrl', ($scope, $stateParams, User, Meta) ->
   $scope.meta = Meta.user
   User.list (list) ->
     $scope.list = list
-    $scope.empty = _.isEmpty $scope.list[0]
+    $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
 
   $scope.delete = (id) ->
-    User.delete id
+    User.delete id, (res) ->
+      $scope.msg = 'User deleted successfully'
 
 
 controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->

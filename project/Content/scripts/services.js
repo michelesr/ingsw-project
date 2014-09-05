@@ -1,4 +1,4 @@
-services.factory('AuthAPI', function($resource) {
+services.factory('Auth', function($resource) {
   return $resource('/api/auth/:action', {}, {
     login: {
       method: 'POST',
@@ -15,11 +15,38 @@ services.factory('AuthAPI', function($resource) {
   });
 });
 
-services.factory('Auth', function($http, $rootScope, User, AuthAPI) {
-  var auth;
-  auth = {};
-  auth.login = function(credentials) {};
-  return auth;
+services.factory('Category', function($resource) {
+  return $resource('/api/categories/:action/:id', {}, {
+    list: {
+      method: 'GET',
+      params: {
+        action: 'index',
+        id: -1
+      },
+      isArray: true
+    },
+    add: {
+      method: 'POST'
+    },
+    detail: {
+      method: 'GET',
+      params: {
+        action: 'detail'
+      }
+    },
+    update: {
+      method: 'POST',
+      params: {
+        action: 'update'
+      }
+    },
+    "delete": {
+      method: 'GET',
+      params: {
+        action: 'delete'
+      }
+    }
+  });
 });
 
 services.factory('Meta', function() {
@@ -88,6 +115,27 @@ services.factory('Meta', function() {
           type: 'text',
           required: true,
           placeholder: 'coffee'
+        }
+      ]
+    },
+    category: {
+      name: 'category',
+      namePlural: 'categories',
+      nameHuman: 'Categories',
+      icon: 'fa-square',
+      list_fields: [
+        {
+          model: 'name',
+          human: 'Name'
+        }
+      ],
+      form_fields: [
+        {
+          human: 'Name',
+          model: 'name',
+          type: 'text',
+          required: true,
+          placeholder: 'food'
         }
       ]
     },

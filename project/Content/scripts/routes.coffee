@@ -78,9 +78,9 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
     # Products --------------------------------------------
       name: 'products'
       url: '/products'
+      abstract: true
       template: '<ui-view/>'
       controller: 'ProductCtrl'
-      abstract: true
       children: [
         name: 'list'
         url: ''
@@ -100,6 +100,34 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         url: '/edit/:id'
         templateUrl: 'Content/partials/resource/edit.html'
         controller: 'ProductEditCtrl'
+      ]
+    ,
+
+    # Cagories --------------------------------------------
+      name: 'categories'
+      url: '/categories'
+      abstract: true
+      template: '<ui-view/>'
+      controller: 'CategoryCtrl'
+      children: [
+        name: 'list'
+        url: ''
+        templateUrl: 'Content/partials/resource/list.html'
+      ,
+        name: 'add'
+        url: '/add'
+        templateUrl: 'Content/partials/resource/add.html'
+        controller: 'CategoryAddCtrl'
+      ,
+        name: 'detail'
+        url: '/detail/:id'
+        templateUrl: 'Content/partials/resource/detail.html'
+        controller: 'CategoryDetailCtrl'
+      ,
+        name: 'edit'
+        url: '/edit/:id'
+        templateUrl: 'Content/partials/resource/edit.html'
+        controller: 'CategoryEditCtrl'
       ]
 
     ]

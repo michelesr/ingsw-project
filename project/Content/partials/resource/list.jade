@@ -28,4 +28,4 @@ span(ng-switch='empty')
             span 
             a.fa.fa-pencil(ui-sref='root.{{ meta.namePlural }}.edit({id: r.id})')
             span 
-            a.fa.fa-trash-o(ng-click='remove(r.id)')
+            a.fa.fa-trash-o(ng-click='remove(r["id"])')

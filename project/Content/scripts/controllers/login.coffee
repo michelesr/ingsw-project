@@ -1,11 +1,11 @@
-controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, AuthAPI, User) ->
+controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, Auth, User) ->
 
   $scope.credentials =
     email: 'admin@example.org'
     password: 'admin'
 
   $scope.login = (credentials) ->
-    AuthAPI.login credentials, (res_auth) ->
+    Auth.login credentials, (res_auth) ->
       $http.defaults.headers.common['api_key'] = res_auth.api_key
       User.detail { id: res_auth.user_id }, (res_user) ->
         $rootScope.authId = res_user.id
