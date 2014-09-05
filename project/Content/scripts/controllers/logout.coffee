@@ -1,7 +1,6 @@
 controllers.controller 'LogoutCtrl', ($scope, $rootScope, $http, $state, AuthAPI) ->
 
   AuthAPI.logout () ->
-#    $http.defaults.headers.common['api_key'] = undefined
     delete $http.defaults.headers.common['api_key']
 
     $rootScope.authId = null

@@ -28,6 +28,7 @@ services.factory('Meta', function() {
     user: {
       name: 'user',
       namePlural: 'users',
+      nameHuman: 'Users',
       icon: 'fa-users',
       fields: ['id', 'email', 'first_name', 'last_name'],
       form_fields: [
@@ -61,6 +62,7 @@ services.factory('Meta', function() {
     product: {
       name: 'product',
       namePlural: 'products',
+      nameHuman: 'Products',
       icon: 'fa-coffee',
       fields: ['id', 'name'],
       form_fields: [

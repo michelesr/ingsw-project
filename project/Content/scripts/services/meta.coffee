@@ -6,6 +6,7 @@ services.factory 'Meta', () ->
     user:
       name: 'user'
       namePlural: 'users'
+      nameHuman: 'Users'
       icon: 'fa-users'
       fields: [
         'id'
@@ -42,6 +43,7 @@ services.factory 'Meta', () ->
     product:
       name: 'product'
       namePlural: 'products'
+      nameHuman: 'Products'
       icon: 'fa-coffee'
       fields: [
         'id'

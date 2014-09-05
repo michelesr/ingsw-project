@@ -1,7 +1,9 @@
 controllers.controller 'UserCtrl', ($scope, $stateParams, User, Meta) ->
 
   $scope.meta = Meta.user
-  $scope.list = User.list()
+  User.list (list) ->
+    $scope.list = list
+    $scope.empty = _.isEmpty $scope.list[0]
 
 
 controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->

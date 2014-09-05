@@ -1,6 +1,6 @@
 h1.page-header
   span(class='fa {{ meta.icon }}')
-  span  {{ meta.namePlural }} list
+  span  {{ meta.nameHuman }} list
 
 div(align='right')
   a(ui-sref='root.{{ meta.namePlural }}.add')
@@ -8,11 +8,11 @@ div(align='right')
       span.fa.fa-plus
       span  Add a {{ meta.name }}
 
-span(ng-switch='list.length')
-  span(ng-switch-when='0')
+span(ng-switch='empty')
+  span(ng-switch-when='true')
     ng-include(src='\'Content/partials/none_message.html\'')
 
-  div(ng-switch-default, class='table-responsive')
+  div(ng-switch-when='false', class='table-responsive')
     table(class='table table-striped table-hover')
       thead
         tr

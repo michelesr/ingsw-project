@@ -46,10 +46,13 @@ controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state,
 
 controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Meta) {
   $scope.meta = Meta.product;
-  return $scope.list = Product.list();
+  return Product.list(function(list) {
+    $scope.list = list;
+    return $scope.empty = _.isEmpty($scope.list[0]);
+  });
 });
 
-controllers.controller('ProductAddCtrl', function($scope, $stateParams, Product, Meta) {
+controllers.controller('ProductAddCtrl', function($scope, $state, $stateParams, Product, Meta) {
   $scope.meta = Meta.product;
   $scope.resource = {};
   $scope.result = {};
@@ -62,7 +65,8 @@ controllers.controller('ProductAddCtrl', function($scope, $stateParams, Product,
       v = f['value'];
       $scope.resource[k] = v;
     }
-    return $scope.result = Product.add($scope.resource);
+    $scope.result = Product.add($scope.resource);
+    return $state.go('root.products.list');
   };
 });
 
@@ -73,7 +77,7 @@ controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Produ
   });
 });
 
-controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product, Meta) {
+controllers.controller('ProductEditCtrl', function($scope, $state, $stateParams, Product, Meta) {
   $scope.meta = Meta.product;
   Product.detail({
     id: $stateParams.id
@@ -99,7 +103,8 @@ controllers.controller('ProductEditCtrl', function($scope, $stateParams, Product
       v = f['value'];
       $scope.resource[k] = v;
     }
-    return $scope.result = Product.update(resource);
+    $scope.result = Product.update(resource);
+    return $state.go('root.products.list');
   };
 });
 
@@ -116,7 +121,10 @@ controllers.controller('SupplierCtrl', function($rootScope, Meta) {
 
 controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
-  return $scope.list = User.list();
+  return User.list(function(list) {
+    $scope.list = list;
+    return $scope.empty = _.isEmpty($scope.list[0]);
+  });
 });
 
 controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {

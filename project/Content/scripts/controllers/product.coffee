@@ -1,10 +1,12 @@
 controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
 
   $scope.meta = Meta.product
-  $scope.list = Product.list()
+  Product.list (list) ->
+    $scope.list = list
+    $scope.empty = _.isEmpty $scope.list[0]
 
 
-controllers.controller 'ProductAddCtrl', ($scope, $stateParams, Product, Meta) ->
+controllers.controller 'ProductAddCtrl', ($scope, $state, $stateParams, Product, Meta) ->
 
   $scope.meta = Meta.product
   $scope.resource = {}
@@ -17,6 +19,7 @@ controllers.controller 'ProductAddCtrl', ($scope, $stateParams, Product, Meta) -
       v = f['value']
       $scope.resource[k] = v
     $scope.result = Product.add($scope.resource)
+    $state.go 'root.products.list'
 
 
 controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta) ->
@@ -25,7 +28,7 @@ controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta
   $scope.resource = Product.detail({ id: $stateParams.id })
 
 
-controllers.controller 'ProductEditCtrl', ($scope, $stateParams, Product, Meta) ->
+controllers.controller 'ProductEditCtrl', ($scope, $state, $stateParams, Product, Meta) ->
 
   $scope.meta = Meta.product
 
@@ -43,3 +46,4 @@ controllers.controller 'ProductEditCtrl', ($scope, $stateParams, Product, Meta) 
       v = f['value']
       $scope.resource[k] = v
     $scope.result = Product.update(resource)
+    $state.go 'root.products.list'
