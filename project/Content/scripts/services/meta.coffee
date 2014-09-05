@@ -65,7 +65,7 @@ services.factory 'Meta', () ->
       name: 'category'
       namePlural: 'categories'
       nameHuman: 'Categories'
-      icon: 'fa-square'
+      icon: 'fa-ellipsis-h'
       list_fields: [
         model: 'name'
         human: 'Name'
@@ -87,7 +87,7 @@ services.factory 'Meta', () ->
     ,
       name: 'Categories'
       state: 'root.categories.list'
-      icon: 'fa-square'
+      icon: 'fa-ellipsis-h'
 
     # dev
     ,

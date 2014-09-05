@@ -14,8 +14,3 @@ form.form-horizontal(ng-submit="add(meta.form_fields)", name="addForm", role="fo
   .form-group
     div.col-sm-offset-2.col-sm-9
       button.btn.btn-primary(type="submit") Add {{ meta.name }}
-
-h2.sub-header Models
-pre form = {{ meta.form_fields | json }}
-pre resource = {{ resource | json }}
-pre result = {{ result | json }}

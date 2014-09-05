@@ -122,7 +122,7 @@ services.factory('Meta', function() {
       name: 'category',
       namePlural: 'categories',
       nameHuman: 'Categories',
-      icon: 'fa-square',
+      icon: 'fa-ellipsis-h',
       list_fields: [
         {
           model: 'name',
@@ -147,7 +147,7 @@ services.factory('Meta', function() {
       }, {
         name: 'Categories',
         state: 'root.categories.list',
-        icon: 'fa-square'
+        icon: 'fa-ellipsis-h'
       }, {
         name: 'Products',
         state: 'root.products.list',
