@@ -121,10 +121,13 @@ controllers.controller('SupplierCtrl', function($rootScope, Meta) {
 
 controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
-  return User.list(function(list) {
+  User.list(function(list) {
     $scope.list = list;
     return $scope.empty = _.isEmpty($scope.list[0]);
   });
+  return $scope["delete"] = function(id) {
+    return User["delete"](id);
+  };
 });
 
 controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {

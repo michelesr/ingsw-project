@@ -2,6 +2,8 @@ h1.page-header
   span(class='fa {{ meta.icon }}')
   span  {{ meta.nameHuman }} list
 
+p {{ msg }}
+
 div(align='right')
   a(ui-sref='root.{{ meta.namePlural }}.add')
     button.btn.btn-primary(type='button')
@@ -16,14 +18,14 @@ span(ng-switch='empty')
     table(class='table table-striped table-hover')
       thead
         tr
-          th(ng-repeat='field in meta.fields') {{ field | uppercase }}
+          th(ng-repeat='field in meta.list_fields') {{ field.human }}
           th Actions
       tbody
         tr(ng-repeat='r in list')
-          td(ng-repeat='field in r') {{ field }}
+          td(ng-repeat='field in meta.list_fields') {{ r[field.model] }}
           td
             a.fa.fa-eye(ui-sref='root.{{ meta.namePlural }}.detail({id: r.id})')
             span 
             a.fa.fa-pencil(ui-sref='root.{{ meta.namePlural }}.edit({id: r.id})')
             span 
-            a.fa.fa-trash-o(ng-click='remove($id)')
+            a.fa.fa-trash-o(ng-click='remove(r.id)')

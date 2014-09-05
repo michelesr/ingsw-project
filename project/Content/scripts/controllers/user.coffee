@@ -5,6 +5,9 @@ controllers.controller 'UserCtrl', ($scope, $stateParams, User, Meta) ->
     $scope.list = list
     $scope.empty = _.isEmpty $scope.list[0]
 
+  $scope.delete = (id) ->
+    User.delete id
+
 
 controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->
 

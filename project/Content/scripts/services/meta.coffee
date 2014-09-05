@@ -8,11 +8,15 @@ services.factory 'Meta', () ->
       namePlural: 'users'
       nameHuman: 'Users'
       icon: 'fa-users'
-      fields: [
-        'id'
-        'email'
-        'first_name'
-        'last_name'
+      list_fields: [
+        model: 'first_name'
+        human: 'First name'
+      ,
+        model: 'last_name'
+        human: 'Last name'
+      ,
+        model: 'email'
+        human: 'Email'
       ]
       form_fields: [
         human: 'Email'
@@ -45,9 +49,9 @@ services.factory 'Meta', () ->
       namePlural: 'products'
       nameHuman: 'Products'
       icon: 'fa-coffee'
-      fields: [
-        'id'
-        'name'
+      list_fields: [
+        model: 'name'
+        human: 'Name'
       ]
       form_fields: [
         human: 'Name'
