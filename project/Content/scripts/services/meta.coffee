@@ -7,7 +7,7 @@ services.factory 'Meta', () ->
       name: 'user'
       namePlural: 'users'
       nameHuman: 'Users'
-      icon: 'fa-users'
+      icon: 'fa fa-users'
       list_fields: [
         model: 'first_name'
         human: 'First name'
@@ -48,7 +48,7 @@ services.factory 'Meta', () ->
       name: 'product'
       namePlural: 'products'
       nameHuman: 'Products'
-      icon: 'fa-coffee'
+      icon: 'fa fa-coffee'
       list_fields: [
         model: 'name'
         human: 'Name'
@@ -65,7 +65,7 @@ services.factory 'Meta', () ->
       name: 'category'
       namePlural: 'categories'
       nameHuman: 'Categories'
-      icon: 'fa-ellipsis-h'
+      icon: 'glyphicon glyphicon-tags'
       list_fields: [
         model: 'name'
         human: 'Name'
@@ -81,28 +81,27 @@ services.factory 'Meta', () ->
 
     # Sidebars --------------------------------------------
     adminSidebar: [
-      name: 'Users'
-      state: 'root.users.list'
-      icon: 'fa-users'
-    ,
-      name: 'Categories'
-      state: 'root.categories.list'
-      icon: 'fa-ellipsis-h'
-
-    # dev
-    ,
-      name: 'Products'
-      state: 'root.products.list'
-      icon: 'fa-coffee'
-    # end dev
+        name: 'Users'
+        state: 'root.users.list'
+        icon: 'fa fa-users'
+      ,
+        name: 'Categories'
+        state: 'root.categories.list'
+        icon: 'glyphicon glyphicon-tags'
+      ,
+      # dev
+        name: 'Products'
+        state: 'root.products.list'
+        icon: 'fa fa-coffee'
+      # end dev
     ]
 
     supplierSidebar: [
-      name: 'Products'
-      state: 'root.products.list'
-      icon: 'fa-coffee'
-    ,
-      name: 'Catalog'
-      state: 'root.catalog'
-      icon: 'fa-list'
+        name: 'Products'
+        state: 'root.products.list'
+        icon: 'fa fa-coffee'
+      ,
+        name: 'Catalog'
+        state: 'root.catalog'
+        icon: 'fa fa-list'
     ]
