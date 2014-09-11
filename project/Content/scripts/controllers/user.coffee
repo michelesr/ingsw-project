@@ -12,24 +12,32 @@ controllers.controller 'UserCtrl', ($scope, $stateParams, User, Meta) ->
 
 controllers.controller 'UserAddCtrl', ($scope, $stateParams, User, Meta) ->
 
-  $scope.meta = []
   $scope.meta = Meta.user
-  $scope.resource = {}
-  $scope.result = {}
+  password_field =
+    human: 'Password'
+    model: 'password'
+    type: 'password'
+    required: true
+    placeholder: 'your password'
+  $scope.meta.fields.push password_field
 
-  $scope.add = (form_fields) ->
+  $scope.add = (fields) ->
     $scope.resource = {}
-    for f in form_fields
+    for f in fields
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
+    $scope.result = {}
     $scope.result = User.add($scope.resource)
 
 
 controllers.controller 'UserDetailCtrl', ($scope, $stateParams, User, Meta) ->
 
   $scope.meta = Meta.user
-  $scope.resource = User.detail({ id: $stateParams.id })
+  User.detail { id: $stateParams.id }, (res) ->
+    for f in $scope.meta.fields
+      k = f['model']
+      f['value'] = res[k]
 
 
 controllers.controller 'UserEditCtrl', ($scope, $stateParams, User, Meta) ->
@@ -39,14 +47,14 @@ controllers.controller 'UserEditCtrl', ($scope, $stateParams, User, Meta) ->
 
   User.detail { id: $stateParams.id }, (res) ->
     $scope.user = res
-    for f in $scope.meta['form_fields']
+    for f in $scope.meta['fields']
       model = f['model']
       $scope.result = model
       f['value'] = $scope.user[model]
 
-  $scope.edit = (form_fields) ->
+  $scope.edit = (fields) ->
     $scope.resource = {}
-    for f in form_fields
+    for f in fields
       k = f['model']
       v = f['value']
       $scope.resource[k] = v

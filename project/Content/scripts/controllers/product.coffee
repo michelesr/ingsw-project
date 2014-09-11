@@ -1,5 +1,6 @@
 controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
 
+  $scope.meta = {}
   $scope.meta = Meta.product
   Product.list (list) ->
     $scope.list = list
@@ -8,40 +9,47 @@ controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
 
 controllers.controller 'ProductAddCtrl', ($scope, $state, $stateParams, Product, Meta) ->
 
+  $scope.meta = {}
   $scope.meta = Meta.product
   $scope.resource = {}
   $scope.result = {}
 
-  $scope.add = (form_fields) ->
+  $scope.add = (fields) ->
     $scope.resource = {}
-    for f in form_fields
+    for f in fields
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
     $scope.result = Product.add($scope.resource)
+    $scope.meta = {}
     $state.go 'root.products.list'
 
 
 controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta) ->
 
+  $scope.meta = {}
   $scope.meta = Meta.product
-  $scope.resource = Product.detail({ id: $stateParams.id })
+  Product.detail { id: $stateParams.id }, (res) ->
+    for f in $scope.meta.fields
+      k = f['model']
+      f['value'] = res[k]
 
 
 controllers.controller 'ProductEditCtrl', ($scope, $state, $stateParams, Product, Meta) ->
 
+  $scope.meta = {}
   $scope.meta = Meta.product
 
   Product.detail { id: $stateParams.id }, (res) ->
     $scope.product = res
-    for f in $scope.meta['form_fields']
+    for f in $scope.meta['fields']
       model = f['model']
       $scope.result = model
       f['value'] = $scope.product[model]
 
-  $scope.edit = (form_fields, $stateParams) ->
+  $scope.edit = (fields, $stateParams) ->
     $scope.resource = {}
-    for f in form_fields
+    for f in fields
       k = f['model']
       v = f['value']
       $scope.resource[k] = v

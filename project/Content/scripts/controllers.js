@@ -15,28 +15,39 @@ controllers.controller('CategoryCtrl', function($scope, $stateParams, Category, 
   };
 });
 
-controllers.controller('CategoryAddCtrl', function($scope, $stateParams, Category, Meta) {
-  $scope.meta = [];
+controllers.controller('CategoryAddCtrl', function($scope, $state, $stateParams, Category, Meta) {
+  $scope.meta = {};
   $scope.meta = Meta.category;
-  $scope.resource = {};
-  $scope.result = {};
-  return $scope.add = function(form_fields) {
+  return $scope.add = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
-    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
-      f = form_fields[_i];
+    for (_i = 0, _len = fields.length; _i < _len; _i++) {
+      f = fields[_i];
       k = f['model'];
       v = f['value'];
       $scope.resource[k] = v;
     }
-    return $scope.result = Category.add($scope.resource);
+    return Category.add($scope.resource, function(res) {
+      $scope.meta = {};
+      return $state.go('root.categories.list');
+    });
   };
 });
 
 controllers.controller('CategoryDetailCtrl', function($scope, $stateParams, Category, Meta) {
   $scope.meta = Meta.category;
-  return $scope.resource = Category.detail({
+  return Category.detail({
     id: $stateParams.id
+  }, function(res) {
+    var f, k, _i, _len, _ref, _results;
+    _ref = $scope.meta.fields;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      k = f['model'];
+      _results.push(f['value'] = res[k]);
+    }
+    return _results;
   });
 });
 
@@ -47,7 +58,7 @@ controllers.controller('CategoryEditCtrl', function($scope, $stateParams, Catego
   }, function(res) {
     var f, model, _i, _len, _ref, _results;
     $scope.category = res;
-    _ref = $scope.meta['form_fields'];
+    _ref = $scope.meta['fields'];
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
@@ -57,11 +68,11 @@ controllers.controller('CategoryEditCtrl', function($scope, $stateParams, Catego
     }
     return _results;
   });
-  return $scope.edit = function(form_fields) {
+  return $scope.edit = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
-    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
-      f = form_fields[_i];
+    for (_i = 0, _len = fields.length; _i < _len; _i++) {
+      f = fields[_i];
       k = f['model'];
       v = f['value'];
       $scope.resource[k] = v;
@@ -71,10 +82,12 @@ controllers.controller('CategoryEditCtrl', function($scope, $stateParams, Catego
 });
 
 controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, Auth, User) {
-  $scope.credentials = {
-    email: 'admin@example.org',
-    password: 'admin'
-  };
+  if ($rootScope.debug) {
+    $scope.credentials = {
+      email: 'admin@example.org',
+      password: 'admin'
+    };
+  }
   return $scope.login = function(credentials) {
     return Auth.login(credentials, function(res_auth) {
       $http.defaults.headers.common['api_key'] = res_auth.api_key;
@@ -113,6 +126,7 @@ controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state,
 });
 
 controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Meta) {
+  $scope.meta = {};
   $scope.meta = Meta.product;
   return Product.list(function(list) {
     $scope.list = list;
@@ -121,38 +135,52 @@ controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Me
 });
 
 controllers.controller('ProductAddCtrl', function($scope, $state, $stateParams, Product, Meta) {
+  $scope.meta = {};
   $scope.meta = Meta.product;
   $scope.resource = {};
   $scope.result = {};
-  return $scope.add = function(form_fields) {
+  return $scope.add = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
-    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
-      f = form_fields[_i];
+    for (_i = 0, _len = fields.length; _i < _len; _i++) {
+      f = fields[_i];
       k = f['model'];
       v = f['value'];
       $scope.resource[k] = v;
     }
     $scope.result = Product.add($scope.resource);
+    $scope.meta = {};
     return $state.go('root.products.list');
   };
 });
 
 controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Product, Meta) {
+  $scope.meta = {};
   $scope.meta = Meta.product;
-  return $scope.resource = Product.detail({
+  return Product.detail({
     id: $stateParams.id
+  }, function(res) {
+    var f, k, _i, _len, _ref, _results;
+    _ref = $scope.meta.fields;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      k = f['model'];
+      _results.push(f['value'] = res[k]);
+    }
+    return _results;
   });
 });
 
 controllers.controller('ProductEditCtrl', function($scope, $state, $stateParams, Product, Meta) {
+  $scope.meta = {};
   $scope.meta = Meta.product;
   Product.detail({
     id: $stateParams.id
   }, function(res) {
     var f, model, _i, _len, _ref, _results;
     $scope.product = res;
-    _ref = $scope.meta['form_fields'];
+    _ref = $scope.meta['fields'];
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
@@ -162,11 +190,11 @@ controllers.controller('ProductEditCtrl', function($scope, $state, $stateParams,
     }
     return _results;
   });
-  return $scope.edit = function(form_fields, $stateParams) {
+  return $scope.edit = function(fields, $stateParams) {
     var f, k, v, _i, _len;
     $scope.resource = {};
-    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
-      f = form_fields[_i];
+    for (_i = 0, _len = fields.length; _i < _len; _i++) {
+      f = fields[_i];
       k = f['model'];
       v = f['value'];
       $scope.resource[k] = v;
@@ -201,27 +229,44 @@ controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
 });
 
 controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {
-  $scope.meta = [];
+  var password_field;
   $scope.meta = Meta.user;
-  $scope.resource = {};
-  $scope.result = {};
-  return $scope.add = function(form_fields) {
+  password_field = {
+    human: 'Password',
+    model: 'password',
+    type: 'password',
+    required: true,
+    placeholder: 'your password'
+  };
+  $scope.meta.fields.push(password_field);
+  return $scope.add = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
-    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
-      f = form_fields[_i];
+    for (_i = 0, _len = fields.length; _i < _len; _i++) {
+      f = fields[_i];
       k = f['model'];
       v = f['value'];
       $scope.resource[k] = v;
     }
+    $scope.result = {};
     return $scope.result = User.add($scope.resource);
   };
 });
 
 controllers.controller('UserDetailCtrl', function($scope, $stateParams, User, Meta) {
   $scope.meta = Meta.user;
-  return $scope.resource = User.detail({
+  return User.detail({
     id: $stateParams.id
+  }, function(res) {
+    var f, k, _i, _len, _ref, _results;
+    _ref = $scope.meta.fields;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      k = f['model'];
+      _results.push(f['value'] = res[k]);
+    }
+    return _results;
   });
 });
 
@@ -232,7 +277,7 @@ controllers.controller('UserEditCtrl', function($scope, $stateParams, User, Meta
   }, function(res) {
     var f, model, _i, _len, _ref, _results;
     $scope.user = res;
-    _ref = $scope.meta['form_fields'];
+    _ref = $scope.meta['fields'];
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
@@ -242,11 +287,11 @@ controllers.controller('UserEditCtrl', function($scope, $stateParams, User, Meta
     }
     return _results;
   });
-  return $scope.edit = function(form_fields) {
+  return $scope.edit = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
-    for (_i = 0, _len = form_fields.length; _i < _len; _i++) {
-      f = form_fields[_i];
+    for (_i = 0, _len = fields.length; _i < _len; _i++) {
+      f = fields[_i];
       k = f['model'];
       v = f['value'];
       $scope.resource[k] = v;

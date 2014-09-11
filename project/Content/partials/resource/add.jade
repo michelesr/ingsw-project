@@ -2,8 +2,8 @@ h1.page-header
   span.fa.fa-plus
   span  Add a {{ meta.name }}
 
-form.form-horizontal(ng-submit="add(meta.form_fields)", name="addForm", role="form", novalidate)
-  .form-group(ng-repeat="f in meta.form_fields")
+form.form-horizontal(ng-submit="add(meta.fields)", name="addForm", role="form", novalidate)
+  .form-group(ng-repeat="f in meta.fields")
     ng-form(name="addFormIn")
       label.col-sm-2.control-label {{ f.human }}
       .col-sm-10
@@ -14,3 +14,5 @@ form.form-horizontal(ng-submit="add(meta.form_fields)", name="addForm", role="fo
   .form-group
     div.col-sm-offset-2.col-sm-9
       button.btn.btn-primary(type="submit") Add {{ meta.name }}
+
+span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')

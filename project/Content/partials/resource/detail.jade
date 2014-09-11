@@ -6,11 +6,9 @@ div(align='right')
       span.fa.fa-pencil
       span  Edit this {{ meta.name }}
 
-br
-.table-responsive
-  table.table.table-striped.table-bordered.table-hover
-    tbody
-      tr(ng-repeat='(key, value) in resource')
-        td
-          b {{ key }}
-        td {{ value }}
+dl.dl-horizontal
+  span(ng-repeat='field in meta.fields')
+    dt {{ field.human }}
+    dd {{ field.value }}
+
+span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')

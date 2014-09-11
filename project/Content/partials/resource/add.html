@@ -1,7 +1,7 @@
 
 <h1 class="page-header"><span class="fa fa-plus"></span><span> Add a {{ meta.name }}</span></h1>
-<form ng-submit="add(meta.form_fields)" name="addForm" role="form" novalidate="novalidate" class="form-horizontal">
-  <div ng-repeat="f in meta.form_fields" class="form-group">
+<form ng-submit="add(meta.fields)" name="addForm" role="form" novalidate="novalidate" class="form-horizontal">
+  <div ng-repeat="f in meta.fields" class="form-group">
     <ng-form name="addFormIn">
       <label class="col-sm-2 control-label">{{ f.human }}</label>
       <div class="col-sm-10">
@@ -18,4 +18,4 @@
       <button type="submit" class="btn btn-primary">Add {{ meta.name }}</button>
     </div>
   </div>
-</form>
+</form><span ng-if="debug" ng-include="'Content/partials/resource/debug.html'"></span>

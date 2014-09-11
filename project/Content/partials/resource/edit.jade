@@ -3,7 +3,7 @@ h1.page-header
   span  Edit a {{ meta.name }}
 
 form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidate)
-  .form-group(ng-repeat="f in meta.form_fields")
+  .form-group(ng-repeat="f in meta.fields")
     ng-form(name="editFormIn")
       label.col-sm-2.control-label {{ f.human }}
       .col-sm-10
@@ -15,9 +15,4 @@ form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidat
     div.col-sm-offset-2.col-sm-10
       button.btn.btn-primary(type="submit") Edit {{ meta.name }}
 
-h2.sub-header Models
-pre form = {{ meta.form_fields | json }}
-pre product = {{ product | json }}
-pre resource = {{ resource | json }}
-pre result = {{ result | json }}
-pre stocazzo = {{ stocazzo | json }}
+span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')

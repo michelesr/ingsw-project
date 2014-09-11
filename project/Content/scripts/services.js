@@ -57,31 +57,13 @@ services.factory('Meta', function() {
       namePlural: 'users',
       nameHuman: 'Users',
       icon: 'fa fa-users',
-      list_fields: [
-        {
-          model: 'first_name',
-          human: 'First name'
-        }, {
-          model: 'last_name',
-          human: 'Last name'
-        }, {
-          model: 'email',
-          human: 'Email'
-        }
-      ],
-      form_fields: [
+      fields: [
         {
           human: 'Email',
           model: 'email',
           type: 'email',
           required: true,
           placeholder: 'user@example.org'
-        }, {
-          human: 'Password',
-          model: 'password',
-          type: 'password',
-          required: true,
-          placeholder: 'your password'
         }, {
           human: 'First name',
           model: 'first_name',
@@ -102,16 +84,10 @@ services.factory('Meta', function() {
       namePlural: 'products',
       nameHuman: 'Products',
       icon: 'fa fa-coffee',
-      list_fields: [
+      fields: [
         {
           model: 'name',
-          human: 'Name'
-        }
-      ],
-      form_fields: [
-        {
           human: 'Name',
-          model: 'name',
           type: 'text',
           required: true,
           placeholder: 'coffee'
@@ -123,13 +99,13 @@ services.factory('Meta', function() {
       namePlural: 'categories',
       nameHuman: 'Categories',
       icon: 'glyphicon glyphicon-tags',
-      list_fields: [
+      fields: [
         {
           model: 'name',
           human: 'Name'
         }
       ],
-      form_fields: [
+      fields: [
         {
           human: 'Name',
           model: 'name',

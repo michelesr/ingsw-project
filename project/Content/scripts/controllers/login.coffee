@@ -1,8 +1,9 @@
 controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, Auth, User) ->
 
-  $scope.credentials =
-    email: 'admin@example.org'
-    password: 'admin'
+  if $rootScope.debug
+    $scope.credentials =
+      email: 'admin@example.org'
+      password: 'admin'
 
   $scope.login = (credentials) ->
     Auth.login credentials, (res_auth) ->
