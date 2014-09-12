@@ -1,21 +1,24 @@
 
-<h1 class="page-header"><span class="{{ meta.icon }}"></span><span> {{ meta.nameHuman }} list</span></h1>
-<p>{{ msg }}</p>
-<div align="right"><a ui-sref="root.{{ meta.namePlural }}.add">
+<h1 class="page-header"><span class="{{ meta.icon }}"></span><span> {{ meta.nameHuman }}</span></h1>
+<p ng-if="msgSuccess" class="text-success">Info: {{ msgSuccess }}</p>
+<p ng-if="msgError" class="text-danger">Error: {{ msgError }}</p>
+<div align="right"><a ng-click="addForm()">
     <button type="button" class="btn btn-primary"><span class="fa fa-plus"></span><span> Add a {{ meta.name }}</span></button></a></div><br/><span ng-switch="empty"><span ng-switch-when="true">
     <ng-include src="'Content/partials/none_message.html'"></ng-include></span>
   <div ng-switch-when="false" class="table-responsive">
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th ng-repeat="field in meta.fields">{{ field.human }}</th>
+          <th ng-repeat="f in meta.fields">{{ f.human }}</th>
+          <th ng-repeat="rf in meta.related_fields">{{ rf.human }}</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="r in list">
-          <td ng-repeat="field in meta.fields">{{ r[field.model] }}</td>
-          <td><a ui-sref="root.{{ meta.namePlural }}.detail({id: r.id})" class="fa fa-eye"></a><span> </span><a ui-sref="root.{{ meta.namePlural }}.edit({id: r.id})" class="fa fa-pencil"></a><span> </span><a ng-click="remove(r[&quot;id&quot;])" class="fa fa-trash-o"></a></td>
+        <tr ng-repeat="res in list">
+          <td ng-repeat="f in meta.fields">{{ res[f.model] }}</td>
+          <td ng-repeat="rf in meta.related_fields">{{ res[rf.related_model][rf.related_human] }}</td>
+          <td><a ng-click="detail(res.id)" class="btn btn-default btn-sm fa fa-eye"></a><span> </span><a ng-click="remove(res.id)" class="btn btn-danger btn-sm fa fa-trash-o"></a></td>
         </tr>
       </tbody>
     </table>

@@ -1,19 +1,16 @@
-controllers.controller 'CategoryCtrl', ($scope, $stateParams, Category, Meta) ->
+controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
 
-  $scope.meta = Meta.category
-  Category.list (list) ->
-    $scope.list = list
-    $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
+  list = ->
+    $scope.meta = Meta.category
+    Category.list (list) ->
+      $scope.list = list
+      $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
 
-  $scope.delete = (id) ->
-    Category.delete id, (res) ->
-      $scope.msg = 'Category deleted successfully'
-
-
-controllers.controller 'CategoryAddCtrl', ($scope, $state, $stateParams, Category, Meta) ->
-
-  $scope.meta = {}
-  $scope.meta = Meta.category
+  $scope.addForm = () ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    $scope.meta = Meta.category
+    $state.go '^.add'
 
   $scope.add = (fields) ->
     $scope.resource = {}
@@ -22,39 +19,41 @@ controllers.controller 'CategoryAddCtrl', ($scope, $state, $stateParams, Categor
       v = f['value']
       $scope.resource[k] = v
     Category.add $scope.resource, (res) ->
-      $scope.meta = {}
-#      $state.go 'root.categories.list', {reload: true, inherit: true, notify: true}
-#      $state.transitionTo 'root.categories.list', {}, {reload: true, inherit: true, notify: true}
-#      $state.transitionTo 'root.categories.list', {}, {inherit: true, notify: true}
-#      $state.go 'root.categories.list', {}, {inherit: true, notify: true}
-      $state.go 'root.categories.list'
+      list()
+      $state.go '^.list'
 
+  $scope.detail = (id) ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    Category.detail {id: id}, (res) ->
+      for f in $scope.meta.fields
+        k = f['model']
+        f['value'] = res[k]
+      $state.go '^.detail', {id: id}
 
-controllers.controller 'CategoryDetailCtrl', ($scope, $stateParams, Category, Meta) ->
-
-  $scope.meta = Meta.category
-  Category.detail { id: $stateParams.id }, (res) ->
-    for f in $scope.meta.fields
-      k = f['model']
-      f['value'] = res[k]
-
-
-controllers.controller 'CategoryEditCtrl', ($scope, $stateParams, Category, Meta) ->
-
-  $scope.meta = Meta.category
-#  $scope.result = {}
-
-  Category.detail { id: $stateParams.id }, (res) ->
-    $scope.category = res
-    for f in $scope.meta['fields']
-      model = f['model']
-      $scope.result = model
-      f['value'] = $scope.category[model]
+  $scope.editForm = () ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    $scope.meta = Meta.category
+    $state.go '^.edit', {id: $state.params.id}
 
   $scope.edit = (fields) ->
-    $scope.resource = {}
+    resource = {}
     for f in fields
       k = f['model']
       v = f['value']
-      $scope.resource[k] = v
-    $scope.result = Category.update(resource)
+      resource[k] = v
+    Category.update {id: $state.params.id}, resource, (res) ->
+      $scope.result = res
+      list()
+      $scope.msgSuccess = 'Updated successfully'
+      $state.go '^.list'
+
+  $scope.remove = (id) ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    Category.remove {id: id}, (res) ->
+      $scope.msgSuccess = 'Removed successfully'
+      list()
+
+  list()

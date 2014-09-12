@@ -34,11 +34,24 @@ services.factory 'Meta', () ->
       nameHuman: 'Products'
       icon: 'fa fa-coffee'
       fields: [
-        model: 'name'
-        human: 'Name'
-        type: 'text'
-        required: true
-        placeholder: 'coffee'
+          model: 'name'
+          human: 'Name'
+          type: 'text'
+          required: true
+          placeholder: 'coffee'
+      ]
+      related_fields: [
+          related_model: 'product_category'
+          related_human: 'name'
+          model: 'category'
+          human: 'Category'
+          required: false
+        ,
+          related_model: 'supplier_id'
+          related_human: 'email'
+          model: 'supplier'
+          human: 'Supplier'
+          required: true
       ]
 
     category:

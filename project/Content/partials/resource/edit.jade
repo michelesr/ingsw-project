@@ -2,7 +2,7 @@ h1.page-header
   span.fa.fa-plus
   span  Edit a {{ meta.name }}
 
-form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidate)
+form.form-horizontal(ng-submit="edit(meta.fields)", name="editForm", role="form", novalidate)
   .form-group(ng-repeat="f in meta.fields")
     ng-form(name="editFormIn")
       label.col-sm-2.control-label {{ f.human }}
@@ -13,6 +13,6 @@ form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidat
 
   .form-group
     div.col-sm-offset-2.col-sm-10
-      button.btn.btn-primary(type="submit") Edit {{ meta.name }}
+      button.btn.btn-primary(type='submit') Edit {{ meta.name }}
 
 span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')

@@ -2,23 +2,22 @@ controllers.controller('AdminCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('CategoryCtrl', function($scope, $stateParams, Category, Meta) {
-  $scope.meta = Meta.category;
-  Category.list(function(list) {
-    $scope.list = list;
-    return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
-  });
-  return $scope["delete"] = function(id) {
-    return Category["delete"](id, function(res) {
-      return $scope.msg = 'Category deleted successfully';
+controllers.controller('CategoryCtrl', function($scope, $state, Category, Meta) {
+  var list;
+  list = function() {
+    $scope.meta = Meta.category;
+    return Category.list(function(list) {
+      $scope.list = list;
+      return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
     });
   };
-});
-
-controllers.controller('CategoryAddCtrl', function($scope, $state, $stateParams, Category, Meta) {
-  $scope.meta = {};
-  $scope.meta = Meta.category;
-  return $scope.add = function(fields) {
+  $scope.addForm = function() {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    $scope.meta = Meta.category;
+    return $state.go('^.add');
+  };
+  $scope.add = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
@@ -28,57 +27,65 @@ controllers.controller('CategoryAddCtrl', function($scope, $state, $stateParams,
       $scope.resource[k] = v;
     }
     return Category.add($scope.resource, function(res) {
-      $scope.meta = {};
-      return $state.go('root.categories.list');
+      list();
+      return $state.go('^.list');
     });
   };
-});
-
-controllers.controller('CategoryDetailCtrl', function($scope, $stateParams, Category, Meta) {
-  $scope.meta = Meta.category;
-  return Category.detail({
-    id: $stateParams.id
-  }, function(res) {
-    var f, k, _i, _len, _ref, _results;
-    _ref = $scope.meta.fields;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      f = _ref[_i];
-      k = f['model'];
-      _results.push(f['value'] = res[k]);
-    }
-    return _results;
-  });
-});
-
-controllers.controller('CategoryEditCtrl', function($scope, $stateParams, Category, Meta) {
-  $scope.meta = Meta.category;
-  Category.detail({
-    id: $stateParams.id
-  }, function(res) {
-    var f, model, _i, _len, _ref, _results;
-    $scope.category = res;
-    _ref = $scope.meta['fields'];
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      f = _ref[_i];
-      model = f['model'];
-      $scope.result = model;
-      _results.push(f['value'] = $scope.category[model]);
-    }
-    return _results;
-  });
-  return $scope.edit = function(fields) {
-    var f, k, v, _i, _len;
-    $scope.resource = {};
+  $scope.detail = function(id) {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    return Category.detail({
+      id: id
+    }, function(res) {
+      var f, k, _i, _len, _ref;
+      _ref = $scope.meta.fields;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        f = _ref[_i];
+        k = f['model'];
+        f['value'] = res[k];
+      }
+      return $state.go('^.detail', {
+        id: id
+      });
+    });
+  };
+  $scope.editForm = function() {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    $scope.meta = Meta.category;
+    return $state.go('^.edit', {
+      id: $state.params.id
+    });
+  };
+  $scope.edit = function(fields) {
+    var f, k, resource, v, _i, _len;
+    resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       f = fields[_i];
       k = f['model'];
       v = f['value'];
-      $scope.resource[k] = v;
+      resource[k] = v;
     }
-    return $scope.result = Category.update(resource);
+    return Category.update({
+      id: $state.params.id
+    }, resource, function(res) {
+      $scope.result = res;
+      list();
+      $scope.msgSuccess = 'Updated successfully';
+      return $state.go('^.list');
+    });
   };
+  $scope.remove = function(id) {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    return Category.remove({
+      id: id
+    }, function(res) {
+      $scope.msgSuccess = 'Removed successfully';
+      return list();
+    });
+  };
+  return list();
 });
 
 controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, Auth, User) {
@@ -125,21 +132,59 @@ controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state,
   });
 });
 
-controllers.controller('ProductCtrl', function($scope, $stateParams, Product, Meta) {
-  $scope.meta = {};
-  $scope.meta = Meta.product;
-  return Product.list(function(list) {
-    $scope.list = list;
-    return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
-  });
-});
-
-controllers.controller('ProductAddCtrl', function($scope, $state, $stateParams, Product, Meta) {
-  $scope.meta = {};
-  $scope.meta = Meta.product;
-  $scope.resource = {};
-  $scope.result = {};
-  return $scope.add = function(fields) {
+controllers.controller('ProductCtrl', function($scope, $state, User, Category, Product, Meta) {
+  var list;
+  list = function() {
+    var rfList;
+    $scope.meta = Meta.product;
+    rfList = {};
+    return User.list(function(supplierList) {
+      rfList['supplier'] = supplierList;
+      return Category.list(function(categoryList) {
+        rfList['category'] = categoryList;
+        return Product.list(function(list) {
+          var res, rf, rfElem, _i, _len, _results;
+          $scope.list = list;
+          $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
+          _results = [];
+          for (_i = 0, _len = list.length; _i < _len; _i++) {
+            res = list[_i];
+            _results.push((function() {
+              var _j, _len1, _ref, _results1;
+              _ref = $scope.meta.related_fields;
+              _results1 = [];
+              for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+                rf = _ref[_j];
+                _results1.push((function() {
+                  var _k, _len2, _ref1, _results2;
+                  _ref1 = rfList[rf.model];
+                  _results2 = [];
+                  for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+                    rfElem = _ref1[_k];
+                    if (rfElem.id === res[rf.related_model]) {
+                      _results2.push(res[rf.related_model] = rfElem);
+                    } else {
+                      _results2.push(void 0);
+                    }
+                  }
+                  return _results2;
+                })());
+              }
+              return _results1;
+            })());
+          }
+          return _results;
+        });
+      });
+    });
+  };
+  $scope.addForm = function() {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    $scope.meta = Meta.product;
+    return $state.go('^.add');
+  };
+  $scope.add = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
@@ -148,64 +193,98 @@ controllers.controller('ProductAddCtrl', function($scope, $state, $stateParams, 
       v = f['value'];
       $scope.resource[k] = v;
     }
-    $scope.result = Product.add($scope.resource);
-    $scope.meta = {};
-    return $state.go('root.products.list');
+    return Product.add($scope.resource, function(res) {
+      list();
+      return $state.go('^.list');
+    });
   };
-});
-
-controllers.controller('ProductDetailCtrl', function($scope, $stateParams, Product, Meta) {
-  $scope.meta = {};
-  $scope.meta = Meta.product;
-  return Product.detail({
-    id: $stateParams.id
-  }, function(res) {
-    var f, k, _i, _len, _ref, _results;
-    _ref = $scope.meta.fields;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      f = _ref[_i];
-      k = f['model'];
-      _results.push(f['value'] = res[k]);
-    }
-    return _results;
-  });
-});
-
-controllers.controller('ProductEditCtrl', function($scope, $state, $stateParams, Product, Meta) {
-  $scope.meta = {};
-  $scope.meta = Meta.product;
-  Product.detail({
-    id: $stateParams.id
-  }, function(res) {
-    var f, model, _i, _len, _ref, _results;
-    $scope.product = res;
-    _ref = $scope.meta['fields'];
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      f = _ref[_i];
-      model = f['model'];
-      $scope.result = model;
-      _results.push(f['value'] = $scope.product[model]);
-    }
-    return _results;
-  });
-  return $scope.edit = function(fields, $stateParams) {
-    var f, k, v, _i, _len;
-    $scope.resource = {};
+  $scope.detail = function(id) {
+    var rfList;
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    rfList = {};
+    return User.list(function(supplierList) {
+      rfList['supplier'] = supplierList;
+      return Category.list(function(categoryList) {
+        rfList['category'] = categoryList;
+        return Product.detail({
+          id: id
+        }, function(resource) {
+          var f, k, rf, rfElem, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
+          _ref = $scope.meta.fields;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            f = _ref[_i];
+            k = f['model'];
+            f['value'] = resource[k];
+          }
+          _ref1 = $scope.meta.related_fields;
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            rf = _ref1[_j];
+            k = rf['model'];
+            rf['value'] = resource[k];
+          }
+          _ref2 = $scope.meta.related_fields;
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            rf = _ref2[_k];
+            _ref3 = rfList[rf.model];
+            for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+              rfElem = _ref3[_l];
+              if (rfElem.id === resource[rf.related_model]) {
+                rf[rf.related_model] = rfElem;
+              }
+            }
+          }
+          return $state.go('^.detail', {
+            id: id
+          });
+        });
+      });
+    });
+  };
+  $scope.editForm = function() {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    $scope.meta = Meta.product;
+    return $state.go('^.edit', {
+      id: $state.params.id
+    });
+  };
+  $scope.edit = function(fields) {
+    var f, k, resource, v, _i, _len;
+    resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       f = fields[_i];
       k = f['model'];
       v = f['value'];
-      $scope.resource[k] = v;
+      resource[k] = v;
     }
-    $scope.result = Product.update(resource);
-    return $state.go('root.products.list');
+    return Product.update({
+      id: $state.params.id
+    }, resource, function(res) {
+      $scope.result = res;
+      list();
+      $scope.msgSuccess = 'Updated successfully';
+      return $state.go('^.list');
+    });
   };
+  $scope.remove = function(id) {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    return Product.remove({
+      id: id
+    }, function(res) {
+      $scope.msgSuccess = 'Removed successfully';
+      return list();
+    });
+  };
+  return list();
 });
 
-controllers.controller('RootCtrl', function($rootScope, $scope, $state, Auth, Session) {
+controllers.controller('RootCtrl', function($rootScope, $state) {
   $rootScope.debug = true;
+  if ($rootScope.debug === true) {
+    $rootScope.$state = $state;
+  }
   if (!$rootScope.auth) {
     return $state.go('root.login');
   }
@@ -215,31 +294,31 @@ controllers.controller('SupplierCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.supplierSidebar;
 });
 
-controllers.controller('UserCtrl', function($scope, $stateParams, User, Meta) {
-  $scope.meta = Meta.user;
-  User.list(function(list) {
-    $scope.list = list;
-    return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
-  });
-  return $scope["delete"] = function(id) {
-    return User["delete"](id, function(res) {
-      return $scope.msg = 'User deleted successfully';
+controllers.controller('UserCtrl', function($scope, $state, User, Meta) {
+  var list;
+  list = function() {
+    $scope.meta = Meta.user;
+    return User.list(function(list) {
+      $scope.list = list;
+      return $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
     });
   };
-});
-
-controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta) {
-  var password_field;
-  $scope.meta = Meta.user;
-  password_field = {
-    human: 'Password',
-    model: 'password',
-    type: 'password',
-    required: true,
-    placeholder: 'your password'
+  $scope.addForm = function() {
+    var extraField;
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    $scope.meta = Meta.user;
+    extraField = {
+      human: 'Password',
+      model: 'password',
+      type: 'password',
+      required: true,
+      placeholder: 'your password'
+    };
+    $scope.meta.fields.push(extraField);
+    return $state.go('^.add');
   };
-  $scope.meta.fields.push(password_field);
-  return $scope.add = function(fields) {
+  $scope.add = function(fields) {
     var f, k, v, _i, _len;
     $scope.resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
@@ -248,54 +327,64 @@ controllers.controller('UserAddCtrl', function($scope, $stateParams, User, Meta)
       v = f['value'];
       $scope.resource[k] = v;
     }
-    $scope.result = {};
-    return $scope.result = User.add($scope.resource);
+    return User.add($scope.resource, function(res) {
+      list();
+      return $state.go('^.list');
+    });
   };
-});
-
-controllers.controller('UserDetailCtrl', function($scope, $stateParams, User, Meta) {
-  $scope.meta = Meta.user;
-  return User.detail({
-    id: $stateParams.id
-  }, function(res) {
-    var f, k, _i, _len, _ref, _results;
-    _ref = $scope.meta.fields;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      f = _ref[_i];
-      k = f['model'];
-      _results.push(f['value'] = res[k]);
-    }
-    return _results;
-  });
-});
-
-controllers.controller('UserEditCtrl', function($scope, $stateParams, User, Meta) {
-  $scope.meta = Meta.user;
-  User.detail({
-    id: $stateParams.id
-  }, function(res) {
-    var f, model, _i, _len, _ref, _results;
-    $scope.user = res;
-    _ref = $scope.meta['fields'];
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      f = _ref[_i];
-      model = f['model'];
-      $scope.result = model;
-      _results.push(f['value'] = $scope.user[model]);
-    }
-    return _results;
-  });
-  return $scope.edit = function(fields) {
-    var f, k, v, _i, _len;
-    $scope.resource = {};
+  $scope.detail = function(id) {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    return User.detail({
+      id: id
+    }, function(res) {
+      var f, k, _i, _len, _ref;
+      _ref = $scope.meta.fields;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        f = _ref[_i];
+        k = f['model'];
+        f['value'] = res[k];
+      }
+      return $state.go('^.detail', {
+        id: id
+      });
+    });
+  };
+  $scope.editForm = function() {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    $scope.meta = Meta.user;
+    return $state.go('^.edit', {
+      id: $state.params.id
+    });
+  };
+  $scope.edit = function(fields) {
+    var f, k, resource, v, _i, _len;
+    resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       f = fields[_i];
       k = f['model'];
       v = f['value'];
-      $scope.resource[k] = v;
+      resource[k] = v;
     }
-    return $scope.result = User.update(resource);
+    return User.update({
+      id: $state.params.id
+    }, resource, function(res) {
+      $scope.result = res;
+      list();
+      $scope.msgSuccess = 'Updated successfully';
+      return $state.go('^.list');
+    });
   };
+  $scope.remove = function(id) {
+    $scope.msgSuccess = '';
+    $scope.msgError = '';
+    return User.remove({
+      id: id
+    }, function(res) {
+      $scope.msgSuccess = 'Removed successfully';
+      return list();
+    });
+  };
+  return list();
 });

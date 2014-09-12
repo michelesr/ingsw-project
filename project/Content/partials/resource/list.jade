@@ -1,11 +1,12 @@
 h1.page-header
   span(class='{{ meta.icon }}')
-  span  {{ meta.nameHuman }} list
+  span  {{ meta.nameHuman }}
 
-p {{ msg }}
+p.text-success(ng-if='msgSuccess') Info: {{ msgSuccess }}
+p.text-danger(ng-if='msgError') Error: {{ msgError }}
 
 div(align='right')
-  a(ui-sref='root.{{ meta.namePlural }}.add')
+  a(ng-click='addForm()')
     button.btn.btn-primary(type='button')
       span.fa.fa-plus
       span  Add a {{ meta.name }}
@@ -15,18 +16,18 @@ span(ng-switch='empty')
   span(ng-switch-when='true')
     ng-include(src='\'Content/partials/none_message.html\'')
 
-  div(ng-switch-when='false', class='table-responsive')
-    table(class='table table-striped table-hover')
+  .table-responsive(ng-switch-when='false')
+    table.table.table-striped.table-hover
       thead
         tr
-          th(ng-repeat='field in meta.fields') {{ field.human }}
+          th(ng-repeat='f in meta.fields') {{ f.human }}
+          th(ng-repeat='rf in meta.related_fields') {{ rf.human }}
           th Actions
       tbody
-        tr(ng-repeat='r in list')
-          td(ng-repeat='field in meta.fields') {{ r[field.model] }}
+        tr(ng-repeat='res in list')
+          td(ng-repeat='f in meta.fields') {{ res[f.model] }}
+          td(ng-repeat='rf in meta.related_fields') {{ res[rf.related_model][rf.related_human] }}
           td
-            a.fa.fa-eye(ui-sref='root.{{ meta.namePlural }}.detail({id: r.id})')
+            a.btn.btn-default.btn-sm.fa.fa-eye(ng-click='detail(res.id)')
             span 
-            a.fa.fa-pencil(ui-sref='root.{{ meta.namePlural }}.edit({id: r.id})')
-            span 
-            a.fa.fa-trash-o(ng-click='remove(r["id"])')
+            a.btn.btn-danger.btn-sm.fa.fa-trash-o(ng-click='remove(res.id)')

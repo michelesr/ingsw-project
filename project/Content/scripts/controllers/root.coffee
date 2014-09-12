@@ -1,6 +1,9 @@
-controllers.controller 'RootCtrl', ($rootScope, $scope, $state, Auth, Session) ->
+controllers.controller 'RootCtrl', ($rootScope, $state) ->
 
   $rootScope.debug = true
+
+  if $rootScope.debug == true
+    $rootScope.$state = $state
 
   if not $rootScope.auth
     $state.go 'root.login'

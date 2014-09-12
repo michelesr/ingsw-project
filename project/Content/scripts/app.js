@@ -61,18 +61,15 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
           }, {
             name: 'add',
             url: '/add',
-            templateUrl: 'Content/partials/resource/add.html',
-            controller: 'UserAddCtrl'
+            templateUrl: 'Content/partials/resource/add.html'
           }, {
             name: 'detail',
             url: '/detail/:id',
-            templateUrl: 'Content/partials/resource/detail.html',
-            controller: 'UserDetailCtrl'
+            templateUrl: 'Content/partials/resource/detail.html'
           }, {
             name: 'edit',
             url: '/edit/:id',
-            templateUrl: 'Content/partials/resource/edit.html',
-            controller: 'UserEditCtrl'
+            templateUrl: 'Content/partials/resource/edit.html'
           }
         ]
       }, {
@@ -89,18 +86,15 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
           }, {
             name: 'add',
             url: '/add',
-            templateUrl: 'Content/partials/resource/add.html',
-            controller: 'ProductAddCtrl'
+            templateUrl: 'Content/partials/resource/add.html'
           }, {
             name: 'detail',
             url: '/detail/:id',
-            templateUrl: 'Content/partials/resource/detail.html',
-            controller: 'ProductDetailCtrl'
+            templateUrl: 'Content/partials/resource/detail.html'
           }, {
             name: 'edit',
             url: '/edit/:id',
-            templateUrl: 'Content/partials/resource/edit.html',
-            controller: 'ProductEditCtrl'
+            templateUrl: 'Content/partials/resource/edit.html'
           }
         ]
       }, {
@@ -117,18 +111,15 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
           }, {
             name: 'add',
             url: '/add',
-            templateUrl: 'Content/partials/resource/add.html',
-            controller: 'CategoryAddCtrl'
+            templateUrl: 'Content/partials/resource/add.html'
           }, {
             name: 'detail',
             url: '/detail/:id',
-            templateUrl: 'Content/partials/resource/detail.html',
-            controller: 'CategoryDetailCtrl'
+            templateUrl: 'Content/partials/resource/detail.html'
           }, {
             name: 'edit',
             url: '/edit/:id',
-            templateUrl: 'Content/partials/resource/edit.html',
-            controller: 'CategoryEditCtrl'
+            templateUrl: 'Content/partials/resource/edit.html'
           }
         ]
       }

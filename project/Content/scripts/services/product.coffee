@@ -22,7 +22,7 @@ services.factory 'Product', ($resource) ->
       params:
         action: 'update'
 
-    delete:
+    remove:
       method: 'GET'
       params:
         action: 'delete'

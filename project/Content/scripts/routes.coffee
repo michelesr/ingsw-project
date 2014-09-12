@@ -12,122 +12,111 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
     abstract: true
     controller: 'RootCtrl'
     children: [
+        name: 'error'
+        url: '/error'
+        templateUrl: 'Content/partials/error.html'
+      ,
+        name: 'home'
+        url: '/'
+        template: ''
+      ,
+        name: 'about'
+        url: '/about'
+        templateUrl: 'Content/partials/about.html'
+      ,
+        name: 'login'
+        url: '/login'
+        templateUrl: 'Content/partials/login.html'
+        controller: 'LoginCtrl'
+      ,
+        name: 'logout'
+        url: '/logout'
+        template: '<ui-view/>'
+        controller: 'LogoutCtrl'
+      ,
+        name: 'admin'
+        url: '/admin'
+        templateUrl: 'Content/partials/admin.html'
+        controller: 'AdminCtrl'
+      ,
+        name: 'supplier'
+        url: '/supplier'
+        templateUrl: 'Content/partials/supplier.html'
+        controller: 'SupplierCtrl'
+      ,
 
-    # General ---------------------------------------------
-      name: 'error'
-      url: '/error'
-      templateUrl: 'Content/partials/error.html'
-    ,
-      name: 'home'
-      url: '/'
-      template: ''
-    ,
-      name: 'about'
-      url: '/about'
-      templateUrl: 'Content/partials/about.html'
-    ,
-      name: 'login'
-      url: '/login'
-      templateUrl: 'Content/partials/login.html'
-      controller: 'LoginCtrl'
-    ,
-      name: 'logout'
-      url: '/logout'
-      template: '<ui-view/>'
-      controller: 'LogoutCtrl'
-    ,
-      name: 'admin'
-      url: '/admin'
-      templateUrl: 'Content/partials/admin.html'
-      controller: 'AdminCtrl'
-    ,
-      name: 'supplier'
-      url: '/supplier'
-      templateUrl: 'Content/partials/supplier.html'
-      controller: 'SupplierCtrl'
-    ,
+      # Users -----------------------------------------------
+        name: 'users'
+        url: '/users'
+        abstract: true
+        template: '<ui-view/>'
+        controller: 'UserCtrl'
+        children: [
+            name: 'list'
+            url: ''
+            templateUrl: 'Content/partials/resource/list.html'
+          ,
+            name: 'add'
+            url: '/add'
+            templateUrl: 'Content/partials/resource/add.html'
+          ,
+            name: 'detail'
+            url: '/detail/:id'
+            templateUrl: 'Content/partials/resource/detail.html'
+          ,
+            name: 'edit'
+            url: '/edit/:id'
+            templateUrl: 'Content/partials/resource/edit.html'
+        ]
+      ,
 
-    # Users -----------------------------------------------
-      name: 'users'
-      url: '/users'
-      abstract: true
-      template: '<ui-view/>'
-      controller: 'UserCtrl'
-      children: [
-        name: 'list'
-        url: ''
-        templateUrl: 'Content/partials/resource/list.html'
+      # Products --------------------------------------------
+        name: 'products'
+        url: '/products'
+        abstract: true
+        template: '<ui-view/>'
+        controller: 'ProductCtrl'
+        children: [
+            name: 'list'
+            url: ''
+            templateUrl: 'Content/partials/resource/list.html'
+          ,
+            name: 'add'
+            url: '/add'
+            templateUrl: 'Content/partials/resource/add.html'
+          ,
+            name: 'detail'
+            url: '/detail/:id'
+            templateUrl: 'Content/partials/resource/detail.html'
+          ,
+            name: 'edit'
+            url: '/edit/:id'
+            templateUrl: 'Content/partials/resource/edit.html'
+        ]
       ,
-        name: 'add'
-        url: '/add'
-        templateUrl: 'Content/partials/resource/add.html'
-        controller: 'UserAddCtrl'
-      ,
-        name: 'detail'
-        url: '/detail/:id'
-        templateUrl: 'Content/partials/resource/detail.html'
-        controller: 'UserDetailCtrl'
-      ,
-        name: 'edit'
-        url: '/edit/:id'
-        templateUrl: 'Content/partials/resource/edit.html'
-        controller: 'UserEditCtrl'
-      ]
-    ,
 
-    # Products --------------------------------------------
-      name: 'products'
-      url: '/products'
-      abstract: true
-      template: '<ui-view/>'
-      controller: 'ProductCtrl'
-      children: [
-        name: 'list'
-        url: ''
-        templateUrl: 'Content/partials/resource/list.html'
-      ,
-        name: 'add'
-        url: '/add'
-        templateUrl: 'Content/partials/resource/add.html'
-        controller: 'ProductAddCtrl'
-      ,
-        name: 'detail'
-        url: '/detail/:id'
-        templateUrl: 'Content/partials/resource/detail.html'
-        controller: 'ProductDetailCtrl'
-      ,
-        name: 'edit'
-        url: '/edit/:id'
-        templateUrl: 'Content/partials/resource/edit.html'
-        controller: 'ProductEditCtrl'
-      ]
-    ,
-
-    # Cagories --------------------------------------------
-      name: 'categories'
-      url: '/categories'
-      abstract: true
-      template: '<ui-view/>'
-      controller: 'CategoryCtrl'
-      children: [
-        name: 'list'
-        url: ''
-        templateUrl: 'Content/partials/resource/list.html'
-      ,
-        name: 'add'
-        url: '/add'
-        templateUrl: 'Content/partials/resource/add.html'
-        controller: 'CategoryAddCtrl'
-      ,
-        name: 'detail'
-        url: '/detail/:id'
-        templateUrl: 'Content/partials/resource/detail.html'
-        controller: 'CategoryDetailCtrl'
-      ,
-        name: 'edit'
-        url: '/edit/:id'
-        templateUrl: 'Content/partials/resource/edit.html'
-        controller: 'CategoryEditCtrl'
-      ]
+      # Categories --------------------------------------------
+        name: 'categories'
+        url: '/categories'
+        abstract: true
+        template: '<ui-view/>'
+        controller: 'CategoryCtrl'
+        children: [
+            name: 'list'
+            url: ''
+            templateUrl: 'Content/partials/resource/list.html'
+          ,
+            name: 'add'
+            url: '/add'
+            templateUrl: 'Content/partials/resource/add.html'
+          ,
+            name: 'detail'
+            url: '/detail/:id'
+            templateUrl: 'Content/partials/resource/detail.html'
+          ,
+            name: 'edit'
+            url: '/edit/:id'
+            templateUrl: 'Content/partials/resource/edit.html'
+          ]
 
     ]

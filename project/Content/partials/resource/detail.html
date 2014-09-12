@@ -1,7 +1,9 @@
 
 <h1 class="page-header">{{ meta.name }} detail</h1>
-<div align="right"><a ui-sref="root.{{ meta.namePlural }}.edit">
+<div align="right"><a ng-click="editForm()">
     <button type="button" class="btn btn-primary"><span class="fa fa-pencil"></span><span> Edit this {{ meta.name }}</span></button></a></div>
-<dl class="dl-horizontal"><span ng-repeat="field in meta.fields">
-    <dt>{{ field.human }}</dt>
-    <dd>{{ field.value }}</dd></span></dl><span ng-if="debug" ng-include="'Content/partials/resource/debug.html'"></span>
+<dl class="dl-horizontal"><span ng-repeat="f in meta.fields">
+    <dt>{{ f.human }}</dt>
+    <dd>{{ f.value }}</dd></span><span ng-repeat="rf in meta.related_fields">
+    <dt>{{ rf.human }}</dt>
+    <dd>{{ rf[rf.related_model][rf.related_human] }}</dd></span></dl><span ng-if="debug" ng-include="'Content/partials/resource/debug.html'"></span>

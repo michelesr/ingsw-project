@@ -43,7 +43,7 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <ui-view></ui-view>
+          <ui-view></ui-view><span ng-if="debug" ng-include="'Content/partials/debug.html'"></span>
         </div>
       </div>
     </div>

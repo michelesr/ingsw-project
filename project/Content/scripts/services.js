@@ -40,7 +40,7 @@ services.factory('Category', function($resource) {
         action: 'update'
       }
     },
-    "delete": {
+    remove: {
       method: 'GET',
       params: {
         action: 'delete'
@@ -91,6 +91,21 @@ services.factory('Meta', function() {
           type: 'text',
           required: true,
           placeholder: 'coffee'
+        }
+      ],
+      related_fields: [
+        {
+          related_model: 'product_category',
+          related_human: 'name',
+          model: 'category',
+          human: 'Category',
+          required: false
+        }, {
+          related_model: 'supplier_id',
+          related_human: 'email',
+          model: 'supplier',
+          human: 'Supplier',
+          required: true
         }
       ]
     },
@@ -169,7 +184,7 @@ services.factory('Product', function($resource) {
         action: 'update'
       }
     },
-    "delete": {
+    remove: {
       method: 'GET',
       params: {
         action: 'delete'
@@ -225,7 +240,7 @@ services.factory('User', function($resource) {
         action: 'update'
       }
     },
-    "delete": {
+    remove: {
       method: 'GET',
       params: {
         action: 'delete'

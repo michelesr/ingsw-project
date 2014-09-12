@@ -1,18 +1,26 @@
-controllers.controller 'ProductCtrl', ($scope, $stateParams, Product, Meta) ->
+controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, Meta) ->
 
-  $scope.meta = {}
-  $scope.meta = Meta.product
-  Product.list (list) ->
-    $scope.list = list
-    $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
+  list = ->
+    $scope.meta = Meta.product
+    rfList = {}
+    User.list (supplierList) ->
+      rfList['supplier'] = supplierList
+      Category.list (categoryList) ->
+        rfList['category'] = categoryList
+        Product.list (list) ->
+          $scope.list = list
+          $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
+          for res in list
+            for rf in $scope.meta.related_fields
+              for rfElem in rfList[rf.model]
+                if rfElem.id == res[rf.related_model]
+                  res[rf.related_model] = rfElem
 
-
-controllers.controller 'ProductAddCtrl', ($scope, $state, $stateParams, Product, Meta) ->
-
-  $scope.meta = {}
-  $scope.meta = Meta.product
-  $scope.resource = {}
-  $scope.result = {}
+  $scope.addForm = () ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    $scope.meta = Meta.product
+    $state.go '^.add'
 
   $scope.add = (fields) ->
     $scope.resource = {}
@@ -20,38 +28,55 @@ controllers.controller 'ProductAddCtrl', ($scope, $state, $stateParams, Product,
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
-    $scope.result = Product.add($scope.resource)
-    $scope.meta = {}
-    $state.go 'root.products.list'
+    Product.add $scope.resource, (res) ->
+      list()
+      $state.go '^.list'
 
+  $scope.detail = (id) ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    rfList = {}
+    User.list (supplierList) ->
+      rfList['supplier'] = supplierList
+      Category.list (categoryList) ->
+        rfList['category'] = categoryList
+        Product.detail {id: id}, (resource) ->
+          for f in $scope.meta.fields
+            k = f['model']
+            f['value'] = resource[k]
+          for rf in $scope.meta.related_fields
+            k = rf['model']
+            rf['value'] = resource[k]
+          for rf in $scope.meta.related_fields
+            for rfElem in rfList[rf.model]
+              if rfElem.id == resource[rf.related_model]
+                rf[rf.related_model] = rfElem
 
-controllers.controller 'ProductDetailCtrl', ($scope, $stateParams, Product, Meta) ->
+          $state.go '^.detail', {id: id}
 
-  $scope.meta = {}
-  $scope.meta = Meta.product
-  Product.detail { id: $stateParams.id }, (res) ->
-    for f in $scope.meta.fields
-      k = f['model']
-      f['value'] = res[k]
+  $scope.editForm = () ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    $scope.meta = Meta.product
+    $state.go '^.edit', {id: $state.params.id}
 
-
-controllers.controller 'ProductEditCtrl', ($scope, $state, $stateParams, Product, Meta) ->
-
-  $scope.meta = {}
-  $scope.meta = Meta.product
-
-  Product.detail { id: $stateParams.id }, (res) ->
-    $scope.product = res
-    for f in $scope.meta['fields']
-      model = f['model']
-      $scope.result = model
-      f['value'] = $scope.product[model]
-
-  $scope.edit = (fields, $stateParams) ->
-    $scope.resource = {}
+  $scope.edit = (fields) ->
+    resource = {}
     for f in fields
       k = f['model']
       v = f['value']
-      $scope.resource[k] = v
-    $scope.result = Product.update(resource)
-    $state.go 'root.products.list'
+      resource[k] = v
+    Product.update {id: $state.params.id}, resource, (res) ->
+      $scope.result = res
+      list()
+      $scope.msgSuccess = 'Updated successfully'
+      $state.go '^.list'
+
+  $scope.remove = (id) ->
+    $scope.msgSuccess = ''
+    $scope.msgError = ''
+    Product.remove {id: id}, (res) ->
+      $scope.msgSuccess = 'Removed successfully'
+      list()
+
+  list()
