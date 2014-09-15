@@ -3,6 +3,7 @@ h1.page-header
   span  Add a {{ meta.name }}
 
 form.form-horizontal(ng-submit="add()", name="addForm", role="form", novalidate)
+
   .form-group(ng-repeat="f in meta.fields")
     ng-form(name="addFormIn")
       label.col-sm-2.control-label {{ f.human }}

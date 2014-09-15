@@ -532,7 +532,7 @@ controllers.controller('StockCtrl', function($scope, $state, Product, Stock, Met
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
       k = f.model;
-      v = f.value;
+      v = k === 'price' ? f.value * 100 : f.value;
       resource[k] = v;
     }
     _ref1 = $scope.meta.related_fields;
@@ -602,7 +602,7 @@ controllers.controller('StockCtrl', function($scope, $state, Product, Stock, Met
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           f = _ref[_i];
           k = f.model;
-          f.value = resource[k];
+          f.value = k === 'price' ? resource[k] / 100 : resource[k];
         }
         _ref1 = $scope.meta.related_fields;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
@@ -631,7 +631,7 @@ controllers.controller('StockCtrl', function($scope, $state, Product, Stock, Met
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
       k = f.model;
-      v = f.value;
+      v = k === 'price' ? f.value * 100 : f.value;
       resource[k] = v;
     }
     _ref1 = $scope.meta.related_fields;
