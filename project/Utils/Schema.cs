@@ -46,7 +46,7 @@ namespace project.Utils
             new String[] {"price", "FLOAT", "NOT NULL"},
             new String[] {"min", "INTEGER"},
             new String[] {"max", "INTEGER"},
-            new String[] {"aviability", "INTEGER", "NOT NULL"}
+            new String[] {"availability", "INTEGER", "NOT NULL"}
         };
 
         private static readonly String[][] _city = {

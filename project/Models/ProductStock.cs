@@ -12,7 +12,7 @@ namespace project.Models
         public int min { get; set; }
         public int max { get; set; }
         // disponibilità
-        public int aviability { get; set; }
+        public int availability { get; set; }
 
         // controlla che l'user_id sia relativo al produttore del prodotto in stock
         public bool checkUserId(int uid) {

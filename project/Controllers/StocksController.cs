@@ -57,7 +57,7 @@ namespace project.Controllers {
         // POST /api/stocks/update/<id>
         // richiede una admin api_key negli header http
         // aggiorna uno stock
-        // data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, aviability:<av>}
+        // data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, availability:<av>}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -76,7 +76,7 @@ namespace project.Controllers {
         // POST /api/stocks/
         // richiede una admin api_key negli header http
         // aggiunge uno stock
-        // data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, aviability:<av>}
+        // data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, availability:<av>}
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
             ApiKey k = ApiKey.getApiKey();
