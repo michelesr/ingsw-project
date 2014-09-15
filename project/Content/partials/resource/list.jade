@@ -5,7 +5,7 @@ h1.page-header
 p.text-success(ng-if='msgSuccess') Info: {{ msgSuccess }}
 p.text-danger(ng-if='msgError') Error: {{ msgError }}
 
-div(align='right')
+.text-right
   a(ng-click='addForm()')
     button.btn.btn-primary(type='button')
       span.fa.fa-plus
@@ -20,14 +20,16 @@ span(ng-switch='empty')
     table.table.table-striped.table-hover
       thead
         tr
-          th(ng-repeat='f in meta.fields') {{ f.human }}
           th(ng-repeat='rf in meta.related_fields') {{ rf.human }}
+          th(ng-repeat='f in meta.fields') {{ f.human }}
           th Actions
       tbody
         tr(ng-repeat='res in list')
-          td(ng-repeat='f in meta.fields') {{ res[f.model] }}
           td(ng-repeat='rf in meta.related_fields') {{ res[rf.related_model][rf.related_human] }}
+          td(ng-repeat='f in meta.fields') {{ res[f.model] }}
           td
             a.btn.btn-default.btn-sm.fa.fa-eye(ng-click='detail(res.id)')
             span 
             a.btn.btn-danger.btn-sm.fa.fa-trash-o(ng-click='remove(res.id)')
+
+span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')

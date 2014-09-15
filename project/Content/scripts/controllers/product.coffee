@@ -98,12 +98,12 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
           $state.go '^.detail', {id: id}
 
 
-  $scope.editForm = () ->
+  $scope.editForm = ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
     $scope.meta = _.cloneDeep(Meta.product)
 
-    # Get resource lists
+    # Get resource lists and product data
     Product.detail {id: $state.params.id}, (resource) ->
       Category.list (categoryList) ->
         User.list (supplierList) ->
@@ -126,11 +126,11 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
               if rfElem.id == resource[rf.related_model]
                 rf.value = rfElem.id
 
+          # Move to edit form page
+          $state.go '^.edit', {id: $state.params.id}
 
-    $state.go '^.edit', {id: $state.params.id}
 
-
-  $scope.edit = () ->
+  $scope.edit = ->
     resource = {}
 
     # Gather data of resource to edit
@@ -146,11 +146,13 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
         v = _.parseInt(rf.value)
         resource[k] = v
 
-    # Update the resource and return to list page
+    # Update the resource
     Product.update {id: $state.params.id}, resource, (res) ->
 #      $scope.result = res
       list()
       $scope.msgSuccess = 'Updated successfully'
+
+      # Return to list page
       $state.go '^.list'
 
 

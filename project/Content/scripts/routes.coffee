@@ -44,7 +44,6 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         templateUrl: 'Content/partials/supplier.html'
         controller: 'SupplierCtrl'
       ,
-
       # Users -----------------------------------------------
         name: 'users'
         url: '/users'
@@ -69,7 +68,6 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
             templateUrl: 'Content/partials/resource/edit.html'
         ]
       ,
-
       # Products --------------------------------------------
         name: 'products'
         url: '/products'
@@ -94,7 +92,6 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
             templateUrl: 'Content/partials/resource/edit.html'
         ]
       ,
-
       # Categories --------------------------------------------
         name: 'categories'
         url: '/categories'
@@ -118,5 +115,52 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
             url: '/edit/:id'
             templateUrl: 'Content/partials/resource/edit.html'
           ]
-
+      ,
+      # Stocks --------------------------------------------
+        name: 'stocks'
+        url: '/stocks'
+        abstract: true
+        template: '<ui-view/>'
+        controller: 'StockCtrl'
+        children: [
+            name: 'list'
+            url: ''
+            templateUrl: 'Content/partials/resource/list.html'
+          ,
+            name: 'add'
+            url: '/add'
+            templateUrl: 'Content/partials/resource/add.html'
+          ,
+            name: 'detail'
+            url: '/detail/:id'
+            templateUrl: 'Content/partials/resource/detail.html'
+          ,
+            name: 'edit'
+            url: '/edit/:id'
+            templateUrl: 'Content/partials/resource/edit.html'
+        ]
+      ,
+      # Cities --------------------------------------------
+        name: 'cities'
+        url: '/cities'
+        abstract: true
+        template: '<ui-view/>'
+        controller: 'CityCtrl'
+        children: [
+            name: 'list'
+            url: ''
+            templateUrl: 'Content/partials/resource/list.html'
+          ,
+            name: 'add'
+            url: '/add'
+            templateUrl: 'Content/partials/resource/add.html'
+          ,
+            name: 'detail'
+            url: '/detail/:id'
+            templateUrl: 'Content/partials/resource/detail.html'
+          ,
+            name: 'edit'
+            url: '/edit/:id'
+            templateUrl: 'Content/partials/resource/edit.html'
+        ]
     ]

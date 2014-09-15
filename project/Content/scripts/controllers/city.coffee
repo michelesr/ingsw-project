@@ -1,20 +1,20 @@
-controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
+controllers.controller 'CityCtrl', ($scope, $state, City, Meta) ->
 
   list = ->
-    $scope.meta = _.cloneDeep(Meta.category)
+    $scope.meta = _.cloneDeep(Meta.city)
 
     # Get resource list
-    Category.list (categoryList) ->
-      $scope.list = categoryList
+    City.list (cityList) ->
+      $scope.list = cityList
 
-      # Check whether there is no elements in category list
+      # Check whether there is no elements in city list
       $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
 
 
   $scope.addForm = ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
-    $scope.meta = _.cloneDeep(Meta.category)
+    $scope.meta = _.cloneDeep(Meta.city)
 
     # Move to add form page
     $state.go '^.add'
@@ -30,7 +30,7 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
       $scope.resource[k] = v
 
     # Add the resource and return to list page
-    Category.add $scope.resource, (res) ->
+    City.add $scope.resource, (res) ->
       list()
 
       # Return to list page
@@ -41,10 +41,10 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
 
-    # Get category data
-    Category.detail {id: id}, (res) ->
+    # Get city data
+    City.detail {id: id}, (res) ->
 
-      # Gather data of category
+      # Gather data of city
       for f in $scope.meta.fields
         k = f.model
         f.value = res[k]
@@ -56,12 +56,12 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
   $scope.editForm = ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
-    $scope.meta = _.cloneDeep(Meta.category)
+    $scope.meta = _.cloneDeep(Meta.city)
 
-    # Get category data
-    Category.detail {id: $state.params.id}, (resource) ->
+    # Get city data
+    City.detail {id: $state.params.id}, (resource) ->
 
-      # Gather data of category
+      # Gather data of city
       for f in $scope.meta.fields
         k = f.model
         f.value = resource[k]
@@ -80,7 +80,7 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
       resource[k] = v
 
     # Update the resource
-    Category.update {id: $state.params.id}, resource, (res) ->
+    City.update {id: $state.params.id}, resource, (res) ->
 #      $scope.result = res
       list()
       $scope.msgSuccess = 'Updated successfully'
@@ -94,7 +94,7 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
     $scope.msgError = ''
 
     # Remove the resource and return to list page
-    Category.remove {id: id}, (res) ->
+    City.remove {id: id}, (res) ->
       $scope.msgSuccess = 'Removed successfully'
       list()
 

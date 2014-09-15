@@ -122,6 +122,56 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
             templateUrl: 'Content/partials/resource/edit.html'
           }
         ]
+      }, {
+        name: 'stocks',
+        url: '/stocks',
+        abstract: true,
+        template: '<ui-view/>',
+        controller: 'StockCtrl',
+        children: [
+          {
+            name: 'list',
+            url: '',
+            templateUrl: 'Content/partials/resource/list.html'
+          }, {
+            name: 'add',
+            url: '/add',
+            templateUrl: 'Content/partials/resource/add.html'
+          }, {
+            name: 'detail',
+            url: '/detail/:id',
+            templateUrl: 'Content/partials/resource/detail.html'
+          }, {
+            name: 'edit',
+            url: '/edit/:id',
+            templateUrl: 'Content/partials/resource/edit.html'
+          }
+        ]
+      }, {
+        name: 'cities',
+        url: '/cities',
+        abstract: true,
+        template: '<ui-view/>',
+        controller: 'CityCtrl',
+        children: [
+          {
+            name: 'list',
+            url: '',
+            templateUrl: 'Content/partials/resource/list.html'
+          }, {
+            name: 'add',
+            url: '/add',
+            templateUrl: 'Content/partials/resource/add.html'
+          }, {
+            name: 'detail',
+            url: '/detail/:id',
+            templateUrl: 'Content/partials/resource/detail.html'
+          }, {
+            name: 'edit',
+            url: '/edit/:id',
+            templateUrl: 'Content/partials/resource/edit.html'
+          }
+        ]
       }
     ]
   });

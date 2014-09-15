@@ -49,6 +49,40 @@ services.factory('Category', function($resource) {
   });
 });
 
+services.factory('City', function($resource) {
+  return $resource('/api/cities/:action/:id', {}, {
+    list: {
+      method: 'GET',
+      params: {
+        action: 'index',
+        id: -1
+      },
+      isArray: true
+    },
+    add: {
+      method: 'POST'
+    },
+    detail: {
+      method: 'GET',
+      params: {
+        action: 'detail'
+      }
+    },
+    update: {
+      method: 'POST',
+      params: {
+        action: 'update'
+      }
+    },
+    remove: {
+      method: 'GET',
+      params: {
+        action: 'delete'
+      }
+    }
+  });
+});
+
 services.factory('Meta', function() {
   var meta;
   return meta = {
@@ -77,7 +111,8 @@ services.factory('Meta', function() {
           required: false,
           placeholder: 'Rossi'
         }
-      ]
+      ],
+      related_fields: []
     },
     product: {
       name: 'product',
@@ -109,17 +144,53 @@ services.factory('Meta', function() {
         }
       ]
     },
+    stock: {
+      name: 'stock',
+      namePlural: 'stocks',
+      nameHuman: 'Stocks',
+      icon: 'fa fa-shopping-cart',
+      fields: [
+        {
+          model: 'price',
+          human: 'Price',
+          type: 'text',
+          required: true,
+          placeholder: '2.50'
+        }, {
+          model: 'min',
+          human: 'Min',
+          type: 'text',
+          required: true,
+          placeholder: '1'
+        }, {
+          model: 'max',
+          human: 'Max',
+          type: 'text',
+          required: true,
+          placeholder: '20'
+        }, {
+          model: 'availability',
+          human: 'Availability',
+          type: 'text',
+          required: true,
+          placeholder: '100'
+        }
+      ],
+      related_fields: [
+        {
+          related_model: 'product_id',
+          related_human: 'name',
+          model: 'product',
+          human: 'Product',
+          required: true
+        }
+      ]
+    },
     category: {
       name: 'category',
       namePlural: 'categories',
       nameHuman: 'Categories',
       icon: 'glyphicon glyphicon-tags',
-      fields: [
-        {
-          model: 'name',
-          human: 'Name'
-        }
-      ],
       fields: [
         {
           human: 'Name',
@@ -128,13 +199,34 @@ services.factory('Meta', function() {
           required: true,
           placeholder: 'food'
         }
-      ]
+      ],
+      related_fields: []
+    },
+    city: {
+      name: 'city',
+      namePlural: 'cities',
+      nameHuman: 'Cities',
+      icon: 'fa fa-home',
+      fields: [
+        {
+          human: 'Name',
+          model: 'name',
+          type: 'text',
+          required: true,
+          placeholder: 'Urbino'
+        }
+      ],
+      related_fields: []
     },
     adminSidebar: [
       {
         name: 'Users',
         state: 'root.users.list',
         icon: 'fa fa-users'
+      }, {
+        name: 'Cities',
+        state: 'root.cities.list',
+        icon: 'fa fa-home'
       }, {
         name: 'Categories',
         state: 'root.categories.list',
@@ -143,6 +235,14 @@ services.factory('Meta', function() {
         name: 'Products',
         state: 'root.products.list',
         icon: 'fa fa-coffee'
+      }, {
+        name: 'Stocks',
+        state: 'root.stocks.list',
+        icon: 'fa fa-shopping-cart'
+      }, {
+        name: 'Catalog',
+        state: 'root.catalog',
+        icon: 'fa fa-list'
       }
     ],
     supplierSidebar: [
@@ -150,6 +250,10 @@ services.factory('Meta', function() {
         name: 'Products',
         state: 'root.products.list',
         icon: 'fa fa-coffee'
+      }, {
+        name: 'Stocks',
+        state: 'root.stocks.list',
+        icon: 'fa fa-shopping-cart'
       }, {
         name: 'Catalog',
         state: 'root.catalog',
@@ -213,6 +317,40 @@ services.service('Sidebar', function() {
   this.admin = function() {};
   this.supplier = function() {};
   return this;
+});
+
+services.factory('Stock', function($resource) {
+  return $resource('/api/stocks/:action/:id', {}, {
+    list: {
+      method: 'GET',
+      params: {
+        action: 'index',
+        id: -1
+      },
+      isArray: true
+    },
+    add: {
+      method: 'POST'
+    },
+    detail: {
+      method: 'GET',
+      params: {
+        action: 'detail'
+      }
+    },
+    update: {
+      method: 'POST',
+      params: {
+        action: 'update'
+      }
+    },
+    remove: {
+      method: 'GET',
+      params: {
+        action: 'delete'
+      }
+    }
+  });
 });
 
 services.factory('User', function($resource) {

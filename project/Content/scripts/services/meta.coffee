@@ -27,6 +27,7 @@ services.factory 'Meta', () ->
         required: false
         placeholder: 'Rossi'
       ]
+      related_fields: []
 
     product:
       name: 'product'
@@ -54,15 +55,49 @@ services.factory 'Meta', () ->
           required: true
       ]
 
+    stock:
+      name: 'stock'
+      namePlural: 'stocks'
+      nameHuman: 'Stocks'
+      icon: 'fa fa-shopping-cart'
+      fields: [
+          model: 'price'
+          human: 'Price'
+          type: 'text'
+          required: true
+          placeholder: '2.50'
+        ,
+          model: 'min'
+          human: 'Min'
+          type: 'text'
+          required: true
+          placeholder: '1'
+        ,
+          model: 'max'
+          human: 'Max'
+          type: 'text'
+          required: true
+          placeholder: '20'
+        ,
+          model: 'availability'
+          human: 'Availability'
+          type: 'text'
+          required: true
+          placeholder: '100'
+      ]
+      related_fields: [
+          related_model: 'product_id'
+          related_human: 'name'
+          model: 'product'
+          human: 'Product'
+          required: true
+      ]
+
     category:
       name: 'category'
       namePlural: 'categories'
       nameHuman: 'Categories'
       icon: 'glyphicon glyphicon-tags'
-      fields: [
-        model: 'name'
-        human: 'Name'
-      ]
       fields: [
         human: 'Name'
         model: 'name'
@@ -70,7 +105,21 @@ services.factory 'Meta', () ->
         required: true
         placeholder: 'food'
       ]
+      related_fields: []
 
+    city:
+      name: 'city'
+      namePlural: 'cities'
+      nameHuman: 'Cities'
+      icon: 'fa fa-home'
+      fields: [
+        human: 'Name'
+        model: 'name'
+        type: 'text'
+        required: true
+        placeholder: 'Urbino'
+      ]
+      related_fields: []
 
     # Sidebars --------------------------------------------
     adminSidebar: [
@@ -78,21 +127,35 @@ services.factory 'Meta', () ->
         state: 'root.users.list'
         icon: 'fa fa-users'
       ,
+        name: 'Cities'
+        state: 'root.cities.list'
+        icon: 'fa fa-home'
+      ,
         name: 'Categories'
         state: 'root.categories.list'
         icon: 'glyphicon glyphicon-tags'
       ,
-      # dev
         name: 'Products'
         state: 'root.products.list'
         icon: 'fa fa-coffee'
-      # end dev
+      ,
+        name: 'Stocks'
+        state: 'root.stocks.list'
+        icon: 'fa fa-shopping-cart'
+      ,
+        name: 'Catalog'
+        state: 'root.catalog'
+        icon: 'fa fa-list'
     ]
 
     supplierSidebar: [
         name: 'Products'
         state: 'root.products.list'
         icon: 'fa fa-coffee'
+      ,
+        name: 'Stocks'
+        state: 'root.stocks.list'
+        icon: 'fa fa-shopping-cart'
       ,
         name: 'Catalog'
         state: 'root.catalog'
