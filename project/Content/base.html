@@ -41,9 +41,22 @@
           <ul ng-if="sidebar" class="nav nav-sidebar">
             <li ng-repeat="c in sidebar" ui-sref-active="active"><a ui-sref="{{ c.state }}"><span class="{{ c.icon }}"></span><span> {{ c.name }}</span></a></li>
           </ul>
+          <h4 class="sub-header">$state info<small> debug</small></h4>
+          <dl>
+            <dt>current</dt>
+            <dd>{{ $state.current.name }}</dd>
+          </dl>
+          <dl>
+            <dt>url</dt>
+            <dd>{{ $state.$current.url.source }}</dd>
+          </dl>
+          <dl>
+            <dt>params</dt>
+            <dd>{{ $state.params | json }}</dd>
+          </dl>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <ui-view></ui-view><span ng-if="debug" ng-include="'Content/partials/debug.html'"></span>
+          <ui-view></ui-view>
         </div>
       </div>
     </div>

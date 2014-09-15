@@ -17,9 +17,9 @@ form.form-horizontal(ng-submit="add()", name="addForm", role="form", novalidate)
       label.col-sm-2.control-label {{ rf.human }}
         span(ng-if='rf.required') *
       .col-sm-10
-        //input.form-control(ng-model="rf.value", type="{{ rf.type }}", ng-required="{{ rf.required }}", placeholder="{{ rf.placeholder }}")
         select.form-control(ng-model='rf.value')
-          option(ng-repeat='v in rf.values', value='{{ v.id }}'){{ v[rf.related_human] }}
+          option(ng-repeat='v in rf.values', value='{{ v.id }}') {{ v[rf.related_human] }}
+        //input.form-control(ng-model="rf.value", type="{{ rf.type }}", ng-required="{{ rf.required }}", placeholder="{{ rf.placeholder }}")
 
   .form-group
     div.col-sm-offset-2.col-sm-9
