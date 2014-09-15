@@ -44,8 +44,8 @@ namespace project.Utils
         private static readonly String[][] _productStock = {
             new String[] {"product_id", "INTEGER", "NOT NULL", _getFK("product_id", "Product", "id")},
             new String[] {"price", "FLOAT", "NOT NULL"},
-            new String[] {"min", "INTEGER"},
-            new String[] {"max", "INTEGER"},
+            new String[] {"min", "INTEGER", "NOT NULL"},
+            new String[] {"max", "INTEGER", "NOT NULL"},
             new String[] {"availability", "INTEGER", "NOT NULL"}
         };
 
