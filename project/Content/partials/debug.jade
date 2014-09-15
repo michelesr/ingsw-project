@@ -1,5 +1,5 @@
 h3.sub-header Debug info
 
-pre $state = {{ $state.current.name }}
-pre $state.params = {{ $state.params | json }}
-pre $state full url = {{ $state.$current.url.source }}
+pre Current state = {{ $state.current.name }}
+pre State URL = {{ $state.$current.url.source }}
+pre State params = {{ $state.params | json }}

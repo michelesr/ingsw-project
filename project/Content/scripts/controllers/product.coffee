@@ -2,17 +2,24 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
   list = ->
     $scope.meta = _.cloneDeep(Meta.product)
-    rfList = {}
-    User.list (supplierList) ->
-      rfList['supplier'] = supplierList
+
+    # Get resource lists
+    Product.list (productList) ->
       Category.list (categoryList) ->
-        rfList['category'] = categoryList
-        Product.list (list) ->
-          $scope.list = list
-          $scope.empty = $scope.list.length <= 1 and _.isEmpty $scope.list[0]
-          for res in list
+        User.list (supplierList) ->
+
+          $scope.list = productList
+          lists =
+            category: categoryList
+            supplier: supplierList
+
+          # Check whether there is no elements in product list
+          $scope.empty = $scope.list.length <= 1 and _.isEmpty($scope.list[0])
+
+          # Resolve the data relations and put into every product
+          for res in $scope.list
             for rf in $scope.meta.related_fields
-              for rfElem in rfList[rf.model]
+              for rfElem in lists[rf.model]
                 if rfElem.id == res[rf.related_model]
                   res[rf.related_model] = rfElem
 
@@ -22,29 +29,40 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
     $scope.msgError = ''
     $scope.meta = _.cloneDeep(Meta.product)
 
-    rfList = {}
-    User.list (supplierList) ->
-      rfList['supplier'] = supplierList
-      Category.list (categoryList) ->
-        rfList['category'] = categoryList
-        for rf in $scope.meta.related_fields
-          rf.values = rfList[rf.model]
+    # Get resource lists
+    Category.list (categoryList) ->
+      User.list (supplierList) ->
 
+        lists =
+          category: categoryList
+          supplier: supplierList
+
+        # Put relational data into $scope
+        for rf in $scope.meta.related_fields
+          rf.values = lists[rf.model]
+
+        # Move to add form page
         $state.go '^.add'
 
 
-  $scope.add = (fields) ->
-    $scope.resource = {}
-    for f in fields
-      k = f['model']
-      v = f['value']
-      $scope.resource[k] = v
+  $scope.add = ->
+    resource = {}
+
+    # Gather date of resource to add
+    for f in $scope.meta.fields
+      k = f.model
+      v = f.value
+      resource[k] = v
+
+    # Gather relational data of resource to add
     for rf in $scope.meta.related_fields
       if _.has(rf, 'value')
-        k = rf['related_model']
-        v = _.parseInt(rf['value'])
-        $scope.resource[k] = v
-    Product.add $scope.resource, (res) ->
+        k = rf.related_model
+        v = _.parseInt(rf.value)
+        resource[k] = v
+
+    # Add the resource and return to list page
+    Product.add resource, (res) ->
       list()
       $scope.msgSuccess = 'Added successfully'
       $state.go '^.list'
@@ -53,50 +71,84 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
   $scope.detail = (id) ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
-    rfList = {}
-    User.list (supplierList) ->
-      rfList['supplier'] = supplierList
+
+    # Get related resource lists and product data
+    Product.detail {id: id}, (resource) ->
       Category.list (categoryList) ->
-        rfList['category'] = categoryList
-        Product.detail {id: id}, (resource) ->
+        User.list (supplierList) ->
+
+          lists =
+            supplier: supplierList
+            category: categoryList
+
+          # Gather data of product
           for f in $scope.meta.fields
-            k = f['model']
-            f['value'] = resource[k]
+            k = f.model
+            f.value = resource[k]
+
+          # Resolve the data relations and put into every product
           for rf in $scope.meta.related_fields
-            k = rf['model']
-            rf['value'] = resource[k]
-          for rf in $scope.meta.related_fields
-            for rfElem in rfList[rf.model]
+            k = rf.model
+            rf.value = resource[k]
+            for rfElem in lists[rf.model]
               if rfElem.id == resource[rf.related_model]
                 rf[rf.related_model] = rfElem
 
+          # Move to detail page
           $state.go '^.detail', {id: id}
 
 
-  $scope.editForm = ->
+  $scope.editForm = () ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
     $scope.meta = _.cloneDeep(Meta.product)
 
-    rfList = {}
-    User.list (supplierList) ->
-      rfList['supplier'] = supplierList
+    # Get resource lists
+    Product.detail {id: $state.params.id}, (resource) ->
       Category.list (categoryList) ->
-        rfList['category'] = categoryList
-        for rf in $scope.meta.related_fields
-          rf.values = rfList[rf.model]
+        User.list (supplierList) ->
+
+          lists =
+            supplier: supplierList
+            category: categoryList
+
+          # Gather data of product
+          for f in $scope.meta.fields
+            k = f.model
+            f.value = resource[k]
+
+          # Resolve the data relations and put into every product
+          for rf in $scope.meta.related_fields
+            k = rf.model
+            rf.value = resource[k]
+            rf.values = lists[rf.model]
+            for rfElem in lists[rf.model]
+              if rfElem.id == resource[rf.related_model]
+                rf.value = rfElem.id
+
 
     $state.go '^.edit', {id: $state.params.id}
 
 
-  $scope.edit = (fields) ->
+  $scope.edit = () ->
     resource = {}
-    for f in fields
-      k = f['model']
-      v = f['value']
+
+    # Gather data of resource to edit
+    for f in $scope.meta.fields
+      k = f.model
+      v = f.value
       resource[k] = v
+
+    # Gather relational data of resource to edit
+    for rf in $scope.meta.related_fields
+      if _.has(rf, 'value')
+        k = rf.related_model
+        v = _.parseInt(rf.value)
+        resource[k] = v
+
+    # Update the resource and return to list page
     Product.update {id: $state.params.id}, resource, (res) ->
-      $scope.result = res
+#      $scope.result = res
       list()
       $scope.msgSuccess = 'Updated successfully'
       $state.go '^.list'
@@ -105,9 +157,12 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
   $scope.remove = (id) ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
+
+    # Remove the resource and return to list page
     Product.remove {id: id}, (res) ->
       $scope.msgSuccess = 'Removed successfully'
       list()
 
 
+  # By default, load the list data
   list()
