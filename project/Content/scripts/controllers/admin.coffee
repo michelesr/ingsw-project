@@ -24,11 +24,13 @@ controllers.controller 'AdminCtrl', ($scope, $state, User, Meta) ->
 
 
   $scope.add = ->
-    resource = {}
+    resource =
+      type: 'admin'
+      user_data: {}
 
     # Gather date of resource to add
     for f in $scope.meta.fields
-      resource[f.model] = f.value
+      resource.user_data[f.model] = f.value
 
     # Add the resource and return to list page
     User.add resource, (res) ->

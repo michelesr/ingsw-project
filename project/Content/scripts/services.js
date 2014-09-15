@@ -134,7 +134,8 @@ services.factory('Meta', function() {
           model: 'vat',
           type: 'text',
           required: true,
-          placeholder: 'company name'
+          placeholder: 'company name',
+          supplier: true
         }, {
           human: 'Email',
           model: 'email',
@@ -158,7 +159,8 @@ services.factory('Meta', function() {
           model: 'vat',
           type: 'text',
           required: true,
-          placeholder: ''
+          placeholder: '',
+          supplier: true
         }
       ],
       related_fields: [
@@ -167,7 +169,17 @@ services.factory('Meta', function() {
           related_human: 'name',
           model: 'city',
           human: 'City',
-          required: true
+          required: true,
+          supplier: true
+        }
+      ],
+      extra_fields: [
+        {
+          human: 'Password',
+          model: 'password',
+          type: 'password',
+          required: true,
+          placeholder: 'your password'
         }
       ]
     },

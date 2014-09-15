@@ -47,18 +47,27 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
 
 
   $scope.add = ->
-    resource = {}
+    resource =
+      type: 'supplier'
+      user_data: {}
+      supplier_data: {}
 
     # Gather date of resource to add
-    for f in fields
-      resource[f.model] = f.value
+    for f in $scope.meta.fields
+      if _.has(f, 'supplier') and f.supplier
+        resource.user_data[f.model] = f.value
+      else
+        resource.supplier_data[f.model] = f.value
 
     # Gather relational data of resource to add
     for rf in $scope.meta.related_fields
       if _.has(rf, 'value')
         k = rf.related_model
         v = _.parseInt(rf.value)
-        resource[k] = v
+        if _.has(rf, 'supplier') and f.supplier
+          resource.user_data[k] = v
+        else
+          resource.supplier_data[k] = v
 
     # Add the resource and return to list page
     User.add resource, (res) ->

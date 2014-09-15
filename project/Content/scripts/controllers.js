@@ -34,11 +34,14 @@ controllers.controller('AdminCtrl', function($scope, $state, User, Meta) {
   };
   $scope.add = function() {
     var f, resource, _i, _len, _ref;
-    resource = {};
+    resource = {
+      type: 'admin',
+      user_data: {}
+    };
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
-      resource[f.model] = f.value;
+      resource.user_data[f.model] = f.value;
     }
     return User.add(resource, function(res) {
       list();
@@ -848,19 +851,32 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
     });
   };
   $scope.add = function() {
-    var f, k, resource, rf, v, _i, _j, _len, _len1, _ref;
-    resource = {};
-    for (_i = 0, _len = fields.length; _i < _len; _i++) {
-      f = fields[_i];
-      resource[f.model] = f.value;
+    var f, k, resource, rf, v, _i, _j, _len, _len1, _ref, _ref1;
+    resource = {
+      type: 'supplier',
+      user_data: {},
+      supplier_data: {}
+    };
+    _ref = $scope.meta.fields;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      f = _ref[_i];
+      if (_.has(f, 'supplier') && f.supplier) {
+        resource.user_data[f.model] = f.value;
+      } else {
+        resource.supplier_data[f.model] = f.value;
+      }
     }
-    _ref = $scope.meta.related_fields;
-    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-      rf = _ref[_j];
+    _ref1 = $scope.meta.related_fields;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      rf = _ref1[_j];
       if (_.has(rf, 'value')) {
         k = rf.related_model;
         v = _.parseInt(rf.value);
-        resource[k] = v;
+        if (_.has(rf, 'supplier') && f.supplier) {
+          resource.user_data[k] = v;
+        } else {
+          resource.supplier_data[k] = v;
+        }
       }
     }
     return User.add(resource, function(res) {

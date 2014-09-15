@@ -47,6 +47,7 @@ services.factory 'Meta', () ->
           type: 'text'
           required: true
           placeholder: 'company name'
+          supplier: true
         ,
           human: 'Email'
           model: 'email'
@@ -71,6 +72,7 @@ services.factory 'Meta', () ->
           type: 'text'
           required: true
           placeholder: ''
+          supplier: true
       ]
       related_fields: [
           related_model: 'city'
@@ -78,6 +80,14 @@ services.factory 'Meta', () ->
           model: 'city'
           human: 'City'
           required: true
+          supplier: true
+      ]
+      extra_fields: [
+          human: 'Password'
+          model: 'password'
+          type: 'password'
+          required: true
+          placeholder: 'your password'
       ]
 
     product:
