@@ -3,31 +3,82 @@ services.factory 'Meta', () ->
   meta =
 
     # Resources -------------------------------------------
-    user:
-      name: 'user'
-      namePlural: 'users'
-      nameHuman: 'Users'
+    admin:
+      name: 'admin'
+      namePlural: 'admins'
+      nameHuman: 'Admins'
       icon: 'fa fa-users'
       fields: [
-        human: 'Email'
-        model: 'email'
-        type: 'email'
-        required: true
-        placeholder: 'user@example.org'
-      ,
-        human: 'First name'
-        model: 'first_name'
-        type: 'text'
-        required: false
-        placeholder: 'Mario'
-      ,
-        human: 'Last name'
-        model: 'last_name'
-        type: 'text'
-        required: false
-        placeholder: 'Rossi'
+          human: 'Email'
+          model: 'email'
+          type: 'email'
+          required: true
+          placeholder: 'user@example.org'
+        ,
+          human: 'First name'
+          model: 'first_name'
+          type: 'text'
+          required: true
+          placeholder: 'Mario'
+        ,
+          human: 'Last name'
+          model: 'last_name'
+          type: 'text'
+          required: true
+          placeholder: 'Rossi'
       ]
       related_fields: []
+      extra_fields: [
+          human: 'Password'
+          model: 'password'
+          type: 'password'
+          required: true
+          placeholder: 'your password'
+      ]
+
+    supplier:
+      name: 'supplier'
+      namePlural: 'suppliers'
+      nameHuman: 'Suppliers'
+      icon: 'fa fa-building'
+      fields: [
+          human: 'Supplier Name'
+          model: 'vat'
+          type: 'text'
+          required: true
+          placeholder: 'company name'
+        ,
+          human: 'Email'
+          model: 'email'
+          type: 'email'
+          required: true
+          placeholder: 'user@example.org'
+        ,
+          human: 'First name'
+          model: 'first_name'
+          type: 'text'
+          required: true
+          placeholder: 'Mario'
+        ,
+          human: 'Last name'
+          model: 'last_name'
+          type: 'text'
+          required: true
+          placeholder: 'Rossi'
+        ,
+          human: 'VAT'
+          model: 'vat'
+          type: 'text'
+          required: true
+          placeholder: ''
+      ]
+      related_fields: [
+          related_model: 'city'
+          related_human: 'name'
+          model: 'city'
+          human: 'City'
+          required: true
+      ]
 
     product:
       name: 'product'
@@ -99,11 +150,11 @@ services.factory 'Meta', () ->
       nameHuman: 'Categories'
       icon: 'glyphicon glyphicon-tags'
       fields: [
-        human: 'Name'
-        model: 'name'
-        type: 'text'
-        required: true
-        placeholder: 'food'
+          human: 'Name'
+          model: 'name'
+          type: 'text'
+          required: true
+          placeholder: 'food'
       ]
       related_fields: []
 
@@ -113,19 +164,24 @@ services.factory 'Meta', () ->
       nameHuman: 'Cities'
       icon: 'fa fa-home'
       fields: [
-        human: 'Name'
-        model: 'name'
-        type: 'text'
-        required: true
-        placeholder: 'Urbino'
+          human: 'Name'
+          model: 'name'
+          type: 'text'
+          required: true
+          placeholder: 'Urbino'
       ]
       related_fields: []
 
+
     # Sidebars --------------------------------------------
     adminSidebar: [
-        name: 'Users'
-        state: 'root.users.list'
+        name: 'Admins'
+        state: 'root.admins.list'
         icon: 'fa fa-users'
+      ,
+        name: 'Suppliers'
+        state: 'root.suppliers.list'
+        icon: 'fa fa-building'
       ,
         name: 'Cities'
         state: 'root.cities.list'

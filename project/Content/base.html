@@ -27,7 +27,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li ng-if="isAuth"><a ng-href="/#/users/detail/{{ authId }}">Hello {{ authFirstName }}!</a></li>
+            <li ng-if="isAuth" ng-switch="authType"><a ng-switch-when="0" ng-href="/#/suppliers/detail/{{ authId }}">Hello {{ authFirstName }}!</a><a ng-switch-when="1" ng-href="/#/admins/detail/{{ authId }}">Hello {{ authFirstName }}!</a></li>
             <li ng-if="isAuth"><a ui-sref="root.logout">Logout</a></li>
             <li ng-if="!isAuth"><a ui-sref="root.login">Login</a></li>
             <li><a ui-sref="root.about">About</a></li>
@@ -39,7 +39,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul ng-if="sidebar" class="nav nav-sidebar">
-            <li ng-repeat="c in sidebar" ui-sref-active="active"><a ui-sref="{{ c.state }}"><span class="{{ c.icon }}"></span><span> {{ c.name }}</span></a></li>
+            <li ng-repeat="elem in sidebar" ui-sref-active="active"><a ui-sref="{{ elem.state }}"><span class="{{ elem.icon }}"></span><span> {{ elem.name }}</span></a></li>
           </ul>
           <h4 class="sub-header">$state info<small> debug</small></h4>
           <dl>

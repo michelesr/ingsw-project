@@ -18,5 +18,5 @@ controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, Auth, Us
         $rootScope.isAuth = true
 
         switch $rootScope.authType
-          when 0 then $state.go 'root.supplier'
-          when 1 then $state.go 'root.admin'
+          when 0 then $state.go 'root.supplierHome'
+          when 1 then $state.go 'root.adminHome'

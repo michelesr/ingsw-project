@@ -38,21 +38,46 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
         template: '<ui-view/>',
         controller: 'LogoutCtrl'
       }, {
-        name: 'admin',
-        url: '/admin',
+        name: 'adminHome',
+        url: '/home',
         templateUrl: 'Content/partials/admin.html',
-        controller: 'AdminCtrl'
+        controller: 'AdminHomeCtrl'
       }, {
-        name: 'supplier',
-        url: '/supplier',
+        name: 'supplierHome',
+        url: '/home',
         templateUrl: 'Content/partials/supplier.html',
-        controller: 'SupplierCtrl'
+        controller: 'SupplierHomeCtrl'
       }, {
-        name: 'users',
-        url: '/users',
+        name: 'admins',
+        url: '/admins',
         abstract: true,
         template: '<ui-view/>',
-        controller: 'UserCtrl',
+        controller: 'AdminCtrl',
+        children: [
+          {
+            name: 'list',
+            url: '',
+            templateUrl: 'Content/partials/resource/list.html'
+          }, {
+            name: 'add',
+            url: '/add',
+            templateUrl: 'Content/partials/resource/add.html'
+          }, {
+            name: 'detail',
+            url: '/detail/:id',
+            templateUrl: 'Content/partials/resource/detail.html'
+          }, {
+            name: 'edit',
+            url: '/edit/:id',
+            templateUrl: 'Content/partials/resource/edit.html'
+          }
+        ]
+      }, {
+        name: 'suppliers',
+        url: '/suppliers',
+        abstract: true,
+        template: '<ui-view/>',
+        controller: 'SupplierCtrl',
         children: [
           {
             name: 'list',

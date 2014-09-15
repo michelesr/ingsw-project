@@ -16,7 +16,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
           # Check whether there is no elements in product list
           $scope.empty = $scope.list.length <= 1 and _.isEmpty($scope.list[0])
 
-          # Resolve the data relations and put into every product
+          # Resolve the data relations and put into $scope
           for res in $scope.list
             for rf in $scope.meta.related_fields
               for rfElem in lists[rf.model]
@@ -50,9 +50,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
     # Gather date of resource to add
     for f in $scope.meta.fields
-      k = f.model
-      v = f.value
-      resource[k] = v
+      resource[f.model] = f.value
 
     # Gather relational data of resource to add
     for rf in $scope.meta.related_fields
@@ -73,7 +71,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
     $scope.msgError = ''
 
     # Get related resource lists and product data
-    Product.detail {id: id}, (resource) ->
+    Product.detail {id: id}, (product) ->
       Category.list (categoryList) ->
         User.list (supplierList) ->
 
@@ -83,8 +81,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
           # Gather data of product
           for f in $scope.meta.fields
-            k = f.model
-            f.value = resource[k]
+            f.value = product[f.model]
 
           # Resolve the data relations and put into every product
           for rf in $scope.meta.related_fields
@@ -114,8 +111,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
           # Gather data of product
           for f in $scope.meta.fields
-            k = f.model
-            f.value = resource[k]
+            f.value = resource[f.model]
 
           # Resolve the data relations and put into every product
           for rf in $scope.meta.related_fields
@@ -135,9 +131,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
     # Gather data of resource to edit
     for f in $scope.meta.fields
-      k = f.model
-      v = f.value
-      resource[k] = v
+      resource[f.model] = f.value
 
     # Gather relational data of resource to edit
     for rf in $scope.meta.related_fields
@@ -146,7 +140,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
         v = _.parseInt(rf.value)
         resource[k] = v
 
-    # Update the resource
+    # Update the product
     Product.update {id: $state.params.id}, resource, (res) ->
 #      $scope.result = res
       list()
@@ -160,7 +154,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
     $scope.msgSuccess = ''
     $scope.msgError = ''
 
-    # Remove the resource and return to list page
+    # Remove the product and return to list page
     Product.remove {id: id}, (res) ->
       $scope.msgSuccess = 'Removed successfully'
       list()

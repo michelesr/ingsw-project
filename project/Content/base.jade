@@ -27,8 +27,9 @@ html(lang='en', ng-app='app')
             span.sr-only Toggle navigation
         .navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
-            li(ng-if='isAuth')
-              a(ng-href='/#/users/detail/{{ authId }}') Hello {{ authFirstName }}!
+            li(ng-if='isAuth', ng-switch='authType')
+              a(ng-switch-when='0', ng-href='/#/suppliers/detail/{{ authId }}') Hello {{ authFirstName }}!
+              a(ng-switch-when='1', ng-href='/#/admins/detail/{{ authId }}') Hello {{ authFirstName }}!
             li(ng-if='isAuth')
               a(ui-sref='root.logout') Logout
             li(ng-if='!isAuth')
@@ -39,10 +40,10 @@ html(lang='en', ng-app='app')
       .row
         .col-sm-3.col-md-2.sidebar
           ul.nav.nav-sidebar(ng-if='sidebar')
-            li(ng-repeat='c in sidebar' ui-sref-active='active')
-              a(ui-sref='{{ c.state }}')
-                span(class='{{ c.icon }}')
-                span  {{ c.name }}
+            li(ng-repeat='elem in sidebar' ui-sref-active='active')
+              a(ui-sref='{{ elem.state }}')
+                span(class='{{ elem.icon }}')
+                span  {{ elem.name }}
           h4.sub-header $state info
             small  debug
           dl
