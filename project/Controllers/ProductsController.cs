@@ -48,7 +48,7 @@ namespace project.Controllers {
             ApiKey k = ApiKey.getApiKey();
             Product p = Model.getById<Product>(id);
             if(k.isAdmin() || Supplier.checkUserId(k.user_id, p.supplier_id))  {
-                ConvertibleHashtable.fromRequest().toObject<Product>().delete();
+                p.delete();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
             else

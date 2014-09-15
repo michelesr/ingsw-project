@@ -49,7 +49,7 @@ namespace project.Controllers {
             if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else  {
-                ConvertibleHashtable.fromRequest().toObject<ProductCategory>().delete();
+                Model.getById<ProductCategory>(id).delete();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
         }

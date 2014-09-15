@@ -46,9 +46,11 @@ namespace project.Controllers {
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
-            ProductStock s = ConvertibleHashtable.fromRequest().toObject<ProductStock>();
-            if (k.isAdmin() || s.checkUserId(k.user_id)) 
+            ProductStock ps = Model.getById<ProductStock>(id);
+            if(k.isAdmin() || ps.checkUserId(id))  {
+                ps.delete();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
+            }
             else
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
