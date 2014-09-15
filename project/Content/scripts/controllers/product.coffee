@@ -1,7 +1,7 @@
 controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, Meta) ->
 
   list = ->
-    $scope.meta = Meta.product
+    $scope.meta = _.cloneDeep(Meta.product)
     rfList = {}
     User.list (supplierList) ->
       rfList['supplier'] = supplierList
@@ -16,11 +16,22 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
                 if rfElem.id == res[rf.related_model]
                   res[rf.related_model] = rfElem
 
-  $scope.addForm = () ->
+
+  $scope.addForm = ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
-    $scope.meta = Meta.product
-    $state.go '^.add'
+    $scope.meta = _.cloneDeep(Meta.product)
+
+    rfList = {}
+    User.list (supplierList) ->
+      rfList['supplier'] = supplierList
+      Category.list (categoryList) ->
+        rfList['category'] = categoryList
+        for rf in $scope.meta.related_fields
+          rf.values = rfList[rf.model]
+
+        $state.go '^.add'
+
 
   $scope.add = (fields) ->
     $scope.resource = {}
@@ -28,9 +39,16 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
       k = f['model']
       v = f['value']
       $scope.resource[k] = v
+    for rf in $scope.meta.related_fields
+      if _.has(rf, 'value')
+        k = rf['related_model']
+        v = _.parseInt(rf['value'])
+        $scope.resource[k] = v
     Product.add $scope.resource, (res) ->
       list()
+      $scope.msgSuccess = 'Added successfully'
       $state.go '^.list'
+
 
   $scope.detail = (id) ->
     $scope.msgSuccess = ''
@@ -54,11 +72,22 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
           $state.go '^.detail', {id: id}
 
-  $scope.editForm = () ->
+
+  $scope.editForm = ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
-    $scope.meta = Meta.product
+    $scope.meta = _.cloneDeep(Meta.product)
+
+    rfList = {}
+    User.list (supplierList) ->
+      rfList['supplier'] = supplierList
+      Category.list (categoryList) ->
+        rfList['category'] = categoryList
+        for rf in $scope.meta.related_fields
+          rf.values = rfList[rf.model]
+
     $state.go '^.edit', {id: $state.params.id}
+
 
   $scope.edit = (fields) ->
     resource = {}
@@ -72,11 +101,13 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
       $scope.msgSuccess = 'Updated successfully'
       $state.go '^.list'
 
+
   $scope.remove = (id) ->
     $scope.msgSuccess = ''
     $scope.msgError = ''
     Product.remove {id: id}, (res) ->
       $scope.msgSuccess = 'Removed successfully'
       list()
+
 
   list()

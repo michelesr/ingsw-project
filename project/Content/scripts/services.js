@@ -99,7 +99,7 @@ services.factory('Meta', function() {
           related_human: 'name',
           model: 'category',
           human: 'Category',
-          required: false
+          required: true
         }, {
           related_model: 'supplier_id',
           related_human: 'email',

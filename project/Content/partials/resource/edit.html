@@ -3,7 +3,7 @@
 <form ng-submit="edit(meta.fields)" name="editForm" role="form" novalidate="novalidate" class="form-horizontal">
   <div ng-repeat="f in meta.fields" class="form-group">
     <ng-form name="editFormIn">
-      <label class="col-sm-2 control-label">{{ f.human }}</label>
+      <label class="col-sm-2 control-label">{{ f.human }}<span ng-if="f.required">*</span></label>
       <div class="col-sm-10">
         <input ng-model="f.value" type="{{ f.type }}" ng-required="{{ f.required }}" placeholder="{{ f.placeholder }}" class="form-control"/>
         <!--div(ng-show="editFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
@@ -13,9 +13,21 @@
       </div>
     </ng-form>
   </div>
+  <div ng-repeat="rf in meta.related_fields" class="form-group">
+    <ng-form name="addFormIn">
+      <label class="col-sm-2 control-label">{{ rf.human }}<span ng-if="rf.required">*</span></label>
+      <div class="col-sm-10">
+        <!--input.form-control(ng-model="rf.value", type="{{ rf.type }}", ng-required="{{ rf.required }}", placeholder="{{ rf.placeholder }}")-->
+        <select ng-model="rf.value" class="form-control">
+          <option ng-repeat="v in rf.values" value="{{ v.id }}">{{ v[rf.related_human] }}</option>
+        </select>
+      </div>
+    </ng-form>
+  </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-primary">Edit {{ meta.name }}</button>
     </div>
   </div>
-</form><span ng-if="debug" ng-include="'Content/partials/resource/debug.html'"></span>
+</form>
+<p>* Field required</p><span ng-if="debug" ng-include="'Content/partials/resource/debug.html'"></span>

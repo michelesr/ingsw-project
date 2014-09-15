@@ -136,7 +136,7 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
   var list;
   list = function() {
     var rfList;
-    $scope.meta = Meta.product;
+    $scope.meta = _.cloneDeep(Meta.product);
     rfList = {};
     return User.list(function(supplierList) {
       rfList['supplier'] = supplierList;
@@ -179,13 +179,27 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
     });
   };
   $scope.addForm = function() {
+    var rfList;
     $scope.msgSuccess = '';
     $scope.msgError = '';
-    $scope.meta = Meta.product;
-    return $state.go('^.add');
+    $scope.meta = _.cloneDeep(Meta.product);
+    rfList = {};
+    return User.list(function(supplierList) {
+      rfList['supplier'] = supplierList;
+      return Category.list(function(categoryList) {
+        var rf, _i, _len, _ref;
+        rfList['category'] = categoryList;
+        _ref = $scope.meta.related_fields;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          rf = _ref[_i];
+          rf.values = rfList[rf.model];
+        }
+        return $state.go('^.add');
+      });
+    });
   };
   $scope.add = function(fields) {
-    var f, k, v, _i, _len;
+    var f, k, rf, v, _i, _j, _len, _len1, _ref;
     $scope.resource = {};
     for (_i = 0, _len = fields.length; _i < _len; _i++) {
       f = fields[_i];
@@ -193,8 +207,18 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
       v = f['value'];
       $scope.resource[k] = v;
     }
+    _ref = $scope.meta.related_fields;
+    for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+      rf = _ref[_j];
+      if (_.has(rf, 'value')) {
+        k = rf['related_model'];
+        v = _.parseInt(rf['value']);
+        $scope.resource[k] = v;
+      }
+    }
     return Product.add($scope.resource, function(res) {
       list();
+      $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
     });
   };
@@ -242,9 +266,25 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
     });
   };
   $scope.editForm = function() {
+    var rfList;
     $scope.msgSuccess = '';
     $scope.msgError = '';
-    $scope.meta = Meta.product;
+    $scope.meta = _.cloneDeep(Meta.product);
+    rfList = {};
+    User.list(function(supplierList) {
+      rfList['supplier'] = supplierList;
+      return Category.list(function(categoryList) {
+        var rf, _i, _len, _ref, _results;
+        rfList['category'] = categoryList;
+        _ref = $scope.meta.related_fields;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          rf = _ref[_i];
+          _results.push(rf.values = rfList[rf.model]);
+        }
+        return _results;
+      });
+    });
     return $state.go('^.edit', {
       id: $state.params.id
     });

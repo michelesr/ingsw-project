@@ -6,13 +6,25 @@ form.form-horizontal(ng-submit="add(meta.fields)", name="addForm", role="form", 
   .form-group(ng-repeat="f in meta.fields")
     ng-form(name="addFormIn")
       label.col-sm-2.control-label {{ f.human }}
+        span(ng-if='f.required') *
       .col-sm-10
         input.form-control(ng-model="f.value", type="{{ f.type }}", ng-required="{{ f.required }}", placeholder="{{ f.placeholder }}")
         //div(ng-show="addFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
           //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
 
+  .form-group(ng-repeat='rf in meta.related_fields')
+    ng-form(name="addFormIn")
+      label.col-sm-2.control-label {{ rf.human }}
+        span(ng-if='rf.required') *
+      .col-sm-10
+        //input.form-control(ng-model="rf.value", type="{{ rf.type }}", ng-required="{{ rf.required }}", placeholder="{{ rf.placeholder }}")
+        select.form-control(ng-model='rf.value')
+          option(ng-repeat='v in rf.values', value='{{ v.id }}'){{ v[rf.related_human] }}
+
   .form-group
     div.col-sm-offset-2.col-sm-9
       button.btn.btn-primary(type='submit') Add {{ meta.name }}
 
-span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')
+p * Field required
+
+span(ng-if='debug', ng-include='\'Content/partials/resource/debug.html\'')
