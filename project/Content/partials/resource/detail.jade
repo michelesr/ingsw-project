@@ -7,11 +7,13 @@ h1.page-header {{ meta.name }} detail
       span  Edit this {{ meta.name }}
 
 dl.dl-horizontal
-  span(ng-repeat='f in meta.fields')
-    dt {{ f.human }}
-    dd {{ f.value }}
   span(ng-repeat='rf in meta.related_fields')
     dt {{ rf.human }}
     dd {{ rf[rf.related_model][rf.related_human] }}
+  span(ng-repeat='f in meta.fields')
+    dt {{ f.human }}
+    dd(ng-switch='f.model')
+      span(ng-switch-when='price') {{ f.value / 100 | currency: '€' }}
+      span(ng-switch-default) {{ f.value }}
 
 span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')

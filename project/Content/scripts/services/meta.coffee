@@ -58,7 +58,7 @@ services.factory 'Meta', () ->
     stock:
       name: 'stock'
       namePlural: 'stocks'
-      nameHuman: 'Stocks'
+      nameHuman: 'Product Stocks'
       icon: 'fa fa-shopping-cart'
       fields: [
           model: 'price'
@@ -139,7 +139,7 @@ services.factory 'Meta', () ->
         state: 'root.products.list'
         icon: 'fa fa-coffee'
       ,
-        name: 'Stocks'
+        name: 'Product Stocks'
         state: 'root.stocks.list'
         icon: 'fa fa-shopping-cart'
       ,
@@ -153,7 +153,7 @@ services.factory 'Meta', () ->
         state: 'root.products.list'
         icon: 'fa fa-coffee'
       ,
-        name: 'Stocks'
+        name: 'Product Stocks'
         state: 'root.stocks.list'
         icon: 'fa fa-shopping-cart'
       ,

@@ -47,7 +47,8 @@ controllers.controller 'StockCtrl', ($scope, $state, Product, Stock, Meta) ->
     # Gather date of resource to add
     for f in $scope.meta.fields
       k = f.model
-      v = f.value
+      # Price decimal/integer conversion
+      v = if k == 'price' then f.value * 100 else f.value
       resource[k] = v
 
     # Gather relational data of resource to add
@@ -107,7 +108,8 @@ controllers.controller 'StockCtrl', ($scope, $state, Product, Stock, Meta) ->
         # Gather data of stock
         for f in $scope.meta.fields
           k = f.model
-          f.value = resource[k]
+          # Price decimal/integer conversion
+          f.value = if k == 'price' then resource[k] / 100 else resource[k]
 
         # Resolve the data relations and put into every stock
         for rf in $scope.meta.related_fields
@@ -128,7 +130,8 @@ controllers.controller 'StockCtrl', ($scope, $state, Product, Stock, Meta) ->
     # Gather data of resource to edit
     for f in $scope.meta.fields
       k = f.model
-      v = f.value
+      # Price decimal/integer conversion
+      v = if k == 'price' then f.value * 100 else f.value
       resource[k] = v
 
     # Gather relational data of resource to edit

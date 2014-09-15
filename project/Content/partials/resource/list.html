@@ -17,7 +17,7 @@
       <tbody>
         <tr ng-repeat="res in list">
           <td ng-repeat="rf in meta.related_fields">{{ res[rf.related_model][rf.related_human] }}</td>
-          <td ng-repeat="f in meta.fields">{{ res[f.model] }}</td>
+          <td ng-repeat="f in meta.fields"><span ng-switch="f.model"><span ng-switch-when="price">{{ res[f.model] / 100 | currency: '€' }}</span><span ng-switch-default="ng-switch-default">{{ res[f.model] }}</span></span></td>
           <td><a ng-click="detail(res.id)" class="btn btn-default btn-sm fa fa-eye"></a><span> </span><a ng-click="remove(res.id)" class="btn btn-danger btn-sm fa fa-trash-o"></a></td>
         </tr>
       </tbody>
