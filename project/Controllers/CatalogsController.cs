@@ -20,8 +20,8 @@ namespace project.Controllers {
         public ActionResult Detail(int id) {
             // controllo dei permessi
             ApiKey k = ApiKey.getApiKey();
-            if (!k.isAdmin() && !k.checkUser(id))
-                return Json(Costants.UNAUTHORIZED);
+            if (!k.isAdmin() && !k.checkUser(Supplier.getUserIdBySupplierId(id)))
+                return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
             else {
                 // crea un file per l'esportazione e lo restituisce
                 StreamWriter s = new StreamWriter("Content/export.json");
@@ -29,7 +29,7 @@ namespace project.Controllers {
                 Console.WriteLine(c);
                 s.Write(c);
                 s.Close();
-                return File("Content/export.json", "application/json");
+                return File("Content/export.json", "text/plain");
             }
         }
     }
