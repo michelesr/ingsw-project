@@ -58,6 +58,12 @@ namespace project.Utils {
 			return h;
 		}
 
+        public static ArrayList filterPassword(ArrayList a) {
+            foreach(ConvertibleHashtable x in a) 
+                x.filterPassword();
+            return a;
+        }
+
         // aggiorna i dati contenuti nell'hashtable sostituendoli con i dati dell'hashtable passata per parametro
         public void update(ConvertibleHashtable h) {
             foreach (var key in h.Keys) 

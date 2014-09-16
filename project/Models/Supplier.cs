@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using project.Utils;
 
 namespace project.Models {
@@ -44,6 +45,19 @@ namespace project.Models {
         // controlla se esiste la relazione tra user_id e supplier_id forniti
         public static bool checkUserId(int uid, int sid) {
             return getUserIdBySupplierId(sid) == uid;
+        }
+
+        // ritorna una lista di tutte le hashtable dei supplier
+        public static ArrayList getAll() {
+            ConvertibleHashtable[] suppliers = Model.getAll<Supplier>();
+            ArrayList result = new ArrayList();
+
+            foreach (ConvertibleHashtable s in suppliers) {
+                s.merge(User.getHashtableById<User>(int.Parse(s["user_id"].ToString())));
+                result.Add(s);
+            }
+
+            return result;
         }
 	}
 }

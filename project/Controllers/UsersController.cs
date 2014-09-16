@@ -25,6 +25,15 @@ namespace project.Controllers {
 				return Detail (id);
 		}
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult IndexSupplier(int id) {
+            ApiKey k = ApiKey.getApiKey();
+            if (id == -1 && k.isAdmin())
+                return Json(Supplier.getAll(), JsonRequestBehavior.AllowGet);
+            else 
+                return Detail (id);
+        }
+
         // GET /api/users/detail/<id>/
         // richiede una api_key negli headers http
         // ritorna i dettagli di un utente
