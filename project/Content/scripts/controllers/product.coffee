@@ -29,22 +29,20 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, User, Categor
 
     # Get resource lists
     Category.list (categoryList) ->
-      User.listSupplier (supplierList) ->
 
-        lists =
-          category: categoryList
-          supplier: supplierList
+      lists =
+        category: categoryList
 
-        # Put relational data into $scope
-        for rf in $scope.meta.related_fields
-          rf.values = lists[rf.model]
+      # Put relational data into $scope
+      for rf in $scope.meta.related_fields
+        rf.values = lists[rf.model]
 
-        # Move to add form page
-        $state.go '^.add'
+      # Move to add form page
+      $state.go '^.add'
 
 
   $scope.add = ->
-    resource = {}
+    resource.supplier_id = $rootScope.authSupplierId
 
     # Gather date of resource to add
     for f in $scope.meta.fields

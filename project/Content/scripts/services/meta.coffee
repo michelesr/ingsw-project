@@ -114,6 +114,7 @@ services.factory 'Meta', () ->
           model: 'supplier'
           human: 'Supplier'
           required: true
+          show: false
       ]
 
     stock:

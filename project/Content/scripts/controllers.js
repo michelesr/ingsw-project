@@ -116,7 +116,7 @@ controllers.controller('AdminHomeCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('CatalogCtrl', function($scope, $rootScope, Stock, Product, Catalog, Meta) {
+controllers.controller('CatalogCtrl', function($scope, $rootScope, $http, Stock, Product, Catalog, Meta) {
   var count;
   count = function() {
     return Stock.list(function(stockList) {
@@ -160,15 +160,18 @@ controllers.controller('CatalogCtrl', function($scope, $rootScope, Stock, Produc
     });
   };
   count();
-  return $scope["export"] = function() {
+  $scope["export"] = function() {
     console.log('ciao');
-    Catalog["export"]({
+    return Catalog["export"]({
       id: $rootScope.authSupplierId
     }, function(res) {
       console.log('ciao2');
       console.log(res);
       return console.log('ciao3');
     });
+  };
+  return $scope.export2 = function() {
+    return $http.get('/api/catalogs/detail/' + $rootScope.authSupplierId);
   };
 });
 
@@ -481,24 +484,21 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, User,
     $scope.msgError = '';
     $scope.meta = _.cloneDeep(Meta.product);
     return Category.list(function(categoryList) {
-      return User.listSupplier(function(supplierList) {
-        var lists, rf, _i, _len, _ref;
-        lists = {
-          category: categoryList,
-          supplier: supplierList
-        };
-        _ref = $scope.meta.related_fields;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          rf = _ref[_i];
-          rf.values = lists[rf.model];
-        }
-        return $state.go('^.add');
-      });
+      var lists, rf, _i, _len, _ref;
+      lists = {
+        category: categoryList
+      };
+      _ref = $scope.meta.related_fields;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        rf = _ref[_i];
+        rf.values = lists[rf.model];
+      }
+      return $state.go('^.add');
     });
   };
   $scope.add = function() {
-    var f, k, resource, rf, v, _i, _j, _len, _len1, _ref, _ref1;
-    resource = {};
+    var f, k, rf, v, _i, _j, _len, _len1, _ref, _ref1;
+    resource.supplier_id = $rootScope.authSupplierId;
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];

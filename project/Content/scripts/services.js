@@ -220,7 +220,8 @@ services.factory('Meta', function() {
           related_human: 'email',
           model: 'supplier',
           human: 'Supplier',
-          required: true
+          required: true,
+          show: false
         }
       ]
     },

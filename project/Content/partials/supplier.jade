@@ -3,8 +3,8 @@ h1.page-header Home
 h2.sub-header Actions
 ul
   li
-    a(ng-href='/api/catalogs/export/{{ authId }}') Export my catalog
-  li
     a(ui-sref='root.products.add') Add a new product
   li
     a(ui-sref='root.stocks.add') Add a new product stock
+  li
+    a(ng-href='/api/catalogs/export/{{ authSupplierId }}') Export my catalog
