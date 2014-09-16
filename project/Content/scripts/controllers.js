@@ -116,10 +116,16 @@ controllers.controller('AdminHomeCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('CatalogCtrl', function($rootScope, $scope, Meta) {
+controllers.controller('CatalogCtrl', function($scope, Catalog, Meta) {
   $scope.productsCount = 0;
   $scope.stocksCount = 0;
-  return $scope.exportCatalog = function() {};
+  return $scope["export"] = function() {
+    console.log('ciao');
+    Catalog["export"](function(res) {
+      console.log(res);
+      return console.log('ciao');
+    });
+  };
 });
 
 controllers.controller('CategoryCtrl', function($scope, $state, Category, Meta) {
@@ -368,7 +374,7 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
     $scope.meta = _.cloneDeep(Meta.product);
     return Product.list(function(productList) {
       return Category.list(function(categoryList) {
-        return User.list(function(supplierList) {
+        return User.listSupplier(function(supplierList) {
           var lists, res, rf, rfElem, _i, _len, _ref, _results;
           $scope.list = productList;
           lists = {
@@ -414,7 +420,7 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
     $scope.msgError = '';
     $scope.meta = _.cloneDeep(Meta.product);
     return Category.list(function(categoryList) {
-      return User.list(function(supplierList) {
+      return User.listSupplier(function(supplierList) {
         var lists, rf, _i, _len, _ref;
         lists = {
           category: categoryList,
@@ -866,10 +872,10 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
-      if (_.has(f, 'supplier') && f.supplier) {
-        resource.user_data[f.model] = f.value;
-      } else {
+      if (_.has(f, 'supplier') && f.supplier === true) {
         resource.supplier_data[f.model] = f.value;
+      } else {
+        resource.user_data[f.model] = f.value;
       }
     }
     _ref1 = $scope.meta.related_fields;
@@ -878,10 +884,10 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
       if (_.has(rf, 'value')) {
         k = rf.related_model;
         v = _.parseInt(rf.value);
-        if (_.has(rf, 'supplier') && f.supplier) {
-          resource.user_data[k] = v;
-        } else {
+        if (_.has(rf, 'supplier') && f.supplier === true) {
           resource.supplier_data[k] = v;
+        } else {
+          resource.user_data[k] = v;
         }
       }
     }

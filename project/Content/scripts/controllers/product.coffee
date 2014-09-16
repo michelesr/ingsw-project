@@ -6,7 +6,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
     # Get resource lists
     Product.list (productList) ->
       Category.list (categoryList) ->
-        User.list (supplierList) ->
+        User.listSupplier (supplierList) ->
 
           $scope.list = productList
           lists =
@@ -31,7 +31,7 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
 
     # Get resource lists
     Category.list (categoryList) ->
-      User.list (supplierList) ->
+      User.listSupplier (supplierList) ->
 
         lists =
           category: categoryList

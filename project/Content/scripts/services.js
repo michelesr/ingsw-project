@@ -15,6 +15,17 @@ services.factory('Auth', function($resource) {
   });
 });
 
+services.factory('Catalog', function($resource) {
+  return $resource('/api/catalog/:action', {}, {
+    "export": {
+      method: 'GET',
+      params: {
+        action: 'index'
+      }
+    }
+  });
+});
+
 services.factory('Category', function($resource) {
   return $resource('/api/categories/:action/:id', {}, {
     list: {
