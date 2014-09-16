@@ -29,7 +29,7 @@ namespace project.Controllers {
         public JsonResult IndexSupplier(int id) {
             ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
-                return Json(Supplier.getAll(), JsonRequestBehavior.AllowGet);
+                return Json(ConvertibleHashtable.filterPassword(Supplier.getAll()), JsonRequestBehavior.AllowGet);
             else 
                 return Detail (id);
         }
