@@ -48,6 +48,11 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
         templateUrl: 'Content/partials/supplier.html',
         controller: 'SupplierHomeCtrl'
       }, {
+        name: 'catalog',
+        url: '/catalog',
+        templateUrl: 'Content/partials/catalog.html',
+        controller: 'CatalogCtrl'
+      }, {
         name: 'admins',
         url: '/admins',
         abstract: true,

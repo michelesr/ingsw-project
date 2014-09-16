@@ -44,17 +44,18 @@ html(lang='en', ng-app='app')
               a(ui-sref='{{ elem.state }}')
                 span(class='{{ elem.icon }}')
                 span  {{ elem.name }}
-          h4.sub-header $state info
-            small  debug
-          dl
-            dt name
-            dd {{ $state.current.name }}
-          dl
-            dt url
-            dd {{ $state.$current.url.source }}
-          dl
-            dt params
-            dd {{ $state.params | json }}
+          span(ng-if='debug')
+            h4.sub-header $state info
+              small  debug
+            dl
+              dt name
+              dd {{ $state.current.name }}
+            dl
+              dt url
+              dd {{ $state.$current.url.source }}
+            dl
+              dt params
+              dd {{ $state.params | json }}
 
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
           ui-view

@@ -44,6 +44,11 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         templateUrl: 'Content/partials/supplier.html'
         controller: 'SupplierHomeCtrl'
       ,
+        name: 'catalog'
+        url: '/catalog'
+        templateUrl: 'Content/partials/catalog.html'
+        controller: 'CatalogCtrl'
+      ,
       # Users -----------------------------------------------
         name: 'admins'
         url: '/admins'

@@ -40,20 +40,20 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul ng-if="sidebar" class="nav nav-sidebar">
             <li ng-repeat="elem in sidebar" ui-sref-active="active"><a ui-sref="{{ elem.state }}"><span class="{{ elem.icon }}"></span><span> {{ elem.name }}</span></a></li>
-          </ul>
-          <h4 class="sub-header">$state info<small> debug</small></h4>
-          <dl>
-            <dt>name</dt>
-            <dd>{{ $state.current.name }}</dd>
-          </dl>
-          <dl>
-            <dt>url</dt>
-            <dd>{{ $state.$current.url.source }}</dd>
-          </dl>
-          <dl>
-            <dt>params</dt>
-            <dd>{{ $state.params | json }}</dd>
-          </dl>
+          </ul><span ng-if="debug">
+            <h4 class="sub-header">$state info<small> debug</small></h4>
+            <dl>
+              <dt>name</dt>
+              <dd>{{ $state.current.name }}</dd>
+            </dl>
+            <dl>
+              <dt>url</dt>
+              <dd>{{ $state.$current.url.source }}</dd>
+            </dl>
+            <dl>
+              <dt>params</dt>
+              <dd>{{ $state.params | json }}</dd>
+            </dl></span>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <ui-view></ui-view>

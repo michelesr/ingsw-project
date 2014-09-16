@@ -436,6 +436,14 @@ services.factory('User', function($resource) {
       },
       isArray: true
     },
+    listSupplier: {
+      method: 'GET',
+      params: {
+        action: 'indexsupplier',
+        id: -1
+      },
+      isArray: true
+    },
     add: {
       method: 'POST'
     },

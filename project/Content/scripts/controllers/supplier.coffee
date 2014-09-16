@@ -5,7 +5,7 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
 
     # Get resource lists
     City.list (cityList) ->
-      User.list (list) ->
+      User.listSupplier (list) ->
         $scope.list = (user for user in list when user.type == 0)
         lists =
           city: cityList

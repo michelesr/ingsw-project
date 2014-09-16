@@ -116,6 +116,12 @@ controllers.controller('AdminHomeCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
+controllers.controller('CatalogCtrl', function($rootScope, $scope, Meta) {
+  $scope.productsCount = 0;
+  $scope.stocksCount = 0;
+  return $scope.exportCatalog = function() {};
+});
+
 controllers.controller('CategoryCtrl', function($scope, $state, Category, Meta) {
   var list;
   list = function() {
@@ -777,7 +783,7 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
   list = function() {
     $scope.meta = _.cloneDeep(Meta.supplier);
     return City.list(function(cityList) {
-      return User.list(function(list) {
+      return User.listSupplier(function(list) {
         var lists, res, rf, rfElem, user, _i, _len, _ref, _results;
         $scope.list = (function() {
           var _i, _len, _results;
