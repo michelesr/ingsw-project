@@ -7,18 +7,14 @@ controllers.controller 'StockCtrl', ($scope, $rootScope, $state, Product, Stock,
     Stock.list (stockList) ->
       Product.list (productList) ->
 
-        if $rootScope.authType = 0
-          lists =
-            product: (prod for prod in productList when prod.supplier_id == $rootScope.authSupplierId)
-          for prod in lists.product
-            for stock in stockList
-              if stock.product_id == prod.id
-                $scope.list.push(stock)
+        $scope.list = []
+        lists =
+          product: (prod for prod in productList when prod.supplier_id == $rootScope.authSupplierId)
+        for prod in lists.product
+          for stock in stockList
+            if stock.product_id == prod.id
+              $scope.list.push(stock)
 #          $scope.list = stockList
-        else
-          lists =
-            product: productList
-          $scope.list = stockList
 
         # Check whether there is no elements in stock list
         $scope.empty = $scope.list.length <= 1 and _.isEmpty($scope.list[0])

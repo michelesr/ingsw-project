@@ -200,14 +200,6 @@ services.factory 'Meta', () ->
         name: 'Categories'
         state: 'root.categories.list'
         icon: 'glyphicon glyphicon-tags'
-      ,
-        name: 'Products'
-        state: 'root.products.list'
-        icon: 'fa fa-coffee'
-      ,
-        name: 'Product Stocks'
-        state: 'root.stocks.list'
-        icon: 'fa fa-shopping-cart'
     ]
 
     supplierSidebar: [

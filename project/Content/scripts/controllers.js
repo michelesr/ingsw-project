@@ -116,9 +116,50 @@ controllers.controller('AdminHomeCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('CatalogCtrl', function($scope, $rootScope, Catalog, Meta) {
-  $scope.productsCount = 0;
-  $scope.stocksCount = 0;
+controllers.controller('CatalogCtrl', function($scope, $rootScope, Stock, Product, Catalog, Meta) {
+  var count;
+  count = function() {
+    return Stock.list(function(stockList) {
+      return Product.list(function(productList) {
+        var lists, prod, stock, _i, _j, _len, _len1, _ref;
+        $scope.list = [];
+        lists = {
+          product: (function() {
+            var _i, _len, _results;
+            _results = [];
+            for (_i = 0, _len = productList.length; _i < _len; _i++) {
+              prod = productList[_i];
+              if (prod.supplier_id === $rootScope.authSupplierId) {
+                _results.push(prod);
+              }
+            }
+            return _results;
+          })()
+        };
+        _ref = lists.product;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          prod = _ref[_i];
+          for (_j = 0, _len1 = stockList.length; _j < _len1; _j++) {
+            stock = stockList[_j];
+            if (stock.product_id === prod.id) {
+              $scope.list.push(stock);
+            }
+          }
+        }
+        if ($scope.list.length <= 1 && _.isEmpty($scope.list[0])) {
+          $scope.stocksCount = 0;
+        } else {
+          $scope.stocksCount = $scope.list.length;
+        }
+        if (lists.product.length <= 1 && _.isEmpty(lists.product[0])) {
+          return $scope.productsCount = 0;
+        } else {
+          return $scope.productsCount = lists.product.length;
+        }
+      });
+    });
+  };
+  count();
   return $scope["export"] = function() {
     console.log('ciao');
     Catalog["export"]({
@@ -387,58 +428,51 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, User,
     $scope.meta = _.cloneDeep(Meta.product);
     return Product.list(function(productList) {
       return Category.list(function(categoryList) {
-        return User.listSupplier(function(supplierList) {
-          var lists, prod, res, rf, rfElem, _i, _len, _ref, _results;
-          if ($rootScope.authType = 0) {
-            $scope.list = (function() {
-              var _i, _len, _results;
-              _results = [];
-              for (_i = 0, _len = productList.length; _i < _len; _i++) {
-                prod = productList[_i];
-                if (prod.supplier_id === $rootScope.authSupplierId) {
-                  _results.push(prod);
-                }
-              }
-              return _results;
-            })();
-          } else {
-            $scope.list = productList;
-          }
-          lists = {
-            category: categoryList,
-            supplier: supplierList
-          };
-          $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
-          _ref = $scope.list;
+        var lists, prod, res, rf, rfElem, _i, _len, _ref, _results;
+        $scope.list = (function() {
+          var _i, _len, _results;
           _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            res = _ref[_i];
-            _results.push((function() {
-              var _j, _len1, _ref1, _results1;
-              _ref1 = $scope.meta.related_fields;
-              _results1 = [];
-              for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-                rf = _ref1[_j];
-                _results1.push((function() {
-                  var _k, _len2, _ref2, _results2;
-                  _ref2 = lists[rf.model];
-                  _results2 = [];
-                  for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-                    rfElem = _ref2[_k];
-                    if (rfElem.id === res[rf.related_model]) {
-                      _results2.push(res[rf.related_model] = rfElem);
-                    } else {
-                      _results2.push(void 0);
-                    }
-                  }
-                  return _results2;
-                })());
-              }
-              return _results1;
-            })());
+          for (_i = 0, _len = productList.length; _i < _len; _i++) {
+            prod = productList[_i];
+            if (prod.supplier_id === $rootScope.authSupplierId) {
+              _results.push(prod);
+            }
           }
           return _results;
-        });
+        })();
+        lists = {
+          category: categoryList
+        };
+        $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
+        _ref = $scope.list;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          res = _ref[_i];
+          _results.push((function() {
+            var _j, _len1, _ref1, _results1;
+            _ref1 = $scope.meta.related_fields;
+            _results1 = [];
+            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+              rf = _ref1[_j];
+              _results1.push((function() {
+                var _k, _len2, _ref2, _results2;
+                _ref2 = lists[rf.model];
+                _results2 = [];
+                for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                  rfElem = _ref2[_k];
+                  if (rfElem.id === res[rf.related_model]) {
+                    _results2.push(res[rf.related_model] = rfElem);
+                  } else {
+                    _results2.push(void 0);
+                  }
+                }
+                return _results2;
+              })());
+            }
+            return _results1;
+          })());
+        }
+        return _results;
       });
     });
   };
@@ -619,35 +653,29 @@ controllers.controller('StockCtrl', function($scope, $rootScope, $state, Product
     return Stock.list(function(stockList) {
       return Product.list(function(productList) {
         var lists, prod, res, rf, rfElem, stock, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _results;
-        if ($rootScope.authType = 0) {
-          lists = {
-            product: (function() {
-              var _i, _len, _results;
-              _results = [];
-              for (_i = 0, _len = productList.length; _i < _len; _i++) {
-                prod = productList[_i];
-                if (prod.supplier_id === $rootScope.authSupplierId) {
-                  _results.push(prod);
-                }
-              }
-              return _results;
-            })()
-          };
-          _ref = lists.product;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            prod = _ref[_i];
-            for (_j = 0, _len1 = stockList.length; _j < _len1; _j++) {
-              stock = stockList[_j];
-              if (stock.product_id === prod.id) {
-                $scope.list.push(stock);
+        $scope.list = [];
+        lists = {
+          product: (function() {
+            var _i, _len, _results;
+            _results = [];
+            for (_i = 0, _len = productList.length; _i < _len; _i++) {
+              prod = productList[_i];
+              if (prod.supplier_id === $rootScope.authSupplierId) {
+                _results.push(prod);
               }
             }
+            return _results;
+          })()
+        };
+        _ref = lists.product;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          prod = _ref[_i];
+          for (_j = 0, _len1 = stockList.length; _j < _len1; _j++) {
+            stock = stockList[_j];
+            if (stock.product_id === prod.id) {
+              $scope.list.push(stock);
+            }
           }
-        } else {
-          lists = {
-            product: productList
-          };
-          $scope.list = stockList;
         }
         $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
         _ref1 = $scope.list;

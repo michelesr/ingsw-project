@@ -6,26 +6,20 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, User, Categor
     # Get resource lists
     Product.list (productList) ->
       Category.list (categoryList) ->
-        User.listSupplier (supplierList) ->
 
-          if $rootScope.authType = 0
-            $scope.list = (prod for prod in productList when prod.supplier_id == $rootScope.authSupplierId)
-          else
-            $scope.list = productList
+        $scope.list = (prod for prod in productList when prod.supplier_id == $rootScope.authSupplierId)
+        lists =
+          category: categoryList
 
-          lists =
-            category: categoryList
-            supplier: supplierList
+        # Check whether there is no elements in product list
+        $scope.empty = $scope.list.length <= 1 and _.isEmpty($scope.list[0])
 
-          # Check whether there is no elements in product list
-          $scope.empty = $scope.list.length <= 1 and _.isEmpty($scope.list[0])
-
-          # Resolve the data relations and put into $scope
-          for res in $scope.list
-            for rf in $scope.meta.related_fields
-              for rfElem in lists[rf.model]
-                if rfElem.id == res[rf.related_model]
-                  res[rf.related_model] = rfElem
+        # Resolve the data relations and put into $scope
+        for res in $scope.list
+          for rf in $scope.meta.related_fields
+            for rfElem in lists[rf.model]
+              if rfElem.id == res[rf.related_model]
+                res[rf.related_model] = rfElem
 
 
   $scope.addForm = ->

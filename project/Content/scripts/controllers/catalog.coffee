@@ -1,7 +1,32 @@
-controllers.controller 'CatalogCtrl', ($scope, $rootScope, Catalog, Meta) ->
+controllers.controller 'CatalogCtrl', ($scope, $rootScope, Stock, Product, Catalog, Meta) ->
 
-  $scope.productsCount = 0
-  $scope.stocksCount = 0
+  count = ->
+    # Get resource lists
+    Stock.list (stockList) ->
+      Product.list (productList) ->
+
+        $scope.list = []
+        lists =
+          product: (prod for prod in productList when prod.supplier_id == $rootScope.authSupplierId)
+        for prod in lists.product
+          for stock in stockList
+            if stock.product_id == prod.id
+              $scope.list.push(stock)
+#          $scope.list = stockList
+
+        # Check whether there is no elements in stock list
+        if $scope.list.length <= 1 and _.isEmpty($scope.list[0])
+          $scope.stocksCount = 0
+        else
+          $scope.stocksCount = $scope.list.length
+
+        # Check whether there is no elements in product list
+        if lists.product.length <= 1 and _.isEmpty(lists.product[0])
+          $scope.productsCount = 0
+        else
+          $scope.productsCount = lists.product.length
+
+  count()
 
   $scope.export = ->
 
