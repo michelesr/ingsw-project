@@ -43,7 +43,7 @@ namespace project
 		{
             // crea lo schema e aggiunge un admin se non è già presente
 			Schema.createSchema();
-            if (Admin.getByUserId(1).email != "admin@example.org")
+            if (Admin.getUserByEmail("admin@example.org").email != "admin@example.org")
               new Admin("admin@example.org", "admin", "admin", "admin").insert();
 
             // aggiunti dall'ide
