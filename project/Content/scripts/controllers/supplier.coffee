@@ -68,7 +68,7 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
         v = _.parseInt(rf.value)
 
         # Put the params in the corrent sub-dictionary
-        if _.has(rf, 'supplier') and f.supplier == true
+        if _.has(rf, 'supplier') and rf.supplier == true
           resource.supplier_data[k] = v
         else
           resource.user_data[k] = v

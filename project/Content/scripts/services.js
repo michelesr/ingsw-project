@@ -142,7 +142,7 @@ services.factory('Meta', function() {
       fields: [
         {
           human: 'Supplier Name',
-          model: 'vat',
+          model: 'supplier_name',
           type: 'text',
           required: true,
           placeholder: 'company name',

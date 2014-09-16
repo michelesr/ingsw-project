@@ -43,7 +43,7 @@ services.factory 'Meta', () ->
       icon: 'fa fa-building'
       fields: [
           human: 'Supplier Name'
-          model: 'vat'
+          model: 'supplier_name'
           type: 'text'
           required: true
           placeholder: 'company name'

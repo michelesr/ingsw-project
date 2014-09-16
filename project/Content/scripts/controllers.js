@@ -884,7 +884,7 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
       if (_.has(rf, 'value')) {
         k = rf.related_model;
         v = _.parseInt(rf.value);
-        if (_.has(rf, 'supplier') && f.supplier === true) {
+        if (_.has(rf, 'supplier') && rf.supplier === true) {
           resource.supplier_data[k] = v;
         } else {
           resource.user_data[k] = v;
