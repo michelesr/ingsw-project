@@ -35,12 +35,12 @@ app.config (stateHelperProvider, $urlRouterProvider, $httpProvider) ->
         controller: 'LogoutCtrl'
       ,
         name: 'adminHome'
-        url: '/home'
+        url: '/adminhome'
         templateUrl: 'Content/partials/admin.html'
         controller: 'AdminHomeCtrl'
       ,
         name: 'supplierHome'
-        url: '/home'
+        url: '/supplierhome'
         templateUrl: 'Content/partials/supplier.html'
         controller: 'SupplierHomeCtrl'
       ,

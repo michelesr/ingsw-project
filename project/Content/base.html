@@ -53,6 +53,15 @@
             <dl>
               <dt>params</dt>
               <dd>{{ $state.params | json }}</dd>
+            </dl>
+            <h4 class="sub-header">auth data<small> debug</small></h4>
+            <dl>
+              <dt>userId</dt>
+              <dd>{{ authId }}</dd>
+            </dl>
+            <dl ng-if="authType==0">
+              <dt>supplierId</dt>
+              <dd>{{ authSupplierId }}</dd>
             </dl></span>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

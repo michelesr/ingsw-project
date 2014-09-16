@@ -329,10 +329,17 @@ controllers.controller('CityCtrl', function($scope, $state, City, Meta) {
 
 controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, Auth, User) {
   if ($rootScope.debug) {
-    $scope.credentials = {
-      email: 'admin@example.org',
-      password: 'admin'
-    };
+    if ($rootScope.debugType === 'admin') {
+      $scope.credentials = {
+        email: 'admin@example.org',
+        password: 'admin'
+      };
+    } else if ($rootScope.debugType === 'supplier') {
+      $scope.credentials = {
+        email: 'test@example.org',
+        password: 'test'
+      };
+    }
   }
   return $scope.login = function(credentials) {
     return Auth.login(credentials, function(res_auth) {
@@ -582,6 +589,7 @@ controllers.controller('ProductCtrl', function($scope, $state, User, Category, P
 
 controllers.controller('RootCtrl', function($rootScope, $state) {
   $rootScope.debug = true;
+  $rootScope.debugType = 'supplier';
   if ($rootScope.debug === true) {
     $rootScope.$state = $state;
   }
