@@ -1,4 +1,4 @@
-controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, User, Category, Product, Meta) ->
+controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Product, Meta) ->
 
   list = ->
     $scope.meta = _.cloneDeep(Meta.product)
@@ -69,10 +69,9 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, User, Categor
     # Get related resource lists and product data
     Product.detail {id: id}, (product) ->
       Category.list (categoryList) ->
-        User.list (supplierList) ->
 
+# add filter for supplier
           lists =
-            supplier: supplierList
             category: categoryList
 
           # Gather data of product
@@ -99,10 +98,10 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, User, Categor
     # Get resource lists and product data
     Product.detail {id: $state.params.id}, (resource) ->
       Category.list (categoryList) ->
-        User.list (supplierList) ->
 
+# add filter for supplier
+#
           lists =
-            supplier: supplierList
             category: categoryList
 
           # Gather data of product

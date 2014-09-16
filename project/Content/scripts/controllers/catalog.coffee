@@ -28,12 +28,12 @@ controllers.controller 'CatalogCtrl', ($scope, $rootScope, $http, Stock, Product
   count()
 
   $scope.export = ->
+    Catalog.export {id: $rootScope.authSupplierId}, (res) ->
+      blob = new Blob [res], {type: "text/plain;charset=utf-8"}
 
-    console.log 'ciao'
-    Catalog.export {id: $rootScope.authSupplierId}, (res)->
-      console.log 'ciao2'
-      console.log(res)
-      console.log 'ciao3'
+      $scope.res = res
+      console.log 'res = ' + res
+      console.log 'blob = ' + blob
+      $scope.blob = blob
 
-  $scope.export2 = ->
-    $http.get('/api/catalogs/detail/' + $rootScope.authSupplierId)
+      saveAs(blob, 'export.json')

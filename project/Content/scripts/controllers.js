@@ -160,18 +160,20 @@ controllers.controller('CatalogCtrl', function($scope, $rootScope, $http, Stock,
     });
   };
   count();
-  $scope["export"] = function() {
-    console.log('ciao');
+  return $scope["export"] = function() {
     return Catalog["export"]({
       id: $rootScope.authSupplierId
     }, function(res) {
-      console.log('ciao2');
-      console.log(res);
-      return console.log('ciao3');
+      var blob;
+      blob = new Blob([res], {
+        type: "text/plain;charset=utf-8"
+      });
+      $scope.res = res;
+      console.log('res = ' + res);
+      console.log('blob = ' + blob);
+      $scope.blob = blob;
+      return saveAs(blob, 'export.json');
     });
-  };
-  return $scope.export2 = function() {
-    return $http.get('/api/catalogs/detail/' + $rootScope.authSupplierId);
   };
 });
 
@@ -425,7 +427,7 @@ controllers.controller('LogoutCtrl', function($rootScope, $http, $state, Auth) {
   });
 });
 
-controllers.controller('ProductCtrl', function($scope, $rootScope, $state, User, Category, Product, Meta) {
+controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Category, Product, Meta) {
   var list;
   list = function() {
     $scope.meta = _.cloneDeep(Meta.product);
@@ -526,33 +528,30 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, User,
       id: id
     }, function(product) {
       return Category.list(function(categoryList) {
-        return User.list(function(supplierList) {
-          var f, k, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-          lists = {
-            supplier: supplierList,
-            category: categoryList
-          };
-          _ref = $scope.meta.fields;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            f = _ref[_i];
-            f.value = product[f.model];
-          }
-          _ref1 = $scope.meta.related_fields;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            rf = _ref1[_j];
-            k = rf.model;
-            rf.value = resource[k];
-            _ref2 = lists[rf.model];
-            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-              rfElem = _ref2[_k];
-              if (rfElem.id === resource[rf.related_model]) {
-                rf[rf.related_model] = rfElem;
-              }
+        var f, k, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+        lists = {
+          category: categoryList
+        };
+        _ref = $scope.meta.fields;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          f = _ref[_i];
+          f.value = product[f.model];
+        }
+        _ref1 = $scope.meta.related_fields;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          rf = _ref1[_j];
+          k = rf.model;
+          rf.value = resource[k];
+          _ref2 = lists[rf.model];
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            rfElem = _ref2[_k];
+            if (rfElem.id === resource[rf.related_model]) {
+              rf[rf.related_model] = rfElem;
             }
           }
-          return $state.go('^.detail', {
-            id: id
-          });
+        }
+        return $state.go('^.detail', {
+          id: id
         });
       });
     });
@@ -565,34 +564,31 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, User,
       id: $state.params.id
     }, function(resource) {
       return Category.list(function(categoryList) {
-        return User.list(function(supplierList) {
-          var f, k, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-          lists = {
-            supplier: supplierList,
-            category: categoryList
-          };
-          _ref = $scope.meta.fields;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            f = _ref[_i];
-            f.value = resource[f.model];
-          }
-          _ref1 = $scope.meta.related_fields;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            rf = _ref1[_j];
-            k = rf.model;
-            rf.value = resource[k];
-            rf.values = lists[rf.model];
-            _ref2 = lists[rf.model];
-            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-              rfElem = _ref2[_k];
-              if (rfElem.id === resource[rf.related_model]) {
-                rf.value = rfElem.id;
-              }
+        var f, k, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+        lists = {
+          category: categoryList
+        };
+        _ref = $scope.meta.fields;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          f = _ref[_i];
+          f.value = resource[f.model];
+        }
+        _ref1 = $scope.meta.related_fields;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          rf = _ref1[_j];
+          k = rf.model;
+          rf.value = resource[k];
+          rf.values = lists[rf.model];
+          _ref2 = lists[rf.model];
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            rfElem = _ref2[_k];
+            if (rfElem.id === resource[rf.related_model]) {
+              rf.value = rfElem.id;
             }
           }
-          return $state.go('^.edit', {
-            id: $state.params.id
-          });
+        }
+        return $state.go('^.edit', {
+          id: $state.params.id
         });
       });
     });

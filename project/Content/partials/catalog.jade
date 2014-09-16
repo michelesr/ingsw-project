@@ -5,10 +5,10 @@ ul
   li {{ productsCount }} products
   li {{ stocksCount }} stocks
 
-a(ng-click='export(authSupplierId)')
+a(ng-click='export()')
   button.btn.btn-primary(type='button')
-    span Export catalog (old)
+    span Export catalog
 
-a(ng-click='export2(authSupplierId)')
-  button.btn.btn-primary(type='button')
-    span Export catalog (new)
+pre res = {{ res | json }}
+pre blob = {{ blob }}
+pre blob = {{ blob | json }}
