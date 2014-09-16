@@ -47,7 +47,7 @@ namespace project.Controllers {
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             ProductStock ps = Model.getById<ProductStock>(id);
-            if(k.isAdmin() || ps.checkUserId(id))  {
+            if(k.isAdmin() || ps.checkUserId(k.user_id))  {
                 ps.delete();
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
