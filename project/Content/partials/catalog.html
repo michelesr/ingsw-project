@@ -4,5 +4,5 @@
 <ul>
   <li>{{ productsCount }} products</li>
   <li>{{ stocksCount }} stocks</li>
-</ul>
-<button><a ng-href="export()">Export catalog</a></button>
+</ul><a ng-click="export(authId)">
+  <button type="button" class="btn btn-primary"><span>Export catalog</span></button></a>

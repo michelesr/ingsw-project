@@ -16,11 +16,11 @@ services.factory('Auth', function($resource) {
 });
 
 services.factory('Catalog', function($resource) {
-  return $resource('/api/catalog/:action', {}, {
+  return $resource('/api/catalogs/:action/:id', {}, {
     "export": {
       method: 'GET',
       params: {
-        action: 'index'
+        action: 'detail'
       }
     }
   });
@@ -323,10 +323,6 @@ services.factory('Meta', function() {
         name: 'Product Stocks',
         state: 'root.stocks.list',
         icon: 'fa fa-shopping-cart'
-      }, {
-        name: 'Catalog',
-        state: 'root.catalog',
-        icon: 'fa fa-list'
       }
     ],
     supplierSidebar: [

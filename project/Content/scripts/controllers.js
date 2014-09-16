@@ -116,14 +116,17 @@ controllers.controller('AdminHomeCtrl', function($rootScope, Meta) {
   return $rootScope.sidebar = Meta.adminSidebar;
 });
 
-controllers.controller('CatalogCtrl', function($scope, Catalog, Meta) {
+controllers.controller('CatalogCtrl', function($scope, $rootScope, Catalog, Meta) {
   $scope.productsCount = 0;
   $scope.stocksCount = 0;
   return $scope["export"] = function() {
     console.log('ciao');
-    Catalog["export"](function(res) {
+    Catalog["export"]({
+      id: $rootScope.authSupplierId
+    }, function(res) {
+      console.log('ciao2');
       console.log(res);
-      return console.log('ciao');
+      return console.log('ciao3');
     });
   };
 });
@@ -337,7 +340,6 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, 
       return User.detail({
         id: res_auth.user_id
       }, function(res_user) {
-        $rootScope.authId = res_user.id;
         $rootScope.authEmail = res_user.email;
         $rootScope.authFirstName = res_user.first_name;
         $rootScope.authLastName = res_user.last_name;
@@ -345,8 +347,11 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, 
         $rootScope.isAuth = true;
         switch ($rootScope.authType) {
           case 0:
+            $rootScope.authId = res_user.user_id;
+            $rootScope.authSupplierId = res_user.id;
             return $state.go('root.supplierHome');
           case 1:
+            $rootScope.authId = res_user.id;
             return $state.go('root.adminHome');
         }
       });
@@ -354,10 +359,11 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, 
   };
 });
 
-controllers.controller('LogoutCtrl', function($scope, $rootScope, $http, $state, Auth) {
+controllers.controller('LogoutCtrl', function($rootScope, $http, $state, Auth) {
   return Auth.logout(function() {
     delete $http.defaults.headers.common['api_key'];
     $rootScope.authId = null;
+    $rootScope.authSupplierId = null;
     $rootScope.authEmail = null;
     $rootScope.authFistName = '';
     $rootScope.authLastName = null;

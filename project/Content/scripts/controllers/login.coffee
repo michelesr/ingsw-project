@@ -9,7 +9,6 @@ controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, Auth, Us
     Auth.login credentials, (res_auth) ->
       $http.defaults.headers.common['api_key'] = res_auth.api_key
       User.detail { id: res_auth.user_id }, (res_user) ->
-        $rootScope.authId = res_user.id
         $rootScope.authEmail = res_user.email
         $rootScope.authFirstName = res_user.first_name
         $rootScope.authLastName = res_user.last_name
@@ -18,5 +17,10 @@ controllers.controller 'LoginCtrl', ($scope, $rootScope, $http, $state, Auth, Us
         $rootScope.isAuth = true
 
         switch $rootScope.authType
-          when 0 then $state.go 'root.supplierHome'
-          when 1 then $state.go 'root.adminHome'
+          when 0
+            $rootScope.authId = res_user.user_id
+            $rootScope.authSupplierId = res_user.id
+            $state.go 'root.supplierHome'
+          when 1
+            $rootScope.authId = res_user.id
+            $state.go 'root.adminHome'

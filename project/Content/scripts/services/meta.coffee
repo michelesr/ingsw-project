@@ -208,10 +208,6 @@ services.factory 'Meta', () ->
         name: 'Product Stocks'
         state: 'root.stocks.list'
         icon: 'fa fa-shopping-cart'
-      ,
-        name: 'Catalog'
-        state: 'root.catalog'
-        icon: 'fa fa-list'
     ]
 
     supplierSidebar: [

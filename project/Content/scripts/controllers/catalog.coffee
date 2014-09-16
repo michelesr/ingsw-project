@@ -1,4 +1,4 @@
-controllers.controller 'CatalogCtrl', ($scope, Catalog, Meta) ->
+controllers.controller 'CatalogCtrl', ($scope, $rootScope, Catalog, Meta) ->
 
   $scope.productsCount = 0
   $scope.stocksCount = 0
@@ -6,7 +6,8 @@ controllers.controller 'CatalogCtrl', ($scope, Catalog, Meta) ->
   $scope.export = ->
 
     console.log 'ciao'
-    Catalog.export (res) ->
+    Catalog.export {id: $rootScope.authSupplierId}, (res) ->
+      console.log 'ciao2'
       console.log(res)
-      console.log 'ciao'
+      console.log 'ciao3'
     return

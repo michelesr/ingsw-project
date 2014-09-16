@@ -31,7 +31,9 @@ span(ng-switch='empty')
               span(ng-switch-when='price') {{ res[f.model] / 100 | currency: '€' }}
               span(ng-switch-default) {{ res[f.model] }}
           td
-            a.btn.btn-default.btn-sm.fa.fa-eye(ng-click='detail(res.id)')
+            span(ng-switch='res.type')
+              a.btn.btn-default.btn-sm.fa.fa-eye(ng-switch-when='0', ng-click='detail(res.user_id)')
+              a.btn.btn-default.btn-sm.fa.fa-eye(ng-switch-default, ng-click='detail(res.id)')
             span 
             a.btn.btn-danger.btn-sm.fa.fa-trash-o(ng-click='remove(res.id)')
 
