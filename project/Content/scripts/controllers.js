@@ -164,15 +164,14 @@ controllers.controller('CatalogCtrl', function($scope, $rootScope, $http, Stock,
     return Catalog["export"]({
       id: $rootScope.authSupplierId
     }, function(res) {
-      var blob;
-      blob = new Blob([res], {
+      var blob, x2js;
+      x2js = new X2JS({
+        attributePrefix: '$'
+      });
+      blob = new Blob([x2js.json2xml_str(res)], {
         type: "text/plain;charset=utf-8"
       });
-      $scope.res = res;
-      console.log('res = ' + res);
-      console.log('blob = ' + blob);
-      $scope.blob = blob;
-      return saveAs(blob, 'export.json');
+      return saveAs(blob, 'export_supplier' + $rootScope.authSupplierId + '.xml');
     });
   };
 });
