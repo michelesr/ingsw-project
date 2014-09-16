@@ -381,15 +381,29 @@ controllers.controller('LogoutCtrl', function($rootScope, $http, $state, Auth) {
   });
 });
 
-controllers.controller('ProductCtrl', function($scope, $state, User, Category, Product, Meta) {
+controllers.controller('ProductCtrl', function($scope, $rootScope, $state, User, Category, Product, Meta) {
   var list;
   list = function() {
     $scope.meta = _.cloneDeep(Meta.product);
     return Product.list(function(productList) {
       return Category.list(function(categoryList) {
         return User.listSupplier(function(supplierList) {
-          var lists, res, rf, rfElem, _i, _len, _ref, _results;
-          $scope.list = productList;
+          var lists, prod, res, rf, rfElem, _i, _len, _ref, _results;
+          if ($rootScope.authType = 0) {
+            $scope.list = (function() {
+              var _i, _len, _results;
+              _results = [];
+              for (_i = 0, _len = productList.length; _i < _len; _i++) {
+                prod = productList[_i];
+                if (prod.supplier_id === $rootScope.authSupplierId) {
+                  _results.push(prod);
+                }
+              }
+              return _results;
+            })();
+          } else {
+            $scope.list = productList;
+          }
           lists = {
             category: categoryList,
             supplier: supplierList
@@ -598,34 +612,60 @@ controllers.controller('RootCtrl', function($rootScope, $state) {
   }
 });
 
-controllers.controller('StockCtrl', function($scope, $state, Product, Stock, Meta) {
+controllers.controller('StockCtrl', function($scope, $rootScope, $state, Product, Stock, Meta) {
   var list;
   list = function() {
     $scope.meta = _.cloneDeep(Meta.stock);
     return Stock.list(function(stockList) {
       return Product.list(function(productList) {
-        var lists, res, rf, rfElem, _i, _len, _ref, _results;
-        $scope.list = stockList;
-        lists = {
-          product: productList
-        };
+        var lists, prod, res, rf, rfElem, stock, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _results;
+        if ($rootScope.authType = 0) {
+          lists = {
+            product: (function() {
+              var _i, _len, _results;
+              _results = [];
+              for (_i = 0, _len = productList.length; _i < _len; _i++) {
+                prod = productList[_i];
+                if (prod.supplier_id === $rootScope.authSupplierId) {
+                  _results.push(prod);
+                }
+              }
+              return _results;
+            })()
+          };
+          _ref = lists.product;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            prod = _ref[_i];
+            for (_j = 0, _len1 = stockList.length; _j < _len1; _j++) {
+              stock = stockList[_j];
+              if (stock.product_id === prod.id) {
+                $scope.list.push(stock);
+              }
+            }
+          }
+        } else {
+          lists = {
+            product: productList
+          };
+          $scope.list = stockList;
+        }
         $scope.empty = $scope.list.length <= 1 && _.isEmpty($scope.list[0]);
-        _ref = $scope.list;
+        _ref1 = $scope.list;
         _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          res = _ref[_i];
+        for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+          res = _ref1[_k];
           _results.push((function() {
-            var _j, _len1, _ref1, _results1;
-            _ref1 = $scope.meta.related_fields;
+            var _l, _len3, _ref2, _results1;
+            _ref2 = $scope.meta.related_fields;
             _results1 = [];
-            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-              rf = _ref1[_j];
+            for (_l = 0, _len3 = _ref2.length; _l < _len3; _l++) {
+              rf = _ref2[_l];
               _results1.push((function() {
-                var _k, _len2, _ref2, _results2;
-                _ref2 = lists[rf.model];
+                var _len4, _m, _ref3, _results2;
+                _ref3 = lists[rf.model];
                 _results2 = [];
-                for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-                  rfElem = _ref2[_k];
+                for (_m = 0, _len4 = _ref3.length; _m < _len4; _m++) {
+                  rfElem = _ref3[_m];
                   if (rfElem.id === res[rf.related_model]) {
                     _results2.push(res[rf.related_model] = rfElem);
                   } else {

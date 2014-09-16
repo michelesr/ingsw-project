@@ -1,4 +1,4 @@
-controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, Meta) ->
+controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, User, Category, Product, Meta) ->
 
   list = ->
     $scope.meta = _.cloneDeep(Meta.product)
@@ -8,7 +8,11 @@ controllers.controller 'ProductCtrl', ($scope, $state, User, Category, Product, 
       Category.list (categoryList) ->
         User.listSupplier (supplierList) ->
 
-          $scope.list = productList
+          if $rootScope.authType = 0
+            $scope.list = (prod for prod in productList when prod.supplier_id == $rootScope.authSupplierId)
+          else
+            $scope.list = productList
+
           lists =
             category: categoryList
             supplier: supplierList
