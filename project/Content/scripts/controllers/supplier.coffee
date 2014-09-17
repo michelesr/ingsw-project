@@ -1,4 +1,4 @@
-controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
+controllers.controller 'SupplierCtrl', ($scope, $rootScope, $state, City, User, Meta) ->
 
   list = ->
     $scope.meta = _.cloneDeep(Meta.supplier)
@@ -132,10 +132,9 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
 
   $scope.edit = ->
     resource =
-      type: 'supplier'
       user_data: {}
-      supplier_data:
-        supplier_id: $rootScope.authSupplierId
+      supplier_data: {}
+#        supplier_id: $rootScope.authSupplierId
 
     # Gather data of resource to edit
     for f in $scope.meta.fields
@@ -157,7 +156,8 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
 
 
     # Update the supplier
-    User.update {id: $state.params.id}, resource, (res) ->
+#    User.update {id: $state.params.id}, resource, (res) ->
+    User.update {id: 6}, resource, (res) ->
       list()
       $scope.msgSuccess = 'Updated successfully'
 

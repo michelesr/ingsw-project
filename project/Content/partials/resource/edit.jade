@@ -1,5 +1,5 @@
 h1.page-header
-  span.fa.fa-plus
+  span.fa.fa-pencil
   span  Edit a {{ meta.name }}
 
 form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidate)
@@ -13,7 +13,7 @@ form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidat
           //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
 
   .form-group(ng-repeat='rf in meta.related_fields')
-    ng-form(name="addFormIn")
+    ng-form(ng-hide='rf.hide', name="addFormIn")
       label.col-sm-2.control-label {{ rf.human }}
         span(ng-if='rf.required') *
       .col-sm-10

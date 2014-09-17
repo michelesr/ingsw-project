@@ -1,5 +1,5 @@
 
-<h1 class="page-header"><span class="fa fa-plus"></span><span> Edit a {{ meta.name }}</span></h1>
+<h1 class="page-header"><span class="fa fa-pencil"></span><span> Edit a {{ meta.name }}</span></h1>
 <form ng-submit="edit()" name="editForm" role="form" novalidate="novalidate" class="form-horizontal">
   <div ng-repeat="f in meta.fields" class="form-group">
     <ng-form name="editFormIn">
@@ -14,7 +14,7 @@
     </ng-form>
   </div>
   <div ng-repeat="rf in meta.related_fields" class="form-group">
-    <ng-form name="addFormIn">
+    <ng-form ng-hide="rf.hide" name="addFormIn">
       <label class="col-sm-2 control-label">{{ rf.human }}<span ng-if="rf.required">*</span></label>
       <div class="col-sm-10">
         <select ng-model="rf.value" class="form-control">

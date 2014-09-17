@@ -17,9 +17,9 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
         # Resolve the data relations and put into $scope
         for res in $scope.list
           for rf in $scope.meta.related_fields
-            for rfElem in lists.category
-              if rfElem.id == res[rf.related_model]
-                res[rf.related_model] = rfElem
+            for elem in lists.category
+              if elem.id == res[rf.related_model]
+                res[rf.related_model] = elem
 
 
   $scope.addForm = ->
@@ -80,11 +80,10 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
 
           # Resolve the data relations and put into every product
           for rf in $scope.meta.related_fields
-            k = rf.model
-            rf.value = resource[k]
-            for rfElem in lists.category
-              if rfElem.id == resource[rf.related_model]
-                rf[rf.related_model] = rfElem
+            rf.value = resource[rf.model]
+            for elem in lists.category
+              if elem.id == resource[rf.related_model]
+                rf[rf.related_model] = elem
 
           # Move to detail page
           $state.go '^.detail', {id: id}
@@ -108,12 +107,14 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
 
         # Resolve the data relations and put into $scope
         for rf in $scope.meta.related_fields
-          k = rf.model
-          rf.value = resource[k]
-          rf.values = lists[rf.model]
-          for rfElem in lists[rf.model]
-            if rfElem.id == resource[rf.related_model]
-              rf.value = rfElem.id
+          if rf.model == 'category'
+            rf.value = resource[rf.model]
+            rf.values = lists[rf.model]
+            for elem in lists[rf.model]
+              if elem.id == resource[rf.related_model]
+                rf.value = elem.id
+          else
+            rf.value = $rootScope.authSupplierId
 
         # Move to edit form page
         $state.go '^.edit', {id: $state.params.id}
