@@ -25,6 +25,9 @@ namespace project.Controllers {
 				return Detail (id);
 		}
 
+        // ritorna i dati dei supplier
+        // GET /api/users/indexsupplier/
+        // richiede api_key da admin
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult IndexSupplier(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -34,6 +37,17 @@ namespace project.Controllers {
                 return Detail (id);
         }
 
+        // ritorna i dati delle sessioni
+        // GET /api/users/indexsessions/
+        // richiede api_key da admin
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult IndexSessions(int id) {
+            ApiKey k = ApiKey.getApiKey();
+            if (id == -1 && k.isAdmin())
+                return Json(Model.getAll<Session>(), JsonRequestBehavior.AllowGet);
+            else 
+                return Detail (id);
+        }
         // GET /api/users/detail/<id>/
         // richiede una api_key negli headers http
         // ritorna i dettagli di un utente
