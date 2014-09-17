@@ -134,7 +134,8 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
     resource =
       type: 'supplier'
       user_data: {}
-      supplier_data: {}
+      supplier_data:
+        supplier_id: $rootScope.authSupplierId
 
     # Gather data of resource to edit
     for f in $scope.meta.fields

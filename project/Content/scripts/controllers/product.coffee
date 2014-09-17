@@ -17,7 +17,7 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
         # Resolve the data relations and put into $scope
         for res in $scope.list
           for rf in $scope.meta.related_fields
-            for rfElem in lists[rf.model]
+            for rfElem in lists.category
               if rfElem.id == res[rf.related_model]
                 res[rf.related_model] = rfElem
 
@@ -42,7 +42,8 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
 
 
   $scope.add = ->
-    resource.supplier_id = $rootScope.authSupplierId
+    resource =
+      supplier_id: $rootScope.authSupplierId
 
     # Gather date of resource to add
     for f in $scope.meta.fields
@@ -67,22 +68,21 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
     $scope.msgError = ''
 
     # Get related resource lists and product data
-    Product.detail {id: id}, (product) ->
+    Product.detail {id: id}, (resource) ->
       Category.list (categoryList) ->
 
-# add filter for supplier
           lists =
             category: categoryList
 
           # Gather data of product
           for f in $scope.meta.fields
-            f.value = product[f.model]
+            f.value = resource[f.model]
 
           # Resolve the data relations and put into every product
           for rf in $scope.meta.related_fields
             k = rf.model
             rf.value = resource[k]
-            for rfElem in lists[rf.model]
+            for rfElem in lists.category
               if rfElem.id == resource[rf.related_model]
                 rf[rf.related_model] = rfElem
 
@@ -99,26 +99,24 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
     Product.detail {id: $state.params.id}, (resource) ->
       Category.list (categoryList) ->
 
-# add filter for supplier
-#
-          lists =
-            category: categoryList
+        lists =
+          category: categoryList
 
-          # Gather data of product
-          for f in $scope.meta.fields
-            f.value = resource[f.model]
+        # Gather data of product
+        for f in $scope.meta.fields
+          f.value = resource[f.model]
 
-          # Resolve the data relations and put into every product
-          for rf in $scope.meta.related_fields
-            k = rf.model
-            rf.value = resource[k]
-            rf.values = lists[rf.model]
-            for rfElem in lists[rf.model]
-              if rfElem.id == resource[rf.related_model]
-                rf.value = rfElem.id
+        # Resolve the data relations and put into $scope
+        for rf in $scope.meta.related_fields
+          k = rf.model
+          rf.value = resource[k]
+          rf.values = lists[rf.model]
+          for rfElem in lists[rf.model]
+            if rfElem.id == resource[rf.related_model]
+              rf.value = rfElem.id
 
-          # Move to edit form page
-          $state.go '^.edit', {id: $state.params.id}
+        # Move to edit form page
+        $state.go '^.edit', {id: $state.params.id}
 
 
   $scope.edit = ->
@@ -137,7 +135,6 @@ controllers.controller 'ProductCtrl', ($scope, $rootScope, $state, Category, Pro
 
     # Update the product
     Product.update {id: $state.params.id}, resource, (res) ->
-#      $scope.result = res
       list()
       $scope.msgSuccess = 'Updated successfully'
 

@@ -460,7 +460,7 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
               rf = _ref1[_j];
               _results1.push((function() {
                 var _k, _len2, _ref2, _results2;
-                _ref2 = lists[rf.model];
+                _ref2 = lists.category;
                 _results2 = [];
                 for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
                   rfElem = _ref2[_k];
@@ -498,8 +498,10 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
     });
   };
   $scope.add = function() {
-    var f, k, rf, v, _i, _j, _len, _len1, _ref, _ref1;
-    resource.supplier_id = $rootScope.authSupplierId;
+    var f, k, resource, rf, v, _i, _j, _len, _len1, _ref, _ref1;
+    resource = {
+      supplier_id: $rootScope.authSupplierId
+    };
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
@@ -525,7 +527,7 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
     $scope.msgError = '';
     return Product.detail({
       id: id
-    }, function(product) {
+    }, function(resource) {
       return Category.list(function(categoryList) {
         var f, k, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
         lists = {
@@ -534,14 +536,14 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
         _ref = $scope.meta.fields;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           f = _ref[_i];
-          f.value = product[f.model];
+          f.value = resource[f.model];
         }
         _ref1 = $scope.meta.related_fields;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           rf = _ref1[_j];
           k = rf.model;
           rf.value = resource[k];
-          _ref2 = lists[rf.model];
+          _ref2 = lists.category;
           for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
             rfElem = _ref2[_k];
             if (rfElem.id === resource[rf.related_model]) {
@@ -1047,7 +1049,9 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
     resource = {
       type: 'supplier',
       user_data: {},
-      supplier_data: {}
+      supplier_data: {
+        supplier_id: $rootScope.authSupplierId
+      }
     };
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {

@@ -2,8 +2,8 @@
 <h1 class="page-header">{{ meta.name }} detail</h1>
 <div class="text-right"><a ng-click="editForm()">
     <button type="button" class="btn btn-primary"><span class="fa fa-pencil"></span><span> Edit this {{ meta.name }}</span></button></a></div>
-<dl class="dl-horizontal"><span ng-repeat="rf in meta.related_fields">
-    <dt>{{ rf.human }}</dt>
-    <dd>{{ rf[rf.related_model][rf.related_human] }}</dd></span><span ng-repeat="f in meta.fields">
+<dl class="dl-horizontal"><span ng-repeat="rf in meta.related_fields"><span ng-hide="rf.hide">
+      <dt>{{ rf.human }}</dt>
+      <dd>{{ rf[rf.related_model][rf.related_human] }}</dd></span></span><span ng-repeat="f in meta.fields">
     <dt>{{ f.human }}</dt>
     <dd ng-switch="f.model"><span ng-switch-when="price">{{ f.value / 100 | currency: '€' }}</span><span ng-switch-default="ng-switch-default">{{ f.value }}</span></dd></span></dl><span ng-if="debug" ng-include="'Content/partials/resource/debug.html'"></span>

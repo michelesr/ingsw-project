@@ -8,8 +8,9 @@ h1.page-header {{ meta.name }} detail
 
 dl.dl-horizontal
   span(ng-repeat='rf in meta.related_fields')
-    dt {{ rf.human }}
-    dd {{ rf[rf.related_model][rf.related_human] }}
+    span(ng-hide='rf.hide')
+      dt {{ rf.human }}
+      dd {{ rf[rf.related_model][rf.related_human] }}
   span(ng-repeat='f in meta.fields')
     dt {{ f.human }}
     dd(ng-switch='f.model')
