@@ -51,9 +51,7 @@ controllers.controller('AdminCtrl', function($scope, $state, User, Meta) {
   $scope.detail = function(id) {
     $scope.msgSuccess = '';
     $scope.msgError = '';
-    return User.listSession({
-      id: id
-    }, function(sessions) {
+    return User.listSession(function(sessions) {
       return User.detail({
         id: id
       }, function(admin) {
@@ -999,33 +997,42 @@ controllers.controller('SupplierCtrl', function($scope, $rootScope, $state, City
   $scope.detail = function(id) {
     $scope.msgSuccess = '';
     $scope.msgError = '';
-    return City.list(function(cityList) {
-      return User.detail({
-        id: id
-      }, function(resource) {
-        var f, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-        lists = {
-          city: cityList
-        };
-        _ref = $scope.meta.fields;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          f = _ref[_i];
-          f.value = resource[f.model];
-        }
-        _ref1 = $scope.meta.related_fields;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          rf = _ref1[_j];
-          rf.value = resource[rf.model];
-          _ref2 = lists[rf.model];
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            rfElem = _ref2[_k];
-            if (rfElem.id === resource[rf.related_model]) {
-              rf[rf.related_model] = rfElem;
+    return User.listSession(function(sessions) {
+      return City.list(function(cityList) {
+        return User.detail({
+          id: id
+        }, function(resource) {
+          var f, lists, rf, rfElem, s, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2;
+          lists = {
+            city: cityList
+          };
+          _ref = $scope.meta.fields;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            f = _ref[_i];
+            f.value = resource[f.model];
+          }
+          _ref1 = $scope.meta.related_fields;
+          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+            rf = _ref1[_j];
+            rf.value = resource[rf.model];
+            _ref2 = lists[rf.model];
+            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+              rfElem = _ref2[_k];
+              if (rfElem.id === resource[rf.related_model]) {
+                rf[rf.related_model] = rfElem;
+              }
             }
           }
-        }
-        return $state.go('^.detail', {
-          id: id
+          $scope.sessions = [];
+          for (_l = 0, _len3 = sessions.length; _l < _len3; _l++) {
+            s = sessions[_l];
+            if (s.user_id === id) {
+              $scope.sessions.push(s);
+            }
+          }
+          return $state.go('^.detail', {
+            id: id
+          });
         });
       });
     });

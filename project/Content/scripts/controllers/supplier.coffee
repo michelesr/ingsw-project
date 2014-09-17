@@ -84,25 +84,31 @@ controllers.controller 'SupplierCtrl', ($scope, $rootScope, $state, City, User, 
     $scope.msgError = ''
 
     # Get supplier data
-    City.list (cityList) ->
-      User.detail {id: id}, (resource) ->
+    User.listSession (sessions) ->
+      City.list (cityList) ->
+        User.detail {id: id}, (resource) ->
 
-        lists =
-          city: cityList
+          lists =
+            city: cityList
 
-        # Gather data of resource
-        for f in $scope.meta.fields
-          f.value = resource[f.model]
+          # Gather data of resource
+          for f in $scope.meta.fields
+            f.value = resource[f.model]
 
-        # Resolve the data relations and put into $scope
-        for rf in $scope.meta.related_fields
-          rf.value = resource[rf.model]
-          for rfElem in lists[rf.model]
-            if rfElem.id == resource[rf.related_model]
-              rf[rf.related_model] = rfElem
+          # Resolve the data relations and put into $scope
+          for rf in $scope.meta.related_fields
+            rf.value = resource[rf.model]
+            for rfElem in lists[rf.model]
+              if rfElem.id == resource[rf.related_model]
+                rf[rf.related_model] = rfElem
 
-        # Move to detail page
-        $state.go '^.detail', {id: id}
+          $scope.sessions = []
+          for s in sessions
+            if s.user_id == id
+              $scope.sessions.push(s)
+
+          # Move to detail page
+          $state.go '^.detail', {id: id}
 
 
   $scope.editForm = ->

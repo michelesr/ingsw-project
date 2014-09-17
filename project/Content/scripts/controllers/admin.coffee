@@ -43,7 +43,7 @@ controllers.controller 'AdminCtrl', ($scope, $state, User, Meta) ->
     $scope.msgError = ''
 
     # Get admin data
-    User.listSession {id: id}, (sessions) ->
+    User.listSession (sessions) ->
       User.detail {id: id}, (admin) ->
 
         # Gather data of admin

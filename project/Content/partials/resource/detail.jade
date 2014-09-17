@@ -17,4 +17,17 @@ dl.dl-horizontal
       span(ng-switch-when='price') {{ f.value / 100 | currency: '€' }}
       span(ng-switch-default) {{ f.value }}
 
+span(ng-if='meta.show_sessions')
+  h3.sub-header User sessions
+  .table-responsive
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Start
+          th End
+      tbody
+        tr(ng-repeat='s in sessions')
+          td {{ s.start }}
+          td {{ s.end }}
+
 span(ng-if='debug' ng-include='\'Content/partials/resource/debug.html\'')
