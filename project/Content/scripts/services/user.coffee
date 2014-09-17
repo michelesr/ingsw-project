@@ -16,6 +16,13 @@ services.factory 'User', ($resource) ->
         id: -1
       isArray: true
 
+    listSession:
+      method: 'GET'
+      params:
+        action: 'sessions'
+        id: -1
+      isArray: true
+
     add:
       method: 'POST'
 

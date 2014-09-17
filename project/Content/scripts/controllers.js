@@ -51,17 +51,28 @@ controllers.controller('AdminCtrl', function($scope, $state, User, Meta) {
   $scope.detail = function(id) {
     $scope.msgSuccess = '';
     $scope.msgError = '';
-    return User.detail({
+    return User.listSession({
       id: id
-    }, function(admin) {
-      var f, _i, _len, _ref;
-      _ref = $scope.meta.fields;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        f = _ref[_i];
-        f.value = admin[f.model];
-      }
-      return $state.go('^.detail', {
+    }, function(sessions) {
+      return User.detail({
         id: id
+      }, function(admin) {
+        var f, s, _i, _j, _len, _len1, _ref;
+        _ref = $scope.meta.fields;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          f = _ref[_i];
+          f.value = admin[f.model];
+        }
+        $scope.sessions = [];
+        for (_j = 0, _len1 = sessions.length; _j < _len1; _j++) {
+          s = sessions[_j];
+          if (s.user_id === id) {
+            $scope.sessions.push(s);
+          }
+        }
+        return $state.go('^.detail', {
+          id: id
+        });
       });
     });
   };

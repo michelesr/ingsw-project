@@ -43,14 +43,20 @@ controllers.controller 'AdminCtrl', ($scope, $state, User, Meta) ->
     $scope.msgError = ''
 
     # Get admin data
-    User.detail {id: id}, (admin) ->
+    User.listSession {id: id}, (sessions) ->
+      User.detail {id: id}, (admin) ->
 
-      # Gather data of admin
-      for f in $scope.meta.fields
-        f.value = admin[f.model]
+        # Gather data of admin
+        for f in $scope.meta.fields
+          f.value = admin[f.model]
 
-      # Move to detail page
-      $state.go '^.detail', {id: id}
+        $scope.sessions = []
+        for s in sessions
+          if s.user_id == id
+            $scope.sessions.push(s)
+
+        # Move to detail page
+        $state.go '^.detail', {id: id}
 
 
   $scope.editForm = ->

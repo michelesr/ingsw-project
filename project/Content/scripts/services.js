@@ -102,6 +102,7 @@ services.factory('Meta', function() {
       namePlural: 'admins',
       nameHuman: 'Admins',
       icon: 'fa fa-users',
+      show_session: true,
       fields: [
         {
           human: 'Email',
@@ -139,6 +140,7 @@ services.factory('Meta', function() {
       namePlural: 'suppliers',
       nameHuman: 'Suppliers',
       icon: 'fa fa-building',
+      show_session: true,
       fields: [
         {
           human: 'Supplier Name',
@@ -440,6 +442,14 @@ services.factory('User', function($resource) {
       method: 'GET',
       params: {
         action: 'indexsupplier',
+        id: -1
+      },
+      isArray: true
+    },
+    listSession: {
+      method: 'GET',
+      params: {
+        action: 'sessions',
         id: -1
       },
       isArray: true
