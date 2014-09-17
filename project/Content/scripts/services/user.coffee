@@ -19,7 +19,7 @@ services.factory 'User', ($resource) ->
     listSession:
       method: 'GET'
       params:
-        action: 'sessions'
+        action: 'indexsessions'
         id: -1
       isArray: true
 

@@ -102,7 +102,7 @@ services.factory('Meta', function() {
       namePlural: 'admins',
       nameHuman: 'Admins',
       icon: 'fa fa-users',
-      show_session: true,
+      show_sessions: true,
       fields: [
         {
           human: 'Email',
@@ -140,7 +140,7 @@ services.factory('Meta', function() {
       namePlural: 'suppliers',
       nameHuman: 'Suppliers',
       icon: 'fa fa-building',
-      show_session: true,
+      show_sessions: true,
       fields: [
         {
           human: 'Supplier Name',
@@ -372,22 +372,6 @@ services.factory('Product', function($resource) {
   });
 });
 
-services.service('Session', function() {
-  this.create = function(user) {
-    this.id = user.id;
-    this.email = user.email;
-    this.name = user.first_name;
-    return this.type = user.type;
-  };
-  this.destroy = function() {
-    this.id = null;
-    this.email = null;
-    this.name = null;
-    return this.type = null;
-  };
-  return this;
-});
-
 services.service('Sidebar', function() {
   this.admin = function() {};
   this.supplier = function() {};
@@ -449,7 +433,7 @@ services.factory('User', function($resource) {
     listSession: {
       method: 'GET',
       params: {
-        action: 'sessions',
+        action: 'indexsessions',
         id: -1
       },
       isArray: true

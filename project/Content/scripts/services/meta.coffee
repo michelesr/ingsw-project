@@ -8,7 +8,7 @@ services.factory 'Meta', () ->
       namePlural: 'admins'
       nameHuman: 'Admins'
       icon: 'fa fa-users'
-      show_session: true
+      show_sessions: true
       fields: [
           human: 'Email'
           model: 'email'
@@ -42,7 +42,7 @@ services.factory 'Meta', () ->
       namePlural: 'suppliers'
       nameHuman: 'Suppliers'
       icon: 'fa fa-building'
-      show_session: true
+      show_sessions: true
       fields: [
           human: 'Supplier Name'
           model: 'supplier_name'
