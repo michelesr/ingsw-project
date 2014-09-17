@@ -68,15 +68,15 @@ controllers.controller 'AdminCtrl', ($scope, $state, User, Meta) ->
 
 
   $scope.edit = ->
-    resource = {}
+    resource =
+      user_data: {}
 
     # Gather data of resource to edit
     for f in $scope.meta.fields
-      resource[f.model] = f.value
+      resource.user_data[f.model] = f.value
 
     # Update the admin
     User.update {id: $state.params.id}, resource, (res) ->
-#      $scope.result = res
       list()
       $scope.msgSuccess = 'Updated successfully'
 

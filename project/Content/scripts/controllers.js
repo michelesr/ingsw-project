@@ -85,11 +85,13 @@ controllers.controller('AdminCtrl', function($scope, $state, User, Meta) {
   };
   $scope.edit = function() {
     var f, resource, _i, _len, _ref;
-    resource = {};
+    resource = {
+      user_data: {}
+    };
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
-      resource[f.model] = f.value;
+      resource.user_data[f.model] = f.value;
     }
     return User.update({
       id: $state.params.id
