@@ -119,8 +119,8 @@ namespace project.Controllers {
                     if (h.ContainsKey("user_data"))
                         newData.merge(ConvertibleHashtable.fromJObject((JObject) h["user_data"]));
                     supplierCurrentData.update(newData);
-                    if (supplierCurrentData.ContainsKey("user_id"))
-                        supplierCurrentData.Remove("user_id");
+                    if (!supplierCurrentData.ContainsKey("user_id"))
+                        supplierCurrentData.Add("user_id", id);
                     supplierCurrentData.toObject<Supplier>().update();
                 }
                 // modifica le info di base dell'utente, che sia admin o supplier
