@@ -1071,7 +1071,7 @@ controllers.controller('SupplierCtrl', function($scope, $rootScope, $state, City
       }
     }
     return User.update({
-      id: 6
+      id: $state.params.id
     }, resource, function(res) {
       list();
       $scope.msgSuccess = 'Updated successfully';

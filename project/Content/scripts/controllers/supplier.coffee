@@ -156,8 +156,7 @@ controllers.controller 'SupplierCtrl', ($scope, $rootScope, $state, City, User, 
 
 
     # Update the supplier
-#    User.update {id: $state.params.id}, resource, (res) ->
-    User.update {id: 6}, resource, (res) ->
+    User.update {id: $state.params.id}, resource, (res) ->
       list()
       $scope.msgSuccess = 'Updated successfully'
 
