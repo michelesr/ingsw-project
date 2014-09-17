@@ -14,7 +14,7 @@ form.form-horizontal(ng-submit="add()", name="addForm", role="form", novalidate)
           //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
 
   .form-group(ng-repeat='rf in meta.related_fields')
-    ng-form(name="addFormIn")
+    ng-form(ng-hide='rf.hide', name="addFormIn")
       label.col-sm-2.control-label {{ rf.human }}
         span(ng-if='rf.required') *
       .col-sm-10

@@ -709,14 +709,20 @@ controllers.controller('StockCtrl', function($scope, $rootScope, $state, Product
     $scope.msgSuccess = '';
     $scope.msgError = '';
     $scope.meta = _.cloneDeep(Meta.stock);
-    return Product.list(function(productList) {
-      var lists, rf, _i, _len, _ref;
+    return Product.list(function(allProductList) {
+      var lists, prod, rf, _i, _j, _len, _len1, _ref;
       lists = {
-        product: productList
+        product: []
       };
+      for (_i = 0, _len = allProductList.length; _i < _len; _i++) {
+        prod = allProductList[_i];
+        if (prod.supplier_id === $rootScope.authSupplierId) {
+          lists.product.push(prod);
+        }
+      }
       _ref = $scope.meta.related_fields;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        rf = _ref[_i];
+      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+        rf = _ref[_j];
         rf.values = lists[rf.model];
       }
       return $state.go('^.add');
@@ -979,27 +985,25 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
     return City.list(function(cityList) {
       return User.detail({
         id: id
-      }, function(supplier) {
-        var f, k, lists, resource, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-        resource = {};
+      }, function(resource) {
+        var f, lists, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
         lists = {
           city: cityList
         };
         _ref = $scope.meta.fields;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           f = _ref[_i];
-          f.value = supplier[f.model];
-          _ref1 = $scope.meta.related_fields;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            rf = _ref1[_j];
-            k = rf.model;
-            rf.value = resource[k];
-            _ref2 = lists[rf.model];
-            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-              rfElem = _ref2[_k];
-              if (rfElem.id === resource[rf.related_model]) {
-                rf[rf.related_model] = rfElem;
-              }
+          f.value = resource[f.model];
+        }
+        _ref1 = $scope.meta.related_fields;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          rf = _ref1[_j];
+          rf.value = resource[rf.model];
+          _ref2 = lists[rf.model];
+          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+            rfElem = _ref2[_k];
+            if (rfElem.id === resource[rf.related_model]) {
+              rf[rf.related_model] = rfElem;
             }
           }
         }
@@ -1016,30 +1020,21 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
     return City.list(function(cityList) {
       return User.detail({
         id: $state.params.id
-      }, function(supplier) {
-        var f, k, lists, resource, rf, rfElem, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-        resource = {};
+      }, function(resource) {
+        var f, lists, rf, _i, _j, _len, _len1, _ref, _ref1;
         lists = {
           city: cityList
         };
         _ref = $scope.meta.fields;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           f = _ref[_i];
-          f.value = supplier[f.model];
-          _ref1 = $scope.meta.related_fields;
-          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-            rf = _ref1[_j];
-            k = rf.model;
-            rf.value = resource[k];
-            rf.values = lists[rf.model];
-            _ref2 = lists[rf.model];
-            for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-              rfElem = _ref2[_k];
-              if (rfElem.id === resource[rf.related_model]) {
-                rf.value = rfElem.id;
-              }
-            }
-          }
+          f.value = resource[f.model];
+        }
+        _ref1 = $scope.meta.related_fields;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          rf = _ref1[_j];
+          rf.value = resource[rf.model];
+          rf.values = lists[rf.model];
         }
         return $state.go('^.edit', {
           id: $state.params.id
@@ -1048,12 +1043,29 @@ controllers.controller('SupplierCtrl', function($scope, $state, City, User, Meta
     });
   };
   $scope.edit = function() {
-    var f, resource, _i, _len, _ref;
-    resource = {};
+    var f, resource, rf, _i, _j, _len, _len1, _ref, _ref1;
+    resource = {
+      type: 'supplier',
+      user_data: {},
+      supplier_data: {}
+    };
     _ref = $scope.meta.fields;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       f = _ref[_i];
-      resource[f.model] = f.value;
+      if (_.has(f, 'supplier') && f.supplier === true) {
+        resource.supplier_data[f.model] = f.value;
+      } else {
+        resource.user_data[f.model] = f.value;
+      }
+    }
+    _ref1 = $scope.meta.related_fields;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      rf = _ref1[_j];
+      if (_.has(rf, 'supplier') && rf.supplier === true) {
+        resource.supplier_data[rf.model] = rf.value;
+      } else {
+        resource.user_data[rf.model] = rf.value;
+      }
     }
     return User.update({
       id: $state.params.id

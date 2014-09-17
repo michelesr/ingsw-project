@@ -85,23 +85,21 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
 
     # Get supplier data
     City.list (cityList) ->
-      User.detail {id: id}, (supplier) ->
+      User.detail {id: id}, (resource) ->
 
-        resource = {}
         lists =
           city: cityList
 
-        # Gather data of supplier
+        # Gather data of resource
         for f in $scope.meta.fields
-          f.value = supplier[f.model]
+          f.value = resource[f.model]
 
-          # Resolve the data relations and put into every product
-          for rf in $scope.meta.related_fields
-            k = rf.model
-            rf.value = resource[k]
-            for rfElem in lists[rf.model]
-              if rfElem.id == resource[rf.related_model]
-                rf[rf.related_model] = rfElem
+        # Resolve the data relations and put into $scope
+        for rf in $scope.meta.related_fields
+          rf.value = resource[rf.model]
+          for rfElem in lists[rf.model]
+            if rfElem.id == resource[rf.related_model]
+              rf[rf.related_model] = rfElem
 
         # Move to detail page
         $state.go '^.detail', {id: id}
@@ -114,38 +112,51 @@ controllers.controller 'SupplierCtrl', ($scope, $state, City, User, Meta) ->
 
     # Get supplier data and put into $scope
     City.list (cityList) ->
-      User.detail {id: $state.params.id}, (supplier) ->
+      User.detail {id: $state.params.id}, (resource) ->
 
-        resource = {}
         lists =
           city: cityList
 
+        # Gather data of resource
         for f in $scope.meta.fields
-          f.value = supplier[f.model]
+          f.value = resource[f.model]
 
-          # Resolve the data relations and put into every product
-          for rf in $scope.meta.related_fields
-            k = rf.model
-            rf.value = resource[k]
-            rf.values = lists[rf.model]
-            for rfElem in lists[rf.model]
-              if rfElem.id == resource[rf.related_model]
-                rf.value = rfElem.id
+        # Resolve the data relations and put into $scope
+        for rf in $scope.meta.related_fields
+          rf.value = resource[rf.model]
+          rf.values = lists[rf.model]
 
         # Move to edit form page
         $state.go '^.edit', {id: $state.params.id}
 
 
   $scope.edit = ->
-    resource = {}
+    resource =
+      type: 'supplier'
+      user_data: {}
+      supplier_data: {}
 
     # Gather data of resource to edit
     for f in $scope.meta.fields
-      resource[f.model] = f.value
+
+      # Put the params in the corrent sub-dictionary
+      if _.has(f, 'supplier') and f.supplier == true
+        resource.supplier_data[f.model] = f.value
+      else
+        resource.user_data[f.model] = f.value
+
+    # Gather relational data of resource to edit
+    for rf in $scope.meta.related_fields
+
+      # Put the params in the corrent sub-dictionary
+      if _.has(rf, 'supplier') and rf.supplier == true
+        resource.supplier_data[rf.model] = rf.value
+      else
+        resource.user_data[rf.model] = rf.value
+
 
     # Update the supplier
     User.update {id: $state.params.id}, resource, (res) ->
-#      $scope.result = res
       list()
       $scope.msgSuccess = 'Updated successfully'
 

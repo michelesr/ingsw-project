@@ -33,10 +33,15 @@ controllers.controller 'StockCtrl', ($scope, $rootScope, $state, Product, Stock,
     $scope.meta = _.cloneDeep(Meta.stock)
 
     # Get resource lists
-    Product.list (productList) ->
+    Product.list (allProductList) ->
 
       lists =
-        product: productList
+        product: []
+
+      # Show only products of this supplier
+      for prod in allProductList
+        if prod.supplier_id == $rootScope.authSupplierId
+          lists.product.push(prod)
 
       # Put relational data into $scope
       for rf in $scope.meta.related_fields

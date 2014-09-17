@@ -20,12 +20,14 @@ span(ng-switch='empty')
     table.table.table-striped.table-hover
       thead
         tr
-          th(ng-repeat='rf in meta.related_fields') {{ rf.human }}
+          th(ng-repeat='rf in meta.related_fields')
+            span(ng-hide='rf.hide') {{ rf.human }}
           th(ng-repeat='f in meta.fields') {{ f.human }}
           th Actions
       tbody
         tr(ng-repeat='res in list')
-          td(ng-repeat='rf in meta.related_fields') {{ res[rf.related_model][rf.related_human] }}
+          td(ng-repeat='rf in meta.related_fields')
+            span(ng-hide='rf.hide') {{ res[rf.related_model][rf.related_human] }}
           td(ng-repeat='f in meta.fields')
             span(ng-switch='f.model')
               span(ng-switch-when='price') {{ res[f.model] / 100 | currency: '€' }}

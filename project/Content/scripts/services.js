@@ -221,7 +221,7 @@ services.factory('Meta', function() {
           model: 'supplier',
           human: 'Supplier',
           required: true,
-          show: false
+          hide: true
         }
       ]
     },
