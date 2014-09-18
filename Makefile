@@ -1,10 +1,13 @@
 PR=project
 CON=$(PR)/Content
-BIN=$(PR)/bin/
+BIN=$(PR)/bin
 
 build: server client
+build-all: server client doc
 rebuild: clean server client
 rebuild-doc: clean-doc doc
+clean-all: clean clean-doc
+rebuild-all: clean clean-doc build build-doc
 
 server:
 	mdtool build project/project.csproj
@@ -18,13 +21,11 @@ client:
 	coffee --no-header -j scripts/services.js -bc scripts/services/*.coffee; cd -;
 
 doc:
-	cd $(CON); \
-	doxygen ../doxygenrc
+	cd $(PR); \
+	doxygen doxygenrc; cd -;
 
 clean:
 	rm -rvf $(BIN)
 
 clean-doc:
-	rm -rvf doc $(CON)/doc
-
-
+	rm -rvf $(PR)/doc 
