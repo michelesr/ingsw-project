@@ -372,12 +372,6 @@ services.factory('Product', function($resource) {
   });
 });
 
-services.service('Sidebar', function() {
-  this.admin = function() {};
-  this.supplier = function() {};
-  return this;
-});
-
 services.factory('Stock', function($resource) {
   return $resource('/api/stocks/:action/:id', {}, {
     list: {
