@@ -31,7 +31,7 @@
             <li ng-if="isAuth" ng-switch="authType"><a ng-switch-when="0" ng-href="/#/suppliers/detail/{{ authId }}">Hello {{ authFirstName }}!</a><a ng-switch-when="1" ng-href="/#/admins/detail/{{ authId }}">Hello {{ authFirstName }}!</a></li>
             <li ng-if="isAuth"><a ui-sref="root.logout">Logout</a></li>
             <li ng-if="!isAuth"><a ui-sref="root.login">Login</a></li>
-            <li><a ui-sref="root.about">About</a></li>
+            <li><a href="doc/html/index.html">Docs</a></li>
           </ul>
         </div>
       </div>

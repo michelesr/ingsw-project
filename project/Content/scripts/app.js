@@ -24,10 +24,6 @@ app.config(function(stateHelperProvider, $urlRouterProvider, $httpProvider) {
         url: '/',
         template: ''
       }, {
-        name: 'about',
-        url: '/about',
-        templateUrl: 'Content/partials/about.html'
-      }, {
         name: 'login',
         url: '/login',
         templateUrl: 'Content/partials/login.html',
