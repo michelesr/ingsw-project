@@ -31,14 +31,14 @@ namespace project.Models
             return h[h.Length - 1].toObject<Session>();
         }
 
-        // Apre una sessione, registrandone il tempo di inizio
+        /// Apre una sessione, registrandone il tempo di inizio
         public static void OpenSession(int user_id) {
             Session s = Session.startingNow();
             s.user_id = user_id;
             s.insert();
         }
 
-        // Chiude una sessione, registrandone il tempo di chiusura
+        /// Chiude una sessione, registrandone il tempo di chiusura
         public static void CloseSession(int user_id) {
             // chiude la sessione precedentemente aperta
             Session s = Session.getLastByUserId(user_id);

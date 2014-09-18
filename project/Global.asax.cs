@@ -38,7 +38,7 @@ namespace project
 			filters.Add (new HandleErrorAttribute ());
 		}
 
-        // Metodo Main
+        /// Metodo Main
 		protected void Application_Start ()
 		{
             // crea lo schema e aggiunge un admin se non è già presente

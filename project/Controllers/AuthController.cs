@@ -10,13 +10,19 @@ using project.Models;
 using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
+
     /// Controller autorizzazione: /api/auth/
+
 	public class AuthController : Controller {
 
 		[AcceptVerbs(HttpVerbs.Post)]
+
         /** Autentica l'utente e ritorna l'api_key
+
             API Reference: POST /api/auth/
+
             JSON data: {email: "email", password: "password"} */
+
 		public JsonResult Index() {
             ConvertibleHashtable d = ConvertibleHashtable.fromRequest(); 
 			ConvertibleHashtable h = new ConvertibleHashtable();
@@ -47,9 +53,13 @@ namespace project.Controllers {
 
 
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Chiude la sessione dell'utente
+
             API Reference: GET /api/auth/logout/
+
             Requisiti: api_key nell'header della richiesta http */
+
         public JsonResult Logout() {
             ApiKey k = ApiKey.getApiKey();
             Models.Session.CloseSession(k.user_id);

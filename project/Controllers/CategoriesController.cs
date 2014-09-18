@@ -14,12 +14,17 @@ using Newtonsoft.Json.Linq;
 namespace project.Controllers {
 
     /// Controller per la gestione delle categorie: /api/categories/
+
     public class CategoriesController : Controller {
 
 		[AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna tutte le categorie
+
             API Reference: GET /api/categories/
+
             Requisiti: api_key negli header http */
+
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -30,9 +35,13 @@ namespace project.Controllers {
 		}
 
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna una categoria
+
             API Reference: GET /api/categories/detail/<id>/
+
             Requisiti: api_key negli header http */
+
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -42,9 +51,13 @@ namespace project.Controllers {
 
 
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Elimina una categoria
+
            API Reference: GET /api/categories/delete/<id>/
+
            Requisiti: admin api_key negli header http */
+
         public JsonResult Delete(int id) {
             if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -55,10 +68,15 @@ namespace project.Controllers {
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+
         /** Aggiorna una categoria
+
             API Reference: POST /api/categories/update/<id>/
+
             Requisiti: admin api_key negli header http
+
             JSON Data: {name: "name"} */
+
         public JsonResult Update(int id) {
             if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -72,10 +90,15 @@ namespace project.Controllers {
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+
         /** Aggiunge una categoria
+
             API Reference: POST /api/categories/
+
             Requisiti: admin api_key negli header http
+
             JSON Data: {name: "name"} */
+
         public JsonResult Index() {
             if(!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);

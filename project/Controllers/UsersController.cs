@@ -12,12 +12,17 @@ using project.Utils;
 namespace project.Controllers {
 
     /// Controller degli utenti
+
 	public class UsersController : Controller {
 
 		[AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna tutti gli utenti
-            GET /api/users/
+
+            API Reference: GET /api/users/
+
             Requisiti: api_key negli headers http */
+
 		public JsonResult Index(int id) {
 			ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
@@ -27,9 +32,13 @@ namespace project.Controllers {
 		}
 
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna i dati dei supplier
+
             GET /api/users/indexsupplier/
+
             Requisiti: admin api_key negli haeders http */
+
         public JsonResult IndexSupplier(int id) {
             ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
@@ -39,9 +48,13 @@ namespace project.Controllers {
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna i dati delle sessioni
-            GET /api/users/indexsessions/
+
+            API Reference: GET /api/users/indexsessions/
+
             Requisiti: admin api_key negli haeders http */
+
         public JsonResult IndexSessions(int id) {
             ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
@@ -52,8 +65,11 @@ namespace project.Controllers {
 
 		[AcceptVerbs(HttpVerbs.Get)]
         /** Ritorna i dettagli di un utente
+	
             Nota: ritorna anche le info sui supplier
-            GET /api/users/detail/<id>/
+
+            API Reference: GET /api/users/detail/<id>/
+
             Requisiti: api_key negli headers http */
 		public JsonResult Detail(int id) {
 			ApiKey k = ApiKey.getApiKey();
@@ -68,8 +84,11 @@ namespace project.Controllers {
 		}
 
         /** Elimina un utente
-            GET /api/users/delete/<id>/
+
+            API Reference: GET /api/users/delete/<id>/
+
             Requisiti: api_key negli headers http */
+
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             if(k.isAdmin() || k.checkUser(id)) {
@@ -91,10 +110,14 @@ namespace project.Controllers {
         }
 
         /** Aggiunge un utente
-            POST /api/users/add/
+
+            API Reference: POST /api/users/add/
+
             Requisiti: admin api_key negli haeders http
+
             JSON Data: {type: "admin|supplier", user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
                         supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}} */
+
 		[AcceptVerbs(HttpVerbs.Post)]
 		public JsonResult Index() {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
@@ -118,8 +141,11 @@ namespace project.Controllers {
 		}
 
         /** Aggiorna le informazioni su un utente
-            POST /api/users/update/<id>
+	
+            API Reference: POST /api/users/update/<id>
+
             Requisiti: api_key negli headers http
+
             JSON data: {user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
                         supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}} */
         [AcceptVerbs(HttpVerbs.Post)]

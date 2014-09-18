@@ -48,12 +48,12 @@ namespace project.Models {
             return getById<Supplier>(supplier_id).user_id;
         }
 
-        // Restituisce true <=> user_id e supplier_id forniti sono relativi alla stessa utenza
+        /// Restituisce true <=> user_id e supplier_id forniti sono relativi alla stessa utenza
         public static bool checkUserId(int uid, int sid) {
             return getUserIdBySupplierId(sid) == uid;
         }
 
-        // Ritorna una ArrayList di tutte le ConvertibleHashtable dei Supplier
+        /// Ritorna una ArrayList di tutte le ConvertibleHashtable dei Supplier
         public static ArrayList getAll() {
             ConvertibleHashtable[] suppliers = Model.getAll<Supplier>();
             ArrayList result = new ArrayList();

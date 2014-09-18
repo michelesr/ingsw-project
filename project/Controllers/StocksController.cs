@@ -14,12 +14,17 @@ using Newtonsoft.Json.Linq;
 namespace project.Controllers {
 
     /// Controller degli stocks
+
     public class StocksController : Controller {
 
 		[AcceptVerbs(HttpVerbs.Get)]
-        // Ritorna tutti gli stocks
-        // Api Reference: GET /api/stocks/
-        // Requisiti: api_key negli header http
+
+        /** Ritorna tutti gli stocks
+
+            Api Reference: GET /api/stocks/
+
+            Requisiti: api_key negli header http */
+
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -30,9 +35,13 @@ namespace project.Controllers {
 		}
 
         [AcceptVerbs(HttpVerbs.Get)]
-        // Ritorna uno stock
-        // Api Reference: GET /api/stocks/detail/<id>/
-        // Requisiti: api_key negli header http
+
+        /**  Ritorna uno stock
+
+             Api Reference: GET /api/stocks/detail/<id>/
+
+             Requisiti: api_key negli header http */
+
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -42,9 +51,13 @@ namespace project.Controllers {
 
                 
         [AcceptVerbs(HttpVerbs.Get)]
-        // Elimina uno stock
-        // Api Reference: GET /api/stocks/delete/<id>/
-        // Requisiti: admin api_key negli header http
+
+        /** Elimina uno stock
+
+            Api Reference: GET /api/stocks/delete/<id>/
+
+            Requisiti: admin api_key negli header http */
+
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             ProductStock ps = Model.getById<ProductStock>(id);
@@ -58,10 +71,15 @@ namespace project.Controllers {
 
 
         [AcceptVerbs(HttpVerbs.Post)]
-        // Aggiorna uno stock
-        // Api Reference: POST /api/stocks/update/<id>/
-        // Requisiti: admin api_key negli header http
-        // JSON Data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, availability:<av>}
+
+        /** Aggiorna uno stock
+
+            Api Reference: POST /api/stocks/update/<id>/
+
+            Requisiti: admin api_key negli header http
+
+            JSON Data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, availability:<av>} */
+
         public JsonResult Update(int id) {
             ApiKey k = ApiKey.getApiKey();
             ConvertibleHashtable newData = ConvertibleHashtable.fromRequest();
@@ -77,10 +95,15 @@ namespace project.Controllers {
         }
                 
         [AcceptVerbs(HttpVerbs.Post)]
-        // Aggiunge uno stock
-        // Api Reference: POST /api/stocks/
-        // Requisiti: admin api_key negli header http
-        // JSON Data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, availability:<av>}
+
+        /** Aggiunge uno stock
+
+            Api Reference: POST /api/stocks/
+
+            Requisiti: admin api_key negli header http
+
+            JSON Data: {product_id:<id>, price:<pr>, min:<min>, max:<max>, availability:<av>} */
+
         public JsonResult Index() {
             ApiKey k = ApiKey.getApiKey();
             ProductStock s = ConvertibleHashtable.fromRequest().toObject<ProductStock>();

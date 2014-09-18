@@ -14,11 +14,15 @@ using Newtonsoft.Json.Linq;
 namespace project.Controllers {
 
     /// Controller dei prodotti
+
 	public class ProductsController : Controller {
 
         /** Ritorna tutti i prodotti
+
             Api Reference: GET /api/products/
+
             Requisiti: api_key negli header http */
+
 		[AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
@@ -30,8 +34,11 @@ namespace project.Controllers {
 		}
 
         /** Ritorna un prodotto
+
             Api Reference: GET /api/products/detail/<id>
+
             Requisiti: api_key negli header http */
+
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
@@ -42,8 +49,11 @@ namespace project.Controllers {
 
         
         /** Elimina un prodotto
+
             Api Reference: GET /api/products/delete/<id>
+
             Requisiti: admin api_key negli header http */
+
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -58,9 +68,13 @@ namespace project.Controllers {
 
         
         /** Aggiorna un prodotto
+
             Api Reference: POST /api/products/update/<id>
+
             Requisiti: admin api_key negli header http
+
             JSON Data: {supplier_id:<id>, product_category:<id>, name:"name"} */
+
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -76,9 +90,13 @@ namespace project.Controllers {
         }
         
         /** Aggiunge un prodotto
+	
             Api Reference: POST /api/products/
+
             Requisiti: admin api_key negli header http
+
             JSON Data: {supplier_id:<id>, product_category:<id>, name:"name"} */
+
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
             ApiKey k = ApiKey.getApiKey();

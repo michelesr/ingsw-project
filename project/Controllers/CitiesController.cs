@@ -14,12 +14,17 @@ using Newtonsoft.Json.Linq;
 namespace project.Controllers {
 
     /// Controller delle Città.
+
     public class CitiesController : Controller {
 
 		[AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna tutte le città
+
             API Reference: GET /api/cities/
+
             Requisiti: api_key negli header http */
+
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -30,9 +35,13 @@ namespace project.Controllers {
 		}
         
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Ritorna una città
+
             API Reference: GET /api/cities/detail/<id>/
+
             Requisiti: api_key negli header http */
+
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -41,9 +50,13 @@ namespace project.Controllers {
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
+
         /** Elimina una città
+
             Api Reference: GET /api/cities/delete/<id>/
+
             Requisiti: admin api_key negli header http */
+
         public JsonResult Delete(int id) {
             if (!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -54,10 +67,15 @@ namespace project.Controllers {
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+
         /** Aggiorna una città
+
             Api Reference: POST /api/cities/update/<id>
+	    
             Requisiti: admin api_key negli header http 
+
             JSON Data: {name: "name"} */
+
         public JsonResult Update(int id) {
             if (!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -71,10 +89,15 @@ namespace project.Controllers {
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
+
         /** Aggiunge una città
+
             Api Reference: POST /api/cities/
+
             Requisiti: admin api_key negli header http 
+
             JSON Data: {name: "name"} */ 
+
         public JsonResult Index() {
             if (!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);

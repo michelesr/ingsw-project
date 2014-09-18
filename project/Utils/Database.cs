@@ -11,10 +11,14 @@ namespace project.Utils
     /// Wrapper di alto livello di astrazione per database sqlite
     public class Database {
 
-        private const String _fileName = "db.sqlite"; /// path del database
-        private SqliteConnection _con; /// connessione al database 
-        private static volatile Database _istance = null; /// istanza del database
-        private static object _lock = new object(); /// lock per la creazione dell'istanza
+        /// Path del database nel file system
+        private const String _fileName = "db.sqlite";
+        /// Istanza della connessione al database
+        private SqliteConnection _con;  
+        /// Istanza singleton del Database
+        private static volatile Database _istance = null; 
+        /// Lock utilizzato nella creazione dell'istanza
+        private static object _lock = new object();
 
         /// Ritorna l'istanza del database, creandola qualora non esistesse
 		public static Database Istance {
@@ -89,6 +93,7 @@ namespace project.Utils
             _executeQuery(sql);
         }
 
+        /// Crea un trigger per controllare che non venga aggiornato un valore con un nuovo relativo a un valore esterno inesistente
         public void createUpdateTrigger(String localTable, String localField, String foreignTable) {
             String sql = "CREATE TRIGGER IF NOT EXISTS ut__" + localTable + "__" + localField +
                          " BEFORE UPDATE ON `" + localTable + "` FOR EACH ROW BEGIN SELECT RAISE(ROLLBACK, 'FK value \"" + localField + "\" references null value') " +
