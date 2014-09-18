@@ -1,0 +1,11 @@
+<map id="project.Models.Model" name="project.Models.Model">
+<area shape="rect" id="node2" href="$classproject_1_1Models_1_1ApiKey.html" title="Chiave di accesso all&#39;api dell&#39;applicazione server. " alt="" coords="5,358,159,567"/>
+<area shape="rect" id="node3" href="$classproject_1_1Models_1_1City.html" title="Città " alt="" coords="183,424,317,501"/>
+<area shape="rect" id="node4" href="$classproject_1_1Models_1_1Product.html" title="Prodotto. " alt="" coords="341,409,497,516"/>
+<area shape="rect" id="node5" href="$classproject_1_1Models_1_1ProductCategory.html" title="Categoria di prodotti. " alt="" coords="521,424,731,501"/>
+<area shape="rect" id="node6" href="$classproject_1_1Models_1_1ProductStock.html" title="Stock (fornitura) " alt="" coords="755,380,945,545"/>
+<area shape="rect" id="node7" href="$classproject_1_1Models_1_1Session.html" title="Dati di sessione dell&#39;User. " alt="" coords="969,380,1128,545"/>
+<area shape="rect" id="node8" href="$classproject_1_1Models_1_1User.html" title="Utente generico. " alt="" coords="1152,292,1367,633"/>
+<area shape="rect" id="node9" href="$classproject_1_1Models_1_1Admin.html" title="Utente con privilegi di amministratore. " alt="" coords="1072,718,1247,839"/>
+<area shape="rect" id="node10" href="$classproject_1_1Models_1_1Supplier.html" title="Produttore (sottoclasse dell&#39;utente generico) " alt="" coords="1271,681,1445,876"/>
+</map>
