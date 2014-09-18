@@ -2,11 +2,11 @@
 using System.Collections;
 
 namespace project.Models {
-    // questa classe di per se sembra inutile ma viene utilizzata
-    // dal serializzatore e dal db per gestire le città
-    // classe rappresentante le città dei produttori
+    /* Questa classe non ha metodi ma viene utilizzata
+       dal serializzatore JSON per gestire le città */
+    /// Città 
     public class City : Model {
-        // attributi
+        /// Nome della città
         public String name { get; set;}
 	}
 }

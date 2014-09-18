@@ -2,12 +2,12 @@
 
 namespace project.Utils
 {
-    // classe contenente lo schema del database
+    /// Classe contenente lo schema del database
 	public static class Schema {
 
-        // riferimento al db
+        /// Riferimento all'istanza del db
 		private static Database _db = Database.Istance;
-        // tabelle
+        /// Tabelle
         private static String[] _tables = new String[] {"ApiKey", "User", "Admin", "Supplier", "ProductCategory", "ProductStock", "Product", "City", "Session"};
 
         // schemi delle tabelle
@@ -68,7 +68,7 @@ namespace project.Utils
         private static String[][][] _models = new String[][][] { _apiKey, _user, _admin, _supplier, _productCategory, _productStock, _product, _city, _session };
 
 
-        // triggers per l'inserimento/aggiornamento
+        /// Triggers per l'inserimento/aggiornamento
         private static readonly String[][] _insertTriggers = {
             // tabella interna, campo interno, tabella esterna
             new String[] {"ApiKey", "user_id", "User"},
@@ -81,12 +81,12 @@ namespace project.Utils
             new String[] {"ProductStock", "product_id", "Product"}
         };
 
-        // metodo che restituisce la stringa sql per la generazione delle chiavi esterne
+        /// Restituisce la stringa sql per la generazione delle chiavi esterne
 		private static String _getFK(String localField, String foreignTable, String foreignField) {
             return ", FOREIGN KEY(`" + localField + "`) REFERENCES `" + foreignTable + "`(`" + foreignField + "`) ON DELETE RESTRICT ON UPDATE CASCADE"; 
 		}
 
-        // metodo che inizializza il database
+        /// Inizializza il database
 		public static void createSchema() {
             for (int i = 0; i < _tables.Length; i++) 
 				_db.createTable(_tables[i], _models[i]);

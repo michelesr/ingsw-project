@@ -10,10 +10,10 @@ using project.Utils;
 
 namespace project
 {
-    // classe di partenza del programma
+    /// Classe Main
 	public class MvcApplication : System.Web.HttpApplication
 	{
-        // registrazione del routing per le richieste http
+        /// Registrazione del routing per le richieste http
 		public static void RegisterRoutes (RouteCollection routes)
 		{
 			routes.IgnoreRoute ("{resource}.axd/{*pathInfo}");
@@ -32,13 +32,13 @@ namespace project
 
 		}
 
-        // aggiunto dall'ide
+        /// Aggiunto da Monodevelop
 		public static void RegisterGlobalFilters (GlobalFilterCollection filters)
 		{
 			filters.Add (new HandleErrorAttribute ());
 		}
 
-        // punto di partenza del programma
+        // Metodo Main
 		protected void Application_Start ()
 		{
             // crea lo schema e aggiunge un admin se non è già presente

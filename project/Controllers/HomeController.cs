@@ -6,10 +6,10 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 
 namespace project.Controllers {
-    // controller della homepage
+    /// Controller del base template: /
     public class HomeController : Controller {
-        // GET / 
-        // ritorna la homepage
+        /* Ritorna il template base
+           Reference: GET / */
         public ActionResult Index() {
             return File("Content/base.html", "text/html");
 		}

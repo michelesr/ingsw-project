@@ -4,10 +4,11 @@ using System.Security.Cryptography;
 
 namespace project.Utils {
 
-    // classe di utilità per il calcolo dell'hash md5
+    /// Classe di utilità per il calcolo dell'hash md5
     // fonte: http://blogs.msdn.com/b/csharpfaq/archive/2006/10/09/how-do-i-calculate-a-md5-hash-from-a-string_3f00_.aspx
 	public class Hashing {
 
+        /// Calcola l'hash md5 di una stringa
         public static String CalculateMD5Hash(String input) {
 
 			// step 1, calculate MD5 hash from input

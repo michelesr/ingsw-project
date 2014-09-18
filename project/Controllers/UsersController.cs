@@ -11,12 +11,13 @@ using project.Utils;
 
 namespace project.Controllers {
 
+    /// Controller degli utenti
 	public class UsersController : Controller {
 
-        // GET /api/users/
-        // richiede una api_key negli headers http
-        // ritorna tutti gli utenti
 		[AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna tutti gli utenti
+            GET /api/users/
+            Requisiti: api_key negli headers http */
 		public JsonResult Index(int id) {
 			ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
@@ -25,10 +26,10 @@ namespace project.Controllers {
 				return Detail (id);
 		}
 
-        // ritorna i dati dei supplier
-        // GET /api/users/indexsupplier/
-        // richiede api_key da admin
         [AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna i dati dei supplier
+            GET /api/users/indexsupplier/
+            Requisiti: admin api_key negli haeders http */
         public JsonResult IndexSupplier(int id) {
             ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
@@ -37,10 +38,10 @@ namespace project.Controllers {
                 return Detail (id);
         }
 
-        // ritorna i dati delle sessioni
-        // GET /api/users/indexsessions/
-        // richiede api_key da admin
         [AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna i dati delle sessioni
+            GET /api/users/indexsessions/
+            Requisiti: admin api_key negli haeders http */
         public JsonResult IndexSessions(int id) {
             ApiKey k = ApiKey.getApiKey();
             if (id == -1 && k.isAdmin())
@@ -48,12 +49,12 @@ namespace project.Controllers {
             else 
                 return Detail (id);
         }
-        // GET /api/users/detail/<id>/
-        // richiede una api_key negli headers http
-        // ritorna i dettagli di un utente
-        // nota: se l'utente è un supplier ritorna anche le
-        // informazioni del supplier
+
 		[AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna i dettagli di un utente
+            Nota: ritorna anche le info sui supplier
+            GET /api/users/detail/<id>/
+            Requisiti: api_key negli headers http */
 		public JsonResult Detail(int id) {
 			ApiKey k = ApiKey.getApiKey();
             if (k.isAdmin() || k.checkUser(id)) {
@@ -66,9 +67,9 @@ namespace project.Controllers {
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}
 
-        // GET /api/users/delete/<id>/
-        // richiede una api_key negli headers http
-        // elimina un utente
+        /** Elimina un utente
+            GET /api/users/delete/<id>/
+            Requisiti: api_key negli headers http */
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
             if(k.isAdmin() || k.checkUser(id)) {
@@ -89,11 +90,11 @@ namespace project.Controllers {
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
 
-        // POST /api/users/add/
-        // richiede una admin api_key negli haeders http
-        // aggiunge un utente
-        // data: {type: "admin|supplier", user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
-        //        supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}}
+        /** Aggiunge un utente
+            POST /api/users/add/
+            Requisiti: admin api_key negli haeders http
+            JSON Data: {type: "admin|supplier", user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
+                        supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}} */
 		[AcceptVerbs(HttpVerbs.Post)]
 		public JsonResult Index() {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();
@@ -116,11 +117,11 @@ namespace project.Controllers {
 				return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
 		}
 
-        // POST /api/users/update/<id>
-        // richiede una api_key negli headers http
-        // aggiorna le informazioni su un utente
-        // data: {user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
-        //        supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}}
+        /** Aggiorna le informazioni su un utente
+            POST /api/users/update/<id>
+            Requisiti: api_key negli headers http
+            JSON data: {user_data:{first_name:"fn", last_name:"ln", email:"email", password:"pw"},
+                        supplier_data:{vat:"vat", supplier_name:"name", city:<city_id>}} */
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ConvertibleHashtable h = ConvertibleHashtable.fromRequest();

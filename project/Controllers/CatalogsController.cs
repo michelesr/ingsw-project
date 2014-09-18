@@ -10,13 +10,13 @@ using project.Utils;
 
 namespace project.Controllers {
 
-    // controller per l'esportazione dei listini
+    /// Controller per l'esportazione dei listini: /api/catalogs/
     public class CatalogsController : Controller {
 
-        // GET /api/catalogs/detail/<id_supplier>
-        // necessita api_key negli header della richiesta http
-        // ritorna un JSON contenente tutte le informazioni su un produttore e i suoi stocks
         [AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna un JSON contenente il listino del produttore
+            API Reference: GET /api/catalogs/detail/<supplier_id>/
+            Requisiti: api_key negli header della richiesta http */
         public ActionResult Detail(int id) {
             // controllo dei permessi
             ApiKey k = ApiKey.getApiKey();

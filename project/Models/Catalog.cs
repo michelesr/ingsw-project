@@ -6,18 +6,22 @@ using System.Collections;
 
 
 namespace project.Models {
-    // classe per l'esportazione dei listini dei produttori
+    /// Listino del fornitore
     public class Catalog {
-        // produttore, stock, categorie dei prodotti, città 
+        /// Fornitore relativo al listino
         public Supplier supplier { get; set; }
+        /// Stocks del produttore
         public ArrayList stocks = new ArrayList();
+        /// Categorie affiliate ai prodotti nel listino
         public ArrayList categories = new ArrayList();
+        /// Città del produttore
         public String city;
+        /// Prodotti
         public ConvertibleHashtable[] products;
-        // istanza del db
+        /// Istanza del db
         private Database _db = Database.Istance;
 
-        // costruttore, genera il listino
+        /// Costruttore, genera il listino
         public Catalog(int supplier_id) {
             // interroga il db per ottenere il supplier e i suoi prodotti
             supplier = Supplier.getByUserId(Supplier.getUserIdBySupplierId(supplier_id));
@@ -47,10 +51,9 @@ namespace project.Models {
             city = Model.getById<City>(supplier.city).name;
         }
 
-        // ritorna la stringa JSON del listino (i dati grezzi da esportare)
+        /// Ritorna la stringa JSON del listino (i dati grezzi da esportare)
         public override string ToString() {
             return JsonConvert.SerializeObject(this);
         }
-
     }
 }

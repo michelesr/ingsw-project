@@ -13,11 +13,12 @@ using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
 
+    /// Controller dei prodotti
 	public class ProductsController : Controller {
 
-        // GET /api/products/
-        // richiede api_key negli header http
-        // ritorna tutte i prodotti
+        /** Ritorna tutti i prodotti
+            Api Reference: GET /api/products/
+            Requisiti: api_key negli header http */
 		[AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
@@ -28,9 +29,9 @@ namespace project.Controllers {
                 return Detail(id);
 		}
 
-        // GET /api/products/detail/<id>
-        // richiede api_key negli header http
-        // ritorna un prodotto
+        /** Ritorna un prodotto
+            Api Reference: GET /api/products/detail/<id>
+            Requisiti: api_key negli header http */
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
@@ -40,9 +41,9 @@ namespace project.Controllers {
         }
 
         
-        // GET /api/products/delete/<id>
-        // richiede una admin api_key negli header http
-        // elimina un prodotto
+        /** Elimina un prodotto
+            Api Reference: GET /api/products/delete/<id>
+            Requisiti: admin api_key negli header http */
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Delete(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -56,10 +57,10 @@ namespace project.Controllers {
         }
 
         
-        // POST /api/products/update/<id>
-        // richiede una admin api_key negli header http
-        // aggiorna un prodotto
-        // data: {supplier_id:<id>, product_category:<id>, name:"name"}
+        /** Aggiorna un prodotto
+            Api Reference: POST /api/products/update/<id>
+            Requisiti: admin api_key negli header http
+            JSON Data: {supplier_id:<id>, product_category:<id>, name:"name"} */
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Update(int id) {
             ApiKey k = ApiKey.getApiKey();
@@ -74,10 +75,10 @@ namespace project.Controllers {
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
         }
         
-        // POST /api/products/
-        // richiede una admin api_key negli header http
-        // aggiunge un prodotto
-        // data: {supplier_id:<id>, product_category:<id>, name:"name"}
+        /** Aggiunge un prodotto
+            Api Reference: POST /api/products/
+            Requisiti: admin api_key negli header http
+            JSON Data: {supplier_id:<id>, product_category:<id>, name:"name"} */
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Index() {
             ApiKey k = ApiKey.getApiKey();

@@ -8,15 +8,15 @@ using Mono.Data.Sqlite;
 
 namespace project.Utils
 {
-    // wrapper di alto livello di astrazione per database sqlite
+    /// Wrapper di alto livello di astrazione per database sqlite
     public class Database {
 
-		private const String _fileName = "db.sqlite"; // path del database
-		private SqliteConnection _con; // connessione al database 
-		private static volatile Database _istance = null; // istanza del database
-		private static object _lock = new object(); // lock per la creazione dell'istanza
+        private const String _fileName = "db.sqlite"; /// path del database
+        private SqliteConnection _con; /// connessione al database 
+        private static volatile Database _istance = null; /// istanza del database
+        private static object _lock = new object(); /// lock per la creazione dell'istanza
 
-		// ritorna l'istanza del database, creandola qualora non esistesse
+        /// Ritorna l'istanza del database, creandola qualora non esistesse
 		public static Database Istance {
 			get {
 				lock (_lock) {
@@ -28,7 +28,7 @@ namespace project.Utils
 			}
 		}
 
-        // crea il Database (costruttore privato, invocabile tramite istance) 
+        /// Crea il Database (costruttore privato, invocabile tramite istance) 
         private Database() {
 			if (File.Exists(_fileName) == false) 
 				SqliteConnection.CreateFile(_fileName);
@@ -37,7 +37,7 @@ namespace project.Utils
 			_con.Open();
 		}
 
-		// lancia una query e ritorna la tabella risultante
+        /// Lancia una query e ritorna la tabella risultante
 		private ConvertibleHashtable[] _executeQuery(String sql) {
 			Console.WriteLine(sql);
 			DataTable table = new DataTable();
@@ -45,7 +45,7 @@ namespace project.Utils
 			return _parseTable(table);
 		}
 
-		// converte i risultati di una query in un array di ConvertibleHashtable 
+        /// Converte i risultati di una query in un array di ConvertibleHashtable 
 		private ConvertibleHashtable[] _parseTable(DataTable table) {
 			ConvertibleHashtable[] outputTable;
 
@@ -63,7 +63,7 @@ namespace project.Utils
 			return outputTable;
 		}
 
-		// crea una tabella col nome scelto e con le combinazioni dati/tipi scelte 
+        /// Crea una tabella col nome scelto e con le combinazioni dati/tipi scelte 
 		public void createTable(String tableName, String[][] fields) {
 			String sql = "CREATE TABLE IF NOT EXISTS `" + tableName + "` (";
 
@@ -81,7 +81,7 @@ namespace project.Utils
 			_executeQuery(sql);
 		}
 
-        // crea un trigger per controllare che non venga inserito un valore relativo a un valore esterno inesistente
+        /// Crea un trigger per controllare che non venga inserito un valore relativo a un valore esterno inesistente
         public void createInsertTrigger(String localTable, String localField, String foreignTable) {
             String sql = "CREATE TRIGGER IF NOT EXISTS it__" + localTable + "__" + localField +
                          " BEFORE INSERT ON `" + localTable + "` FOR EACH ROW BEGIN SELECT RAISE(ROLLBACK, 'FK value \"" + localField + "\" references null value') " +
@@ -96,7 +96,7 @@ namespace project.Utils
             _executeQuery(sql);
         }
 
-		// inserisce un valore dentro una tabella (campi espliciti)
+        /// Inserisce un valore dentro una tabella (campi espliciti)
 		public int insertData(String tableName, ConvertibleHashtable data) {
 			// interrogo il db per ottenere informazioni sulla tabella 
 			ConvertibleHashtable[] h = _executeQuery("pragma table_info(`" + tableName + "`);");
@@ -136,17 +136,17 @@ namespace project.Utils
 			}
 		}
 
-		// ritorna tutti i record della tabella scelta
+        /// Ritorna tutti i record della tabella scelta
 		public ConvertibleHashtable[] getData(String tableName) {
 			return _executeQuery("SELECT * FROM " + tableName);
 		}
 
-		// ritorna i record per i quali inputField = inputValue
+        /// Ritorna i record per i quali inputField = inputValue
 		public ConvertibleHashtable[] getData(String tableName, String inputField, String inputValue) {
 			return getData(tableName, inputField, inputValue, new String[] {"*"});
 		} 
 
-		// ritorna i campi scelti per i record dove inputField = inputValue 
+        /// Ritorna i campi scelti per i record dove inputField = inputValue 
 		public ConvertibleHashtable[] getData(String tableName, String inputField, String inputValue, String[] outputFields) {
 			String sql = "SELECT ";
 
@@ -161,17 +161,17 @@ namespace project.Utils
 			return _executeQuery(sql);
 		} 
 		
-		// modifica un record per i quali vale oldField = oldValue assegnando al campo fieldToEdit il valore newValue
+        /// Modifica un record per i quali vale oldField = oldValue assegnando al campo fieldToEdit il valore newValue
 		public void updateData(String tableName, String fieldToEdit, String newValue, String oldField, String oldValue) {
 		    _executeQuery("UPDATE `" + tableName + "` SET `" + fieldToEdit + "`='" + newValue + "' WHERE `" + oldField + "`='" + oldValue + "';");
 		}
 		
-		// rimuove i record per i quali vale field = value dalla tabella scelta
+        /// Rimuove i record per i quali vale field = value dalla tabella scelta
 		public void deleteData(String tableName, String field, String value) {
 			_executeQuery("DELETE FROM `" + tableName + "` WHERE " + field + "='" + value + "';");
 		}
 
-		// ritorna una stringa che descrive il contenuto della tabella
+        /// Ritorna una stringa che descrive il contenuto della tabella
 		public String tableToString(String tableName) {
 			String sql = "SELECT * FROM " + tableName;
 			SqliteCommand cmd = new SqliteCommand(sql, _con);

@@ -13,12 +13,13 @@ using Newtonsoft.Json.Linq;
 
 namespace project.Controllers {
 
+    /// Controller delle Città.
     public class CitiesController : Controller {
 
-        // GET /api/cities/
-        // richiede api_key negli header http
-        // ritorna tutte le città
 		[AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna tutte le città
+            API Reference: GET /api/cities/
+            Requisiti: api_key negli header http */
         public JsonResult Index(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -28,10 +29,10 @@ namespace project.Controllers {
                 return Detail(id);
 		}
         
-        // GET /api/cities/detail/<id>
-        // richiede api_key negli header http
-        // ritorna una città
         [AcceptVerbs(HttpVerbs.Get)]
+        /** Ritorna una città
+            API Reference: GET /api/cities/detail/<id>/
+            Requisiti: api_key negli header http */
         public JsonResult Detail(int id) {
             if (!ApiKey.isRegistered())
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -39,10 +40,10 @@ namespace project.Controllers {
                 return Json(Model.getHashtableById<City>(id), JsonRequestBehavior.AllowGet);
         }
 
-        // GET /api/cities/delete/<id>
-        // richiede una admin api_key negli header http
-        // elimina una città
         [AcceptVerbs(HttpVerbs.Get)]
+        /** Elimina una città
+            Api Reference: GET /api/cities/delete/<id>/
+            Requisiti: admin api_key negli header http */
         public JsonResult Delete(int id) {
             if (!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -52,11 +53,11 @@ namespace project.Controllers {
             }
         }
 
-        // POST /api/cities/update/<id>
-        // richiede una admin api_key negli header http
-        // aggiorna una città
-        // data: {name: "name"}
         [AcceptVerbs(HttpVerbs.Post)]
+        /** Aggiorna una città
+            Api Reference: POST /api/cities/update/<id>
+            Requisiti: admin api_key negli header http 
+            JSON Data: {name: "name"} */
         public JsonResult Update(int id) {
             if (!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -69,11 +70,11 @@ namespace project.Controllers {
             }
         }
 
-        // POST /api/cities/
-        // richiede una admin api_key negli header http
-        // aggiunge una città
-        // data: {name: "name"}
         [AcceptVerbs(HttpVerbs.Post)]
+        /** Aggiunge una città
+            Api Reference: POST /api/cities/
+            Requisiti: admin api_key negli header http 
+            JSON Data: {name: "name"} */ 
         public JsonResult Index() {
             if (!ApiKey.getApiKey().isAdmin()) 
                 return Json(Costants.UNAUTHORIZED, JsonRequestBehavior.AllowGet);
@@ -82,6 +83,5 @@ namespace project.Controllers {
                 return Json(Costants.OK, JsonRequestBehavior.AllowGet);
             }
         }
-
 	}
 }
