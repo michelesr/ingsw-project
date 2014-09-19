@@ -11,8 +11,6 @@ form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidat
         span(ng-if='f.required') *
       .col-sm-10
         input.form-control(ng-model="f.value", type="{{ f.type }}", ng-required="{{ f.required }}", placeholder="{{ f.placeholder }}")
-        //div(ng-show="editFormIn.theInput.$dirty && signFormIn.theInput.$invalid")
-          //span.error(ng-show="signFormIn.theInput.$error.required") The field is required.
 
   .form-group(ng-repeat='rf in meta.related_fields')
     ng-form(ng-hide='rf.hide', name="addFormIn")
@@ -21,7 +19,6 @@ form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidat
       .col-sm-10
         select.form-control(ng-model='rf.value')
           option(ng-repeat='v in rf.values', value='{{ v.id }}') {{ v[rf.related_human] }}
-        //input.form-control(ng-model="rf.value", type="{{ rf.type }}", ng-required="{{ rf.required }}", placeholder="{{ rf.placeholder }}")
 
   .form-group
     div.col-sm-offset-2.col-sm-10
