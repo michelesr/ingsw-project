@@ -71,8 +71,12 @@ controllers.controller 'StockCtrl', ($scope, $rootScope, $state, Product, Stock,
     # Add the resource and return to list page
     Stock.add resource, (res) ->
       list()
+      $scope.msgError = ''
       $scope.msgSuccess = 'Added successfully'
       $state.go '^.list'
+
+    , ->
+      $scope.msgError = 'Adding error'
 
 
   $scope.detail = (id) ->
@@ -153,12 +157,15 @@ controllers.controller 'StockCtrl', ($scope, $rootScope, $state, Product, Stock,
 
     # Update the resource
     Stock.update {id: $state.params.id}, resource, (res) ->
-#      $scope.result = res
       list()
+      $scope.msgError = ''
       $scope.msgSuccess = 'Updated successfully'
 
       # Return to list page
       $state.go '^.list'
+
+    , ->
+      $scope.msgError = 'Updating error'
 
 
   $scope.remove = (id) ->
@@ -167,8 +174,12 @@ controllers.controller 'StockCtrl', ($scope, $rootScope, $state, Product, Stock,
 
     # Remove the resource and return to list page
     Stock.remove {id: id}, (res) ->
+      $scope.msgError = ''
       $scope.msgSuccess = 'Removed successfully'
       list()
+
+    , ->
+      $scope.msgError = 'Removing error'
 
 
   # By default, load the list data

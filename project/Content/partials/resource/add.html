@@ -1,5 +1,6 @@
 
 <h1 class="page-header"><span class="fa fa-plus"></span><span> Add a {{ meta.name }}</span></h1>
+<p ng-if="msgError" class="text-danger">Error: {{ msgError }}</p>
 <form ng-submit="add()" name="addForm" role="form" novalidate="novalidate" class="form-horizontal">
   <div ng-repeat="f in meta.fields" class="form-group">
     <ng-form name="addFormIn">

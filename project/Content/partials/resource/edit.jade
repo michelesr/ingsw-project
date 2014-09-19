@@ -2,6 +2,8 @@ h1.page-header
   span.fa.fa-pencil
   span  Edit a {{ meta.name }}
 
+p.text-danger(ng-if='msgError') Error: {{ msgError }}
+
 form.form-horizontal(ng-submit="edit()", name="editForm", role="form", novalidate)
   .form-group(ng-repeat="f in meta.fields")
     ng-form(name="editFormIn")

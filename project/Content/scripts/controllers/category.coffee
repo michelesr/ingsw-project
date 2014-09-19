@@ -32,9 +32,14 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
     # Add the resource and return to list page
     Category.add $scope.resource, (res) ->
       list()
+      $scope.msgError = ''
+      $scope.msgSuccess = 'Added successfully'
 
       # Return to list page
       $state.go '^.list'
+
+    , ->
+      $scope.msgError = 'Adding error'
 
 
   $scope.detail = (id) ->
@@ -81,12 +86,15 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
 
     # Update the resource
     Category.update {id: $state.params.id}, resource, (res) ->
-#      $scope.result = res
       list()
+      $scope.msgError = ''
       $scope.msgSuccess = 'Updated successfully'
 
       # Return to list page
       $state.go '^.list'
+
+    , ->
+      $scope.msgError = 'Updating error'
 
 
   $scope.remove = (id) ->
@@ -95,8 +103,12 @@ controllers.controller 'CategoryCtrl', ($scope, $state, Category, Meta) ->
 
     # Remove the resource and return to list page
     Category.remove {id: id}, (res) ->
+      $scope.msgError = ''
       $scope.msgSuccess = 'Removed successfully'
       list()
+
+    , ->
+      $scope.msgError = 'Removing error'
 
 
   # By default, load the list data

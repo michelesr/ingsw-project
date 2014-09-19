@@ -2,6 +2,8 @@ h1.page-header
   span.fa.fa-plus
   span  Add a {{ meta.name }}
 
+p.text-danger(ng-if='msgError') Error: {{ msgError }}
+
 form.form-horizontal(ng-submit="add()", name="addForm", role="form", novalidate)
 
   .form-group(ng-repeat="f in meta.fields")

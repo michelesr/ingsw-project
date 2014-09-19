@@ -1,5 +1,6 @@
 
 <h1 class="page-header"><span class="fa fa-sign-in"></span><span> Login</span></h1>
+<p ng-if="loginError" class="text-danger">Error: {{ loginError }}</p>
 <form ng-submit="login(credentials)" role="form" novalidate="novalidate" class="form-signin">
   <h2 class="form-signin-heading">Please sign in</h2>
   <input ng-model="credentials.email" type="email" placeholder="Email address" required="" autofocus="" class="form-control"/>

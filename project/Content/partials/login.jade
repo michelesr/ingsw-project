@@ -2,6 +2,8 @@ h1.page-header
   span.fa.fa-sign-in
   span  Login
 
+p.text-danger(ng-if='loginError') Error: {{ loginError }}
+
 form.form-signin(ng-submit='login(credentials)', role='form', novalidate)
   h2.form-signin-heading Please sign in
   input.form-control(ng-model='credentials.email', type='email', placeholder='Email address', required='', autofocus='')

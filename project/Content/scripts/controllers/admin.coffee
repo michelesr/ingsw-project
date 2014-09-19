@@ -35,7 +35,12 @@ controllers.controller 'AdminCtrl', ($scope, $state, User, Meta) ->
     # Add the resource and return to list page
     User.add resource, (res) ->
       list()
+      $scope.msgError = ''
+      $scope.msgSuccess = 'Added successfully'
       $state.go '^.list'
+
+    , ->
+      $scope.msgError = 'Adding error'
 
 
   $scope.detail = (id) ->
@@ -96,8 +101,12 @@ controllers.controller 'AdminCtrl', ($scope, $state, User, Meta) ->
 
     # Remove the admin and return to list page
     User.remove {id: id}, (res) ->
+      $scope.msgError = ''
       $scope.msgSuccess = 'Removed successfully'
       list()
+
+    , ->
+      $scope.msgError = 'Removing error'
 
 
   # By default, load the list data

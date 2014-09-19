@@ -45,7 +45,11 @@ controllers.controller('AdminCtrl', function($scope, $state, User, Meta) {
     }
     return User.add(resource, function(res) {
       list();
+      $scope.msgError = '';
+      $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Adding error';
     });
   };
   $scope.detail = function(id) {
@@ -116,8 +120,11 @@ controllers.controller('AdminCtrl', function($scope, $state, User, Meta) {
     return User.remove({
       id: id
     }, function(res) {
+      $scope.msgError = '';
       $scope.msgSuccess = 'Removed successfully';
       return list();
+    }, function() {
+      return $scope.msgError = 'Removing error';
     });
   };
   return list();
@@ -214,7 +221,11 @@ controllers.controller('CategoryCtrl', function($scope, $state, Category, Meta) 
     }
     return Category.add($scope.resource, function(res) {
       list();
+      $scope.msgError = '';
+      $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Adding error';
     });
   };
   $scope.detail = function(id) {
@@ -268,8 +279,11 @@ controllers.controller('CategoryCtrl', function($scope, $state, Category, Meta) 
       id: $state.params.id
     }, resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Updated successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Updating error';
     });
   };
   $scope.remove = function(id) {
@@ -278,8 +292,11 @@ controllers.controller('CategoryCtrl', function($scope, $state, Category, Meta) 
     return Category.remove({
       id: id
     }, function(res) {
+      $scope.msgError = '';
       $scope.msgSuccess = 'Removed successfully';
       return list();
+    }, function() {
+      return $scope.msgError = 'Removing error';
     });
   };
   return list();
@@ -312,7 +329,11 @@ controllers.controller('CityCtrl', function($scope, $state, City, Meta) {
     }
     return City.add($scope.resource, function(res) {
       list();
+      $scope.msgError = '';
+      $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Adding error';
     });
   };
   $scope.detail = function(id) {
@@ -366,8 +387,11 @@ controllers.controller('CityCtrl', function($scope, $state, City, Meta) {
       id: $state.params.id
     }, resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Updated successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Updating error';
     });
   };
   $scope.remove = function(id) {
@@ -376,8 +400,11 @@ controllers.controller('CityCtrl', function($scope, $state, City, Meta) {
     return City.remove({
       id: id
     }, function(res) {
+      $scope.msgError = '';
       $scope.msgSuccess = 'Removed successfully';
       return list();
+    }, function() {
+      return $scope.msgError = 'Removing error';
     });
   };
   return list();
@@ -399,25 +426,30 @@ controllers.controller('LoginCtrl', function($scope, $rootScope, $http, $state, 
   }
   return $scope.login = function(credentials) {
     return Auth.login(credentials, function(res_auth) {
-      $http.defaults.headers.common['api_key'] = res_auth.api_key;
-      return User.detail({
-        id: res_auth.user_id
-      }, function(res_user) {
-        $rootScope.authEmail = res_user.email;
-        $rootScope.authFirstName = res_user.first_name;
-        $rootScope.authLastName = res_user.last_name;
-        $rootScope.authType = res_user.type;
-        $rootScope.isAuth = true;
-        switch ($rootScope.authType) {
-          case 0:
-            $rootScope.authId = res_user.user_id;
-            $rootScope.authSupplierId = res_user.id;
-            return $state.go('root.supplierHome');
-          case 1:
-            $rootScope.authId = res_user.id;
-            return $state.go('root.adminHome');
-        }
-      });
+      $scope.loginError = '';
+      if (!res_auth.auth === true) {
+        return $scope.loginError = 'Authentication error';
+      } else {
+        $http.defaults.headers.common['api_key'] = res_auth.api_key;
+        return User.detail({
+          id: res_auth.user_id
+        }, function(res_user) {
+          $rootScope.authEmail = res_user.email;
+          $rootScope.authFirstName = res_user.first_name;
+          $rootScope.authLastName = res_user.last_name;
+          $rootScope.authType = res_user.type;
+          $rootScope.isAuth = true;
+          switch ($rootScope.authType) {
+            case 0:
+              $rootScope.authId = res_user.user_id;
+              $rootScope.authSupplierId = res_user.id;
+              return $state.go('root.supplierHome');
+            case 1:
+              $rootScope.authId = res_user.id;
+              return $state.go('root.adminHome');
+          }
+        });
+      }
     });
   };
 });
@@ -529,8 +561,11 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
     }
     return Product.add(resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Adding error';
     });
   };
   $scope.detail = function(id) {
@@ -628,8 +663,11 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
       id: $state.params.id
     }, resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Updated successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Updating error';
     });
   };
   $scope.remove = function(id) {
@@ -638,8 +676,11 @@ controllers.controller('ProductCtrl', function($scope, $rootScope, $state, Categ
     return Product.remove({
       id: id
     }, function(res) {
+      $scope.msgError = '';
       $scope.msgSuccess = 'Removed successfully';
       return list();
+    }, function() {
+      return $scope.msgError = 'Removing error';
     });
   };
   return list();
@@ -764,8 +805,11 @@ controllers.controller('StockCtrl', function($scope, $rootScope, $state, Product
     }
     return Stock.add(resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Adding error';
     });
   };
   $scope.detail = function(id) {
@@ -865,8 +909,11 @@ controllers.controller('StockCtrl', function($scope, $rootScope, $state, Product
       id: $state.params.id
     }, resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Updated successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Updating error';
     });
   };
   $scope.remove = function(id) {
@@ -875,8 +922,11 @@ controllers.controller('StockCtrl', function($scope, $rootScope, $state, Product
     return Stock.remove({
       id: id
     }, function(res) {
+      $scope.msgError = '';
       $scope.msgSuccess = 'Removed successfully';
       return list();
+    }, function() {
+      return $scope.msgError = 'Removing error';
     });
   };
   return list();
@@ -991,7 +1041,11 @@ controllers.controller('SupplierCtrl', function($scope, $rootScope, $state, City
     }
     return User.add(resource, function(res) {
       list();
+      $scope.msgError = '';
+      $scope.msgSuccess = 'Added successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Adding error';
     });
   };
   $scope.detail = function(id) {
@@ -1094,8 +1148,11 @@ controllers.controller('SupplierCtrl', function($scope, $rootScope, $state, City
       id: $state.params.id
     }, resource, function(res) {
       list();
+      $scope.msgError = '';
       $scope.msgSuccess = 'Updated successfully';
       return $state.go('^.list');
+    }, function() {
+      return $scope.msgError = 'Updating error';
     });
   };
   $scope.remove = function(id) {
@@ -1104,8 +1161,11 @@ controllers.controller('SupplierCtrl', function($scope, $rootScope, $state, City
     return User.remove({
       id: id
     }, function(res) {
+      $scope.msgError = '';
       $scope.msgSuccess = 'Removed successfully';
       return list();
+    }, function() {
+      return $scope.msgError = 'Removing error';
     });
   };
   return list();
