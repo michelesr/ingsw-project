@@ -88,6 +88,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
     <Compile Include="Controllers\CatalogsController.cs" />
+    <Compile Include="Content\doxygen_main_page.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -95,7 +96,6 @@
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <Content Include="Content\base.html" />
-    <Content Include="Content\partials\about.html" />
     <Content Include="Content\partials\admin.html" />
     <Content Include="Content\partials\catalog.html" />
     <Content Include="Content\partials\error.html" />
@@ -119,7 +119,6 @@
     <Content Include="Content\scripts\statehelper.js" />
     <Content Include="Content\scripts\ui-bootstrap.js" />
     <Content Include="Content\scripts\xml2json.js" />
-    <Content Include="Content\styles\bootstrap-theme.css" />
     <Content Include="Content\styles\bootstrap.css" />
     <Content Include="Content\styles\dashboard.css" />
     <Content Include="Content\styles\font-awesome.css" />
@@ -149,7 +148,6 @@
     <None Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <None Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Content\fonts\glyphicons-halflings-regular.woff" />
-    <None Include="Content\partials\about.jade" />
     <None Include="Content\partials\admin.jade" />
     <None Include="Content\partials\catalog.jade" />
     <None Include="Content\partials\error.jade" />
@@ -182,7 +180,6 @@
     <None Include="Content\scripts\services\city.coffee" />
     <None Include="Content\scripts\services\meta.coffee" />
     <None Include="Content\scripts\services\product.coffee" />
-    <None Include="Content\scripts\services\sidebar.coffee" />
     <None Include="Content\scripts\services\stock.coffee" />
     <None Include="Content\scripts\services\user.coffee" />
   </ItemGroup>
