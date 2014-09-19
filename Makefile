@@ -7,7 +7,7 @@ build-all: server client doc
 rebuild: clean server client
 rebuild-doc: clean-doc doc
 clean-all: clean clean-doc
-rebuild-all: clean clean-doc build build-doc
+rebuild-all: clean clean-doc build doc
 
 server:
 	mdtool build project/project.csproj
