@@ -1,0 +1,5 @@
+<map id="project.Models.User" name="project.Models.User">
+<area shape="rect" id="node3" href="$classproject_1_1Models_1_1Admin.html" title="Utente con privilegi di amministratore. " alt="" coords="5,718,180,839"/>
+<area shape="rect" id="node4" href="$classproject_1_1Models_1_1Supplier.html" title="Produttore (sottoclasse dell&#39;utente generico) " alt="" coords="204,681,379,876"/>
+<area shape="rect" id="node2" href="$classproject_1_1Models_1_1Model.html" title="Modello generico del db. " alt="" coords="101,5,282,244"/>
+</map>

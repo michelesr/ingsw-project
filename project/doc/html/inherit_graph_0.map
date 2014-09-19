@@ -1,0 +1,10 @@
+<map id="Grafico della gerarchia delle classi" name="Grafico della gerarchia delle classi">
+<area shape="rect" id="node2" href="$classproject_1_1Controllers_1_1AuthController.html" title="Controller autorizzazione: /api/auth/. " alt="" coords="150,5,309,47"/>
+<area shape="rect" id="node3" href="$classproject_1_1Controllers_1_1CatalogsController.html" title="Controller per l&#39;esportazione dei listini: /api/catalogs/. " alt="" coords="137,71,321,112"/>
+<area shape="rect" id="node4" href="$classproject_1_1Controllers_1_1CategoriesController.html" title="Controller per la gestione delle categorie: /api/categories/. " alt="" coords="132,136,327,177"/>
+<area shape="rect" id="node5" href="$classproject_1_1Controllers_1_1CitiesController.html" title="Controller delle Città. " alt="" coords="146,201,313,243"/>
+<area shape="rect" id="node6" href="$classproject_1_1Controllers_1_1HomeController.html" title="Controller del base template: /. " alt="" coords="146,267,313,308"/>
+<area shape="rect" id="node7" href="$classproject_1_1Controllers_1_1ProductsController.html" title="Controller dei prodotti. " alt="" coords="137,332,321,373"/>
+<area shape="rect" id="node8" href="$classproject_1_1Controllers_1_1StocksController.html" title="Controller degli stocks. " alt="" coords="143,397,316,439"/>
+<area shape="rect" id="node9" href="$classproject_1_1Controllers_1_1UsersController.html" title="Controller degli utenti. " alt="" coords="146,463,313,504"/>
+</map>
