@@ -22,7 +22,7 @@ namespace project.Models {
             per tenere tracca dell'id dell'user nella tabella User, che
             differisce dall'id (ereditato da Model) nelle tabelle Admin|Supplier */
 		public int user_id {get; set;}
-        /// Tipo d'utenza (viene ereditato e settato corretamente nelle sottoclassi)
+        /// Tipo d'utenza (viene ereditato e settato correttamente nelle sottoclassi)
 		public userType type = userType.undefined;
 
         /// Costruttore
