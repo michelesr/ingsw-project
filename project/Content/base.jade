@@ -28,9 +28,8 @@ html(lang='en', ng-app='app')
             span.sr-only Toggle navigation
         .navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
-            li(ng-if='isAuth', ng-switch='authType')
-              a(ng-switch-when=0, ng-href='/#/suppliers/detail/{{ authId }}') Hello {{ authFirstName }}!
-              a(ng-switch-when=1, ng-href='/#/admins/detail/{{ authId }}') Hello {{ authFirstName }}!
+            li(ng-if='isAuth')
+              a(href='') Hello {{ authFirstName }}!
             li(ng-if='isAuth')
               a(ui-sref='root.logout') Logout
             li(ng-if='!isAuth')
