@@ -1,6 +1,7 @@
-Web Project
-===========
+# Progetto Ingegneria del Software
 
-Development Reference: 
+Implementazione di un sistema CRUD relativo a listini dei fornitori in un
+contesto di economia solidale. 
 
-- http://piratepad.net/yCDlcVtn82
+Si tratta di un prototipo sviluppato con Mono e AngularJS da Michele Sorcinelli
+e Antonio Esposito per il corso di Ingegneria del Software.
